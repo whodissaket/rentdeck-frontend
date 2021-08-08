@@ -1,5 +1,6 @@
 ### RentDeck
-
+To install Node JS just download it from 
+--> https://nodejs.org/en/download/
 
 In the project directory, you can run:
 
