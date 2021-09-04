@@ -25,7 +25,7 @@ const Success = () => {
       <div className="nav-bar">
         <div className="logo-tab">rentdeck</div>
         <div onClick={handleLogout} className="logout-tab">
-          Logout
+          <button>Logout</button>
         </div>
       </div>
     </div>
