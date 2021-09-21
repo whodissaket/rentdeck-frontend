@@ -21,3 +21,21 @@ export const sliderItems = [
     bg: "fbf0f4",
   },
 ];
+
+export const categories = [
+  {
+    id: 1,
+    img: "/category_1.jpg",
+    title: "Furniture & Decor",
+  },
+  {
+    id: 2,
+    img: "category_2.jpg",
+    title: "Electronics Essesntial",
+  },
+  {
+    id: 3,
+    img: "category_3.jpg",
+    title: "Kitchen Essentials",
+  },
+];

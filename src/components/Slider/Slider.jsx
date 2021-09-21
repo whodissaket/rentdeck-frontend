@@ -12,7 +12,7 @@ import {
   Desc,
   Button,
 } from "./SliderElements";
-import { sliderItems } from "./data";
+import { sliderItems } from "../../data";
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
