@@ -39,3 +39,38 @@ export const categories = [
     title: "Kitchen Essentials",
   },
 ];
+
+export const popproducts = [
+  {
+    id: 1,
+    img: "/products/bed_1.jpg",
+  },
+  {
+    id: 2,
+    img: "/products/bed_2.jpg",
+  },
+  {
+    id: 3,
+    img: "/products/dining_1.jpg",
+  },
+  {
+    id: 4,
+    img: "/products/sofa_1.jpg",
+  },
+  {
+    id: 5,
+    img: "/products/electronics_1.jpg",
+  },
+  {
+    id: 6,
+    img: "/products/electronics_2.jpg",
+  },
+  {
+    id: 7,
+    img: "/products/electronics_4.jpg",
+  },
+  {
+    id: 8,
+    img: "/products/electronics_3.jpg",
+  },
+];
