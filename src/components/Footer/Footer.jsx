@@ -1,0 +1,92 @@
+import {
+  Facebook,
+  Instagram,
+  MailOutline,
+  Phone,
+  Room,
+  Twitter,
+  YouTube,
+} from "@material-ui/icons";
+import React from "react";
+import styled from "styled-components";
+import {
+  Center,
+  Left,
+  Right,
+  Logo,
+  Desc,
+  SocialContainer,
+  SocialIcon,
+  Title,
+  List,
+  ListItem,
+  ContactItem,
+  Payment,
+} from "./FooterEle";
+
+const Container = styled.div`
+  display: flex;
+`;
+
+const Footer = () => {
+  return (
+    <Container>
+      <Left>
+        <Logo>RentDeck</Logo>
+        <Desc>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur.
+        </Desc>
+        <SocialContainer>
+          <SocialIcon color="3B5999">
+            <Facebook />
+          </SocialIcon>
+          <SocialIcon color="E4405F">
+            <Instagram />
+          </SocialIcon>
+          <SocialIcon color="55ACEE">
+            <Twitter />
+          </SocialIcon>
+          <SocialIcon color="FF0000">
+            <YouTube />
+          </SocialIcon>
+        </SocialContainer>
+      </Left>
+      <Center>
+        <Title>Useful Links</Title>
+        <List>
+          <ListItem>Home</ListItem>
+          <ListItem>Cart</ListItem>
+          <ListItem>Categories</ListItem>
+          <ListItem>My Accounts</ListItem>
+          <ListItem>Orders</ListItem>
+          <ListItem>Order Tracking</ListItem>
+          <ListItem>Wishlist</ListItem>
+          <ListItem>Terms and Conditions</ListItem>
+        </List>
+      </Center>
+      <Right>
+        <Title>Contact Us</Title>
+        <ContactItem>
+          <Room style={{ marginRight: "10px" }} />
+          Char Minar Char Rasta Kharcha Rupaiya
+        </ContactItem>
+        <ContactItem>
+          <Phone style={{ marginRight: "10px" }} />
+          123456789
+        </ContactItem>
+        <ContactItem>
+          <MailOutline style={{ marginRight: "10px" }} />
+          rentedeck101@gmail.com
+        </ContactItem>
+        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+      </Right>
+    </Container>
+  );
+};
+
+export default Footer;
