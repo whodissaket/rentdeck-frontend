@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { mobile } from "../../responsive";
 
 export const Left = styled.div`
   display: flex;
@@ -10,11 +11,13 @@ export const Left = styled.div`
 export const Right = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({ backgroundColor: "#fff8f8" })}
 `;
 
 export const Center = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({ display: "none" })}
 `;
 
 export const Title = styled.h3`

@@ -23,9 +23,11 @@ import {
   ContactItem,
   Payment,
 } from "./FooterEle";
+import { mobile } from "../../responsive";
 
 const Container = styled.div`
   display: flex;
+  ${mobile({ flexDirection: "column" })}
 `;
 
 const Footer = () => {

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { mobile } from "../responsive";
 
 import { AiOutlineGoogle } from "react-icons/ai";
 
@@ -23,6 +24,7 @@ const Wrapper = styled.div`
   padding: 20px;
   border-radius: 10px;
   background-color: #fcdec0;
+  ${mobile({ width: "75%" })}
 `;
 
 const Title = styled.h1`
