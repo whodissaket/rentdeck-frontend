@@ -27,16 +27,19 @@ export const categories = [
     id: 1,
     img: "/category_1.jpg",
     title: "Furniture & Decor",
+    category: "furniture",
   },
   {
     id: 2,
     img: "category_2.jpg",
     title: "Electronics Essesntial",
+    category: "electronics",
   },
   {
     id: 3,
     img: "category_3.jpg",
     title: "Kitchen Essentials",
+    category: "kitchen",
   },
 ];
 
