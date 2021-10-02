@@ -1,3 +1,9 @@
+# RentDeck
+
+RentDeck is an online Rental Website developed in MERN Stack and Firebase.RentDeck focuses on renting trendy and high quality furniture and electronics on low cost monthly subscription.
+This repository contains the front-end part of the project
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
