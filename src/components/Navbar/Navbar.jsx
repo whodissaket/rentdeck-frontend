@@ -1,6 +1,7 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Center,
   Container,
@@ -19,7 +20,11 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Logo>RentDeck</Logo>
+          <Logo>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              RentDeck
+            </Link>
+          </Logo>
         </Left>
         <Center>
           <Language>EN</Language>
@@ -29,8 +34,16 @@ const Navbar = () => {
           </SearchContainer>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          <MenuItem>
+            <Link to="/register" style={{ textDecoration: "none" }}>
+              Register
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              Sign In
+            </Link>
+          </MenuItem>
           <MenuItem>
             <Badge badgeContent={4} color="primary">
               <ShoppingCartOutlined />

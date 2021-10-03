@@ -13,8 +13,9 @@ import {
   Button,
 } from "./SliderElements";
 import { sliderItems } from "../../data";
+import { Link } from "react-router-dom";
 
-const Slider = () => {
+const Slider = (item) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const handleClick = (direction) => {
     if (direction === "left") {
@@ -38,7 +39,15 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button>Shop Now</Button>
+
+              <Button>
+                <Link
+                  to={`/products/${item.category}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  Shop Now
+                </Link>
+              </Button>
             </InfoContainer>
           </Slide>
         ))}
