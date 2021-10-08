@@ -17,7 +17,7 @@ const Product = ({ item }) => {
         </Icon>
         <Icon>
           <SearchOutlined />
-        </Icon> 
+        </Icon>
         <Icon>
           <FavoriteBorderOutlined />
         </Icon>
