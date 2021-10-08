@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import {} from "@material-ui/icons";
 import { useStyles } from "./styles/style";
+import { Link } from "react-router-dom";
 
 const Orders = ({ admin }) => {
   const classes = useStyles();
@@ -66,7 +67,9 @@ const Orders = ({ admin }) => {
                 //           : history.push(`/order/${order._id}`)
                 //       }
               >
-                Details
+                <Link to="/orderdetails" style={{ textDecoration: "none" }}>
+                  Details
+                </Link>
               </Button>
             </Card>
           </Grid>
