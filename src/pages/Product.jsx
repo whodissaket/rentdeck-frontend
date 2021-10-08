@@ -105,17 +105,17 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const Product = (props) => {
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src="/products/electronics_1.jpg" />
+          <Image src={props.item.images[0]} />
         </ImgContainer>
         <InfoContainer>
-          <Title>MacBook</Title>
+          <Title>{props.item.title}</Title>
           <Desc>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris
@@ -124,7 +124,7 @@ const Product = () => {
             Mauris pharetra et ultrices neque. Sollicitudin nibh sit amet
             commodo nulla facilisi nullam.
           </Desc>
-          <Price>Rs.900/month</Price>
+          <Price>{props.item.rentalrate}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Variant:</FilterTitle>

@@ -10,14 +10,14 @@ const Product = ({ item }) => {
   return (
     <Container>
       <Circle />
-      <Image src={item.img} alt={item.name} />
+      <Image src={item.images[0]} alt={item.title} />
       <Info>
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
           <SearchOutlined />
-        </Icon>
+        </Icon> 
         <Icon>
           <FavoriteBorderOutlined />
         </Icon>
