@@ -10,6 +10,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { Order, Orders } from "./pages/Orders";
 
 const App = () => {
   const user = false;
@@ -28,6 +29,9 @@ const App = () => {
         </Route>
         <Route exact path="/cart">
           <Cart />
+        </Route>
+        <Route exact path="/orders">
+          <Orders />
         </Route>
         <Route exact path="/login">
           {user ? <Redirect to="/" /> : <Login />}
