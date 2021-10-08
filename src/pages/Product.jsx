@@ -5,6 +5,10 @@ import Announcement from "../components/Announcement/Announcement";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import { mobile } from "../responsive";
+import { useState ,useEffect } from "react";
+import axios from "axios";
+import { useParams } from 'react-router';
+
 
 const Container = styled.div``;
 
@@ -105,17 +109,29 @@ const Button = styled.button`
   }
 `;
 
-const Product = (props) => {
+const Product = () => {
+  const [prod , setP]= useState(null)
+
+  const { id }=useParams()
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/products/id/${id}`).then((response) => {
+    setP(response.data)
+    }) .catch(error => console.log(error.message)); 
+
+}, []);
+
+console.log(prod)
+
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src={props.item.images[0]} />
+         {prod && <Image src={prod.images[0]} />}
         </ImgContainer>
         <InfoContainer>
-          <Title>{props.item.title}</Title>
+        {prod &&  <Title>{prod.title}</Title>}
           <Desc>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris
@@ -124,7 +140,7 @@ const Product = (props) => {
             Mauris pharetra et ultrices neque. Sollicitudin nibh sit amet
             commodo nulla facilisi nullam.
           </Desc>
-          <Price>{props.item.rentalrate}</Price>
+         {prod && <Price>{prod.rentalrate}</Price>}
           <FilterContainer>
             <Filter>
               <FilterTitle>Variant:</FilterTitle>
