@@ -46,7 +46,9 @@ const Navbar = () => {
           </MenuItem>
           <MenuItem>
             <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlined />
+              <Link to="/cart" style={{ textDecoration: "none" }}>
+                <ShoppingCartOutlined />
+              </Link>
             </Badge>
           </MenuItem>
         </Right>
