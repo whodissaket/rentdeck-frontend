@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { popproducts } from "../../data";
 import Product from "./Product";
 import styled from "styled-components";
@@ -10,11 +11,22 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Products = () => {
+const Products = (props) => {
+  const [prods , setProds] = useState(null)
+  useEffect(() => {
+    if(props.match.params.id){
+    axios.get("http://localhost:5000/api/products").then((response) => {
+      setProds(response.data);
+    })}
+    else{    
+      axios.get(`http://localhost:5000/api/products/${props.match.params.id}`).then((response) => {
+      setProds(response.data);})}
+  }, [])
+
   return (
     <Container>
-      {popproducts.map((item) => (
-        <Product item={item} key={item.id} />
+      {prods && prods.map((item) => (
+        <Product item={item} key={item._id} />
       ))}
     </Container>
   );
