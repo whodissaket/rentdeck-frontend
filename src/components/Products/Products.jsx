@@ -12,22 +12,24 @@ const Container = styled.div`
 `;
 
 const Products = (props) => {
-  const [prods , setProds] = useState(null)
+  const [prods, setProds] = useState(null);
   useEffect(() => {
-    if(props.match.params.id){
-    axios.get("http://localhost:5000/api/products").then((response) => {
-      setProds(response.data);
-    })}
-    else{    
-      axios.get(`http://localhost:5000/api/products/${props.match.params.id}`).then((response) => {
-      setProds(response.data);})}
-  }, [])
+    if (props.match.params.id) {
+      axios.get("http://localhost:5000/api/products").then((response) => {
+        setProds(response.data);
+      });
+    } else {
+      axios
+        .get(`http://localhost:5000/api/products/${props.match.params.id}`)
+        .then((response) => {
+          setProds(response.data);
+        });
+    }
+  }, []);
 
   return (
     <Container>
-      {prods && prods.map((item) => (
-        <Product item={item} key={item._id} />
-      ))}
+      {prods && prods.map((item) => <Product item={item} key={item._id} />)}
     </Container>
   );
 };

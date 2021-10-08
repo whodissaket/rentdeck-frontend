@@ -9,38 +9,9 @@ import {
 } from "@material-ui/core";
 import {} from "@material-ui/icons";
 import { useStyles } from "./styles/style";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchOrders } from "../../../redux/slices/order";
-// import { fetchAdminOrders } from "../../../redux/slices/admin";
-// import moment from "moment";
-// import { useHistory } from "react-router-dom";
-// import { Loader } from "../../../components/Loader/";
 
-export const Orders = ({ admin }) => {
+const Orders = ({ admin }) => {
   const classes = useStyles();
-  //   const history = useHistory();
-  //   const dispatch = useDispatch();
-  //   const orders = useSelector((state) =>
-  //     admin ? state.admin.orders : state.orders.orders
-  //   );
-  //   const contentLoading = useSelector((state) =>
-  //     admin ? state.admin.contentLoading : state.orders.contentLoading
-  //   );
-  //   const adminExist = localStorage.getItem("adminToken");
-  //   const userExist = localStorage.getItem("userToken");
-
-  //   useEffect(() => {
-  //     if (admin && !adminExist) {
-  //       history.replace("/admin/login");
-  //     }
-  //     if (!admin && !userExist) {
-  //       history.replace("/");
-  //     }
-  //   }, [userExist, adminExist]);
-
-  //   useEffect(() => {
-  //     dispatch(admin ? fetchAdminOrders() : fetchOrders());
-  //   }, []);
 
   return (
     <Container maxWidth="lg">
@@ -105,3 +76,4 @@ export const Orders = ({ admin }) => {
     </Container>
   );
 };
+export default Orders;
