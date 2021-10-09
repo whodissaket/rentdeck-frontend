@@ -5,6 +5,7 @@ import { mobile } from "../responsive";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { login } from "../store/api-calls";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -81,7 +82,7 @@ const GButton = styled.button`
   }
 `;
 
-const Link = styled.a`
+const New = styled.a`
   margin: 5px 0;
   font-size: 12px;
   text-decoration: underline;
@@ -119,8 +120,10 @@ const Login = () => {
             Login
           </Button>
           {error && <Error>Something went wrong.</Error>}
-          <Link>Forgot Password?</Link>
-          <Link>New ? Create New Account</Link>
+
+          <New>
+            <Link to="/register">New ? Create New Account</Link>
+          </New>
         </Form>
         <Agreement>OR</Agreement>
         <GButton>

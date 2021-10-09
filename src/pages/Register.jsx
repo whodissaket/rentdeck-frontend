@@ -1,6 +1,10 @@
+//Redux code daal dena uske baad hi chalega otherwise not defined aaega
+
 import styled from "styled-components";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { mobile } from "../responsive";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 100vw;
@@ -70,23 +74,93 @@ const GButton = styled.button`
   }
 `;
 
-const Register = () => {
+const Error = styled.span`
+  color: red;
+`;
+
+const Register = ({ location, history }) => {
+  //states
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  //redux part
+  const dispatch = useDispatch();
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { error, userInfo } = userRegister;
+
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, userInfo, redirect]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+    } else {
+      //<--------*****Uncomment later***********----->
+      // dispatch(register(name, email, password));
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        {message && <Error variant="danger">{message}</Error>}
+        {error && <Error variant="danger">{error}</Error>}
+
+        <Form onSubmit={submitHandler}>
+          <Input
+            id="name"
+            placeholder="name"
+            type="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <Input
+            id="username"
+            placeholder="username"
+            type="name"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            id="email"
+            placeholder="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            id="password"
+            placeholder="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            id="cnfmpassword"
+            placeholder="confirm password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with all the policies
           </Agreement>
-          <Button>CREATE</Button>
+          <Button type="submit">Create</Button>
         </Form>
         <Agreement>OR</Agreement>
 
