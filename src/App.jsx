@@ -12,9 +12,10 @@ import {
 } from "react-router-dom";
 import Orders from "./pages/Orders";
 import Order from "./pages/Order";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = false;
+  const user = useSelector((state) => state.user.currentUser);
 
   return (
     <Router>

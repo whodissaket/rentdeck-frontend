@@ -5,10 +5,10 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
 
   axios
-    .post("http://localhost:5000/api/users/login",user, {
+    .post("http://localhost:5000/api/users/login", user, {
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     })
     .then((response) => {
       dispatch(loginSuccess(response.data));

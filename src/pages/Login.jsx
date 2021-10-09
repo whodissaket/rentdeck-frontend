@@ -61,6 +61,11 @@ const Button = styled.button`
   &:hover {
     background-color: #4f5dd6;
   }
+
+  &:disabled {
+    color: blue;
+    cursor: not-allowed;
+  }
 `;
 const GButton = styled.button`
   border: none;
@@ -80,6 +85,10 @@ const Link = styled.a`
   margin: 5px 0;
   font-size: 12px;
   text-decoration: underline;
+`;
+
+const Error = styled.span`
+  color: red;
 `;
 
 const Login = () => {
@@ -106,7 +115,10 @@ const Login = () => {
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={handleLogin}>Login</Button>
+          <Button onClick={handleLogin} disabled={isFetching}>
+            Login
+          </Button>
+          {error && <Error>Something went wrong.</Error>}
           <Link>Forgot Password?</Link>
           <Link>New ? Create New Account</Link>
         </Form>
