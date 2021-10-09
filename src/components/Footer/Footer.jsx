@@ -24,6 +24,7 @@ import {
   Payment,
 } from "./FooterEle";
 import { mobile } from "../../responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -61,12 +62,33 @@ const Footer = () => {
       <Center>
         <Title>Useful Links</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Categories</ListItem>
+          <ListItem>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              Home
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/cart" style={{ textDecoration: "none" }}>
+              Cart
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link to="#categories" style={{ textDecoration: "none" }}>
+              Categories
+            </Link>
+          </ListItem>
           <ListItem>My Accounts</ListItem>
-          <ListItem>Orders</ListItem>
-          <ListItem>Order Tracking</ListItem>
+
+          <ListItem>
+            <Link to="/orderdetails" style={{ textDecoration: "none" }}>
+              Orders
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/orderdetails" style={{ textDecoration: "none" }}>
+              Order Tracking
+            </Link>
+          </ListItem>
           <ListItem>Wishlist</ListItem>
           <ListItem>Terms and Conditions</ListItem>
         </List>
@@ -75,7 +97,7 @@ const Footer = () => {
         <Title>Contact Us</Title>
         <ContactItem>
           <Room style={{ marginRight: "10px" }} />
-          Char Minar Char Rasta Kharcha Rupaiya
+          lorem ipsum dolor sit amet, con
         </ContactItem>
         <ContactItem>
           <Phone style={{ marginRight: "10px" }} />
