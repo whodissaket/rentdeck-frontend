@@ -4,7 +4,8 @@ import Announcement from "../components/Announcement/Announcement";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import { mobile } from "../responsive";
-
+import axios from "axios";
+import { useState,useEffect } from "react";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -152,7 +153,23 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-const Cart = () => {
+
+
+const Cart = (user) => {
+  const [ orders , setOrd] = useState([{}])
+
+  const [pro, setPro] = useState({})
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/orders/mycart `, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`}
+  }).then((response) => {
+    setOrd(response.data)
+    console.log(response.data)
+      }).catch((error)=>{console.log(error)})
+  
+    }, [user]);
   return (
     <Container>
       <Navbar />

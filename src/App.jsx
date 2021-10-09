@@ -33,7 +33,7 @@ const App = () => {
           <Product />
         </Route>
         <Route exact path="/cart">
-          <Cart />
+        {user ? <Cart />  : <Login />}
         </Route>
         <Route exact path="/orders">
           {user ? <Orders user={user} /> : <Login />}
