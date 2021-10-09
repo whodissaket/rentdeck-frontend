@@ -12,11 +12,11 @@ import {
 } from "react-router-dom";
 import Orders from "./pages/Orders";
 import Order from "./pages/Order";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
-
   return (
     <Router>
       <Switch>
@@ -36,7 +36,7 @@ const App = () => {
           <Cart />
         </Route>
         <Route exact path="/orders">
-          <Orders />
+          {user ? <Orders user={user} /> : <Login />}
         </Route>
         <Route exact path="/orderdetails">
           <Order />
