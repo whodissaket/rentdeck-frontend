@@ -1,7 +1,5 @@
 import {
   FavoriteBorderOutlined,
-  SearchOutlined,
-  SelectAllOutlined,
   ShoppingCartOutlined,
   ZoomOutMapOutlined,
 } from "@material-ui/icons";
