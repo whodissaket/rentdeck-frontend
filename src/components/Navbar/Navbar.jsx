@@ -1,3 +1,5 @@
+// Badge Dynamically update krna hai
+
 import { Badge } from "@material-ui/core";
 import {
   PersonOutlineOutlined,
@@ -25,7 +27,7 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <Logo>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
               RentDeck
             </Link>
           </Logo>
@@ -39,23 +41,36 @@ const Navbar = () => {
         </Center>
         <Right>
           <MenuItem>
-            <Link to="/register" style={{ textDecoration: "none" }}>
+            <Link
+              to="/register"
+              style={{ color: "black", textDecoration: "none" }}
+            >
               Register
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/login" style={{ textDecoration: "none" }}>
+            <Link
+              to="/login"
+              style={{ color: "black", textDecoration: "none" }}
+            >
               Sign In
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/orderdetails" style={{ textDecoration: "none" }}>
+            <Link
+              to="/orderdetails"
+              style={{ color: "black", textDecoration: "none" }}
+            >
               <PersonOutlineOutlined />
             </Link>
           </MenuItem>
           <MenuItem>
+            {/* Badge Dynamically Update krna hai  */}
             <Badge badgeContent={4} color="primary">
-              <Link to="/cart" style={{ textDecoration: "none" }}>
+              <Link
+                to="/cart"
+                style={{ color: "black", textDecoration: "none" }}
+              >
                 <ShoppingCartOutlined />
               </Link>
             </Badge>

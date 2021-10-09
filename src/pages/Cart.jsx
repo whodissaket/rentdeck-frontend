@@ -1,3 +1,5 @@
+//Product mapping according to the user krneka hai
+
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement/Announcement";
@@ -7,6 +9,7 @@ import { mobile } from "../responsive";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -153,11 +156,34 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
+const Button2 = styled.button`
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+
+  font-weight: 600;
+`;
 
 const Cart = (user) => {
   const [orders, setOrd] = useState([{}]);
+  const dispatch = useDispatch();
 
   const [pro, setPro] = useState({});
+  //Add to Cart Handler
+  // useEffect(() => {
+  //   if (productId) {
+  //     dispatch(addToCart(productId, qty));
+  //   }
+  // }, [dispatch, productId, qty]);
+
+  const removeFromCartHandler = (id) => {
+    // dispatch(removeFromCart(id));
+  };
+
+  // const checkoutHandler = () => {
+  //   // history.push("/orderdetais");
+  // };
+
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/orders/mycart `, {
@@ -181,16 +207,18 @@ const Cart = (user) => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>
-            <Link to="/products" style={{ textDecoration: "none" }}>
-              CONTINUE SHOPPING
-            </Link>
-          </TopButton>
+          <Link
+            to="/products"
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            <TopButton>CONTINUE SHOPPING</TopButton>
+          </Link>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          {/*Product . maps function daalna h idhar */}
+          {/* ******Functionality to be added****** */}
         </Top>
         <Bottom>
           <Info>
@@ -199,28 +227,44 @@ const Cart = (user) => {
                 <Image src="products/bed_1.jpg" />
                 <Details>
                   <ProductName>
-                    <b>Product:</b> Bolgerist Queen Bed(2020)
+                    <b>Product:</b>
+                    {/* ********  Changes here******** */}
+                    {/* {pro.name} */}
                   </ProductName>
                   <ProductId>
-                    <b>ID:</b> 93813718293
+                    <b>ID:</b>
+                    {/* {pro._id} */}
                   </ProductId>
-                  <ProductColor color="black" />
+
                   <ProductSize>
-                    <b>Size:</b> 37.5
+                    <b>Tag:</b> {pro._tag}
                   </ProductSize>
                 </Details>
               </ProductDetail>
               <PriceDetail>
                 <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
+                  <Button2
+                  //  onClick={addProductHandler}
+                  >
+                    <Add />
+                  </Button2>
+                  {/* <Add key={x + 1} value={x + 1}  /> */}
+                  <ProductAmount>{/* {product.totalqty} */}2</ProductAmount>
+                  <Button2
+                  //  onClick={() => removeFromCartHandler(item.product)}
+                  >
+                    <Remove />
+                  </Button2>
                 </ProductAmountContainer>
-                <ProductPrice>Rs.1000/-</ProductPrice>
+                <ProductPrice>
+                  Rs.
+                  {/* {product.price} */}
+                  /month
+                </ProductPrice>
               </PriceDetail>
             </Product>
             <Hr />
-            <Product>
+            {/* <Product>
               <ProductDetail>
                 <Image src="products/electronics_2.jpg" />
                 <Details>
@@ -244,10 +288,10 @@ const Cart = (user) => {
                 </ProductAmountContainer>
                 <ProductPrice>Rs.2000/-</ProductPrice>
               </PriceDetail>
-            </Product>
+            </Product> */}
           </Info>
           <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+            <SummaryTitle>Order Summary</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
               <SummaryItemPrice>$ 80</SummaryItemPrice>
@@ -264,7 +308,12 @@ const Cart = (user) => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ 80</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Link
+              to="/orderdetails"
+              style={{ color: "white", textDecoration: "none" }}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </Link>
           </Summary>
         </Bottom>
       </Wrapper>
