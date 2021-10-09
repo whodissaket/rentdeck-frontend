@@ -1,5 +1,6 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   Arrow,
@@ -16,6 +17,7 @@ import { sliderItems } from "../../data";
 import { Link } from "react-router-dom";
 
 const Slider = (item) => {
+  const history = useHistory();
   const [slideIndex, setSlideIndex] = useState(0);
   const handleClick = (direction) => {
     if (direction === "left") {
@@ -24,7 +26,9 @@ const Slider = (item) => {
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
-
+  const handleClick2 = () => {
+    history.push("/products");
+}
   return (
     <Container>
       <Arrow direction="left" onClick={() => handleClick("left")}>
@@ -40,13 +44,8 @@ const Slider = (item) => {
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
 
-              <Button>
-                <Link
-                  to={`/products/${item.category}`}
-                  style={{ textDecoration: "none" }}
-                >
+              <Button onClick={handleClick2}> 
                   Shop Now
-                </Link>
               </Button>
             </InfoContainer>
           </Slide>
