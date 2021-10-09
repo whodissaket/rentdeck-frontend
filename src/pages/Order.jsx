@@ -19,13 +19,7 @@ import { useStyles } from "./styles/style2";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import Announcement from "../components/Announcement/Announcement";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useParams, Link, useHistory, Route } from "react-router-dom";
-// import { fetchOrder, deleteOrder } from "../../../redux/slices/order";
-// import { fetchAdminOrder, editAdminOrder } from "../../../redux/slices/admin";
-// import moment from "moment";
-// import { AddReview } from "../../../components/AddReview/";
-// import { Loader } from "../../../components/Loader/";
+
 
 const showStatus = (status) => {
   switch (status) {
@@ -42,33 +36,7 @@ const showStatus = (status) => {
 
 const Order = ({ admin }) => {
   const classes = useStyles();
-  //   const history = useHistory();
-  //   const dispatch = useDispatch();
-  //   const contentLoading = useSelector((state) =>
-  //     admin ? state.admin.contentLoading : state.orders.contentLoading
-  //   );
-  //   const order = useSelector((state) =>
-  //     admin ? state.admin.order : state.orders.order
-  //   );
-  //   const { id } = useParams();
-  //   const items = order?.items?.reduce((total, item) => item.quantity + total, 0);
-  //   const buttonLoading = useSelector((state) => state.admin.authLoading);
-  //   const deleteLoading = useSelector((state) => state.orders.buttonLoading);
-  //   const adminExist = localStorage.getItem("adminToken");
-  //   const userExist = localStorage.getItem("userToken");
-
-  //   useEffect(() => {
-  //     if (admin && !adminExist) {
-  //       history.replace("/admin/login");
-  //     }
-  //     if (!admin && !userExist) {
-  //       history.replace("/");
-  //     }
-  //   }, [userExist, adminExist]);
-
-  //   useEffect(() => {
-  //     dispatch(admin ? fetchAdminOrder(id) : fetchOrder(id));
-  //   }, [id, history.location.pathname]);
+ 
 
   return (
     <div>
