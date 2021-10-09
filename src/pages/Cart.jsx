@@ -5,7 +5,8 @@ import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import { mobile } from "../responsive";
 import axios from "axios";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -153,23 +154,26 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-
-
 const Cart = (user) => {
-  const [ orders , setOrd] = useState([{}])
+  const [orders, setOrd] = useState([{}]);
 
-  const [pro, setPro] = useState({})
+  const [pro, setPro] = useState({});
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/orders/mycart `, {
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`}
-  }).then((response) => {
-    setOrd(response.data)
-    console.log(response.data)
-      }).catch((error)=>{console.log(error)})
-  
-    }, [user]);
+    axios
+      .get(`http://localhost:5000/api/orders/mycart `, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setOrd(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [user]);
   return (
     <Container>
       <Navbar />
@@ -177,7 +181,11 @@ const Cart = (user) => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton>
+            <Link to="/products" style={{ textDecoration: "none" }}>
+              CONTINUE SHOPPING
+            </Link>
+          </TopButton>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>

@@ -1,5 +1,9 @@
 // Line 122 se dusre component mei h
 //Db needed here
+//Person Name or Username fetch krna h idhar
+//Order id fetch krna h
+//Order status fetch krna h
+//Shipping address fetch krna h agar h toh
 
 import { useEffect } from "react";
 import {
@@ -17,13 +21,12 @@ import {
   CircularProgress,
   Box,
 } from "@material-ui/core";
-import {} from "@material-ui/icons";
+import { PersonOutlineOutlined } from "@material-ui/icons";
 import { useStyles } from "./styles/style2";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import Announcement from "../components/Announcement/Announcement";
 import OrderedProducts from "../components/Orders/OrderedProducts";
-
 
 const showStatus = (status) => {
   switch (status) {
@@ -47,6 +50,15 @@ const Order = ({ admin }) => {
       <Announcement />
       <Container maxWidth="lg">
         <>
+          <Typography className={classes.title} variant="h1">
+            Profile
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <PersonOutlineOutlined />
+              Person Name here
+            </Grid>
+          </Grid>
           <Typography className={classes.heading} variant="h3">
             Order Details
           </Typography>
@@ -115,8 +127,17 @@ const Order = ({ admin }) => {
             <Grid item md={6} xs={12}>
               <Paper className={classes.paper}>
                 <Typography variant="h6">Shipping Address</Typography>
+                <Typography variant="h7">
+                  Schedule a visit for document verification
+                </Typography>{" "}
+                <Button
+                  variant="contained"
+                  color="success"
+                  href="mailto:rentdeck101@gmail.com?subject=Document Verification Meet&body=I want to schedule the visit on **Details**"
+                >
+                  Schedule a visit
+                </Button>
                 {/* //******************db here ************************ */}
-
                 {/* <Typography>{order?.shippingAddress?.country}</Typography>
               <Typography>{order?.shippingAddress?.city}</Typography>
               <Typography>{order?.shippingAddress?.address1}</Typography>

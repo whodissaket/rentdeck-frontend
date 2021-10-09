@@ -1,3 +1,5 @@
+//Todo:Dynamic Description
+
 import { Add, Remove } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
@@ -131,6 +133,7 @@ const Product = () => {
         <ImgContainer>{prod && <Image src={prod.images[0]} />}</ImgContainer>
         <InfoContainer>
           {prod && <Title>{prod.title}</Title>}
+          {/******** Description dynamic krneka h*******/}
           <Desc>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris
@@ -139,17 +142,8 @@ const Product = () => {
             Mauris pharetra et ultrices neque. Sollicitudin nibh sit amet
             commodo nulla facilisi nullam.
           </Desc>
-          {prod && <Price>{prod.rentalrate}</Price>}
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Variant:</FilterTitle>
-              <FilterSelect>
-                <FilterOption>8gb + 256gb</FilterOption>
-                <FilterOption>8gb + 500gb</FilterOption>
-                <FilterOption>16gb + 500gb</FilterOption>
-              </FilterSelect>
-            </Filter>
-          </FilterContainer>
+          {prod && <Price>Rs.{prod.rentalrate}/month</Price>}
+
           <AddContainer>
             <AmountContainer>
               <Remove />

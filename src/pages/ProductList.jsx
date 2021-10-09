@@ -34,13 +34,13 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
-  const {category} = useParams()
+  const { category } = useParams();
 
   return (
     <Container>
       <Navbar />
       <Announcement />
-      <Title>Furniture and Electronics</Title>
+      <Title>Products</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter by:</FilterText>
@@ -73,7 +73,7 @@ const ProductList = () => {
           </Select>
         </Filter>
       </FilterContainer>
-      <Products category={category}/>
+      <Products category={category} />
       <Footer />
     </Container>
   );

@@ -1,7 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
+  title: {
+    fontSize: "36px",
+    fontWeight: "bold",
+    margin: "30px 0",
+  },
+
   heading: {
+    fontSize: "24px",
     fontWeight: "bold",
     margin: "30px 0",
   },
