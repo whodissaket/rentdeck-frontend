@@ -4,9 +4,11 @@ import {
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import React from "react";
+import { useEffect } from "react";
 import { Container, Circle, Image, Icon, Info } from "./ProductEle";
 
 const Product = ({ item }) => {
+  useEffect(()=>{},[item])
   return (
     <Container>
       <Circle />

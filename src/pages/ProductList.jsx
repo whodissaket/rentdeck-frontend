@@ -5,7 +5,7 @@ import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import Products from "../components/Products/Products";
 import { mobile } from "../responsive";
-
+import { useParams } from "react-router";
 const Container = styled.div``;
 const Title = styled.h1`
   margin: 20px;
@@ -34,6 +34,8 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
+  const {category} = useParams()
+
   return (
     <Container>
       <Navbar />
@@ -71,7 +73,7 @@ const ProductList = () => {
           </Select>
         </Filter>
       </FilterContainer>
-      <Products />
+      <Products category={category}/>
       <Footer />
     </Container>
   );

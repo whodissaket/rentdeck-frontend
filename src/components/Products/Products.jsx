@@ -12,17 +12,28 @@ const Container = styled.div`
 `;
 
 const Products = (props) => {
-  const [prods, setProds] = useState(null);
+  const [prods, setProds] = useState([]);
+
   useEffect(() => {
-      axios.get("http://localhost:5000/api/products").then((response) => {
+    console.log("here")
+    axios.post(`http://localhost:5000/api/products/categories`, {
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      categories : props.category
+  }).then((response) => {
+    console.log("here")
         setProds(response.data);
-      });
-    
+      }).catch((error)=>{console.log(error)})
   }, []);
+
+
+
+console.log(prods)
 
   return (
     <Container>
-      {prods && prods.map((item) => <Product item={item} key={item._id} />)}
+      {prods.map((item) => <Product item={item} key={item._id} />)}
     </Container>
   );
 };
