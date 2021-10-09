@@ -1,14 +1,16 @@
 import {
   FavoriteBorderOutlined,
   SearchOutlined,
+  SelectAllOutlined,
   ShoppingCartOutlined,
+  ZoomOutMapOutlined,
 } from "@material-ui/icons";
 import React from "react";
 import { useEffect } from "react";
 import { Container, Circle, Image, Icon, Info } from "./ProductEle";
 
 const Product = ({ item }) => {
-  useEffect(()=>{},[item])
+  useEffect(() => {}, [item]);
   return (
     <Container>
       <Circle />
@@ -18,7 +20,7 @@ const Product = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <SearchOutlined />
+          <ZoomOutMapOutlined />
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />
