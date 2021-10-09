@@ -114,6 +114,7 @@ const Login = () => {
           />
           <Input
             placeholder="password"
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button onClick={handleLogin} disabled={isFetching}>
@@ -122,7 +123,7 @@ const Login = () => {
           {error && <Error>Something went wrong.</Error>}
 
           <New>
-            <Link to="/register">New ? Create New Account</Link>
+            New ?<Link to="/register"> Create New Account</Link>
           </New>
         </Form>
         <Agreement>OR</Agreement>
