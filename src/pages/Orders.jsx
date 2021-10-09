@@ -41,29 +41,25 @@ const Orders = ({user}) => {
   return (
     <Container maxWidth="lg">
       <>
-        <Typography className={classes.heading} variant="h3">
-          Orders
-        </Typography>
 
-        {/* {orders.length ? null : <Typography>No orders.</Typography>} */}
+      {orders.length ? <Typography className={classes.heading} variant="h3">
+          Orders
+        </Typography> : <Typography>No orders.</Typography>}
 
         <Grid container spacing={4}>
-          {/* {orders.map((order) => {
-              const items = order?.items?.reduce(
-                (total, item) => item.quantity + total,
-                0
-              ); */}
+          {orders.map((order) => {
+             {/* const items = order?.orderItems.map((o)=>{getprods()}) */}
           return (
           <Grid key="1" item md={4} sm={6} xs={12}>
             <Card className={classes.card}>
               <Typography>
-                <span>ID</span> <Chip label="processing" size="small" />
+                <span>{order?._id}</span> <Chip label="processing" size="small" />
               </Typography>
               <Typography>
-                <span>Products</span> 2
+                <span>Products</span> {order?.orderItems.length}
               </Typography>
               <Typography>
-                <span>Items</span> item
+                <span>Items</span> 
               </Typography>
               <Typography>
                 <span>Date</span>
@@ -97,7 +93,7 @@ const Orders = ({user}) => {
               </Button>
             </Card>
           </Grid>
-          );
+          );} )}
         </Grid>
       </>
     </Container>
