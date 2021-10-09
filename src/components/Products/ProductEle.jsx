@@ -44,7 +44,7 @@ export const Image = styled.img`
   z-index: 2;
 `;
 
-export const Icon = styled.div`
+export const Icon = styled.button`
   width: 40px;
   height: 40px;
   border-radius: 50%;
