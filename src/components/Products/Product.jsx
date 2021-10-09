@@ -6,6 +6,7 @@ import {
 import React from "react";
 import { useEffect } from "react";
 import { Container, Circle, Image, Icon, Info } from "./ProductEle";
+import { Link } from "react-router-dom";
 
 const Product = ({ item }) => {
   useEffect(() => {}, [item]);
@@ -18,7 +19,9 @@ const Product = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
+          <Link to={`product/${item._id}`}>
           <ZoomOutMapOutlined />
+          </Link>
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />
