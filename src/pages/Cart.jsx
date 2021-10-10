@@ -164,11 +164,12 @@ const Button2 = styled.button`
   font-weight: 600;
 `;
 
-const Cart = (user) => {
+const Cart = ({user}) => {
   const [orders, setOrd] = useState([{}]);
   const dispatch = useDispatch();
 
-  const [pro, setPro] = useState({});
+  const [pro, setPro] = useState([]);
+  const [load, setLoad] = useState(false)
   //Add to Cart Handler
   // useEffect(() => {
   //   if (productId) {
@@ -185,21 +186,32 @@ const Cart = (user) => {
   // };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/orders/mycart `, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+    console.log(user)
+    axios.get(`http://localhost:5000/api/orders/mycart`, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user?.token}`}
+  }).then((response) => {
+    setOrd(response.data)
+    console.log(response.data)
+      }).catch((error)=>{console.log(error)})
+  
+    }, [user]);
+    
+    useEffect(
+      ()=>{
+      console.log(orders)
+      orders?.orderItems?.map((order)=>{
+      axios.get(`http://localhost:5000/api/products/id/${order.product}`)
       .then((response) => {
-        setOrd(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [user]);
+        setPro((pro)=>[...pro , response.data]);})
+.catch((error) => console.log(error.message))
+})
+console.log("here2")
+return ()=>{setLoad(true)}
+},[orders] 
+)
+
   return (
     <Container>
       <Navbar />
@@ -214,20 +226,25 @@ const Cart = (user) => {
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag({orders?.orderItems?.length})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          {/*Product . maps function daalna h idhar */}
-          {/* ******Functionality to be added****** */}
+          
         </Top>
         <Bottom>
+        {}
+          
           <Info>
-            <Product>
+          {load && pro.map((P) => {
+            console.log(P)
+             //const items = order?.orderItems?.map((o)=>{getprods()})
+          return (
+                <><Product>
               <ProductDetail>
                 <Image src="products/bed_1.jpg" />
                 <Details>
                   <ProductName>
-                    <b>Product:</b>
+                    <b>Product:{P.title}</b>
                     {/* ********  Changes here******** */}
                     {/* {pro.name} */}
                   </ProductName>
@@ -244,14 +261,12 @@ const Cart = (user) => {
               <PriceDetail>
                 <ProductAmountContainer>
                   <Button2
-                  //  onClick={addProductHandler}
                   >
                     <Add />
                   </Button2>
                   {/* <Add key={x + 1} value={x + 1}  /> */}
                   <ProductAmount>{/* {product.totalqty} */}2</ProductAmount>
                   <Button2
-                  //  onClick={() => removeFromCartHandler(item.product)}
                   >
                     <Remove />
                   </Button2>
@@ -262,33 +277,7 @@ const Cart = (user) => {
                   /month
                 </ProductPrice>
               </PriceDetail>
-            </Product>
-            <Hr />
-            {/* <Product>
-              <ProductDetail>
-                <Image src="products/electronics_2.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> iPhone 14
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Variant:</b> 6gb +128gb
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>1</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>Rs.2000/-</ProductPrice>
-              </PriceDetail>
-            </Product> */}
+            </Product><Hr /></> );} )}
           </Info>
           <Summary>
             <SummaryTitle>Order Summary</SummaryTitle>
