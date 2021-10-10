@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-
+import { useEffect } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
-import { login ,register} from "../store/api-calls";
+import { login } from '../actions/userActions'
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -92,16 +92,24 @@ const Error = styled.span`
   color: red;
 `;
 
-const Login = () => {
+const Login = ({ location, history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
+  const userLogin = useSelector((state) => state.userLogin)
+  const { loading, error, userInfo } = userLogin
 
+  const redirect = location.search ? location.search.split('=')[1] : '/'
+  
   const handleLogin = (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    dispatch(login(username, password))
   };
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect)
+    }
+  }, [history, userInfo, redirect])
 
   return (
     <Container>
@@ -117,7 +125,7 @@ const Login = () => {
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={handleLogin} disabled={isFetching}>
+          <Button onClick={handleLogin} disabled={loading}>
             Login
           </Button>
           {error && <Error>Something went wrong.</Error>}

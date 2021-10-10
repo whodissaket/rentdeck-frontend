@@ -26,14 +26,13 @@ import {
   USER_UPDATE_REQUEST,
 } from '../constants/userConstants'
 
-
-export const login = async (dispatch, user) => {
+export const login = (username, password) => async (dispatch) => {
     dispatch({
         type: USER_LOGIN_REQUEST,
       })
   
     axios
-      .post("http://localhost:5000/api/users/login", user, {
+      .post("http://localhost:5000/api/users/login", {username , password}, {
         headers: {
           "Content-Type": "application/json",
         },
