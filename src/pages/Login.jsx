@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 
 import { AiOutlineGoogle } from "react-icons/ai";
-import { login } from "../store/api-calls";
+import { login ,register} from "../store/api-calls";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 

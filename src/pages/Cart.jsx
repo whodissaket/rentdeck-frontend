@@ -97,6 +97,7 @@ const Cart = ({user}) => {
 
   const [pro, setPro] = useState([]);
   const [load, setLoad] = useState(false)
+  const [totPrice , setPrice]=useState(0)
   //Add to Cart Handler
   // useEffect(() => {
   //   if (productId) {
@@ -120,6 +121,7 @@ const Cart = ({user}) => {
           'Authorization': `Bearer ${user?.token}`}
   }).then((response) => {
     setOrd(response.data)
+    setPrice(response.data.totalPrice)
     console.log("count this")
       }).catch((error)=>{console.log(error)})}, [user]);
     
@@ -141,7 +143,8 @@ console.log(pro)
 return ()=>{setLoad(true)}
 },[orders] 
 )
-
+const handleCallback = (childData) =>{
+}
   return (
     <Container>
       <Navbar />
@@ -183,7 +186,7 @@ return ()=>{setLoad(true)}
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>{totPrice}</SummaryItemPrice>
             </SummaryItem>
             <Link
               to="/orderdetails"

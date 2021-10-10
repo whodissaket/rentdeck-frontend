@@ -124,7 +124,7 @@ const Product = () => {
   }, [id]);
 
   console.log(prod);
-
+  const addToCart=()=>{}
   return (
     <Container>
       <Navbar />
@@ -150,7 +150,7 @@ const Product = () => {
               <Amount>1</Amount>
               <Add />
             </AmountContainer>
-            <Button>Add to Cart</Button>
+            <Button onClick={addToCart}>Add to Cart</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.userDetails);
   return (
     <Router>
       <Switch>
@@ -41,11 +41,10 @@ const App = () => {
         <Route exact path="/orderdetails">
           <Order />
         </Route>
-        <Route exact path="/login">
-          {user ? <Redirect to="/" /> : <Login />}
+        <Route exact path="/login" component={Login}>
         </Route>
-        <Route exact path="/register">
-          {user ? <Redirect to="/" /> : <Register />}
+        <Route exact path="/register" component={Register}>
+          
         </Route>
       </Switch>
     </Router>

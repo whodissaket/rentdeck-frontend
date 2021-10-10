@@ -5,6 +5,8 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { register } from '../actions/userActions'
+
 
 const Container = styled.div`
   width: 100vw;
@@ -92,23 +94,22 @@ const Register = ({ location, history }) => {
   const dispatch = useDispatch();
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { error, userInfo } = userRegister;
+  const { loading, error, userInfo } = userRegister
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  //const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      history.push("/");
     }
-  }, [history, userInfo, redirect]);
+  }, [history, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      //<--------*****Uncomment later***********----->
-      // dispatch(register(name, email, password));
+      dispatch(register(username, email, password));
     }
   };
 

@@ -17,7 +17,7 @@ const Orders = ({user}) => {
   const [ orders , setOrd] = useState([{}])
 
   const [pro, setPro] = useState({})
-
+  const [tit , setTit] =  useState([])
   const classes = useStyles();
 
   useEffect(() => {
@@ -34,13 +34,25 @@ const Orders = ({user}) => {
     useEffect(()=>{console.log(orders)},[orders])
 
 
-  const getprods = (id) =>{ axios
-  .get(`http://localhost:5000/api/products/id/${id}`)
-  .then((response) => {
-    setPro(response.data);
-  })
-  .catch((error) => console.log(error.message));}
+      const prodtit = (prod)=>{
 
+      axios.get(`http://localhost:5000/api/products/id/${prod.product}`)
+      .then((response) => {
+        setTit((prev)=>[...prev ,response.data.title ]) })
+.catch((error) => console.log(error.message))
+const li = tit.map((item)=>{<li> {item}</li>})
+console.log(tit)
+console.log(li)
+return (
+{li}
+);
+}
+{/* const getOne =(orde)=>{
+  const is =orde?.map((order)=>{prodtit(order)})
+  console.log()
+  return();
+} */}
+  
   return (
     <Container maxWidth="lg">
       <>
@@ -62,10 +74,10 @@ const Orders = ({user}) => {
                 <span>Products</span> {order?.orderItems?.length}
               </Typography>
               <Typography>
-                <span>Items</span> 
+                <span>Items  <ul>{}</ul></span> 
               </Typography>
               <Typography>
-                <span>Date</span>
+                <span>Date : {order?.createdAt}</span>
                 {/* {moment(order.date).fromNow()} */}
               </Typography>
               <Typography>
@@ -75,7 +87,7 @@ const Orders = ({user}) => {
                 <span>Status</span>{" "}
                 <Chip
                   style={{ color: "white" }}
-                  label="processing"
+                  label={order?.paymentResult?.status}
                   size="small"
                   color="primary"
                 />
