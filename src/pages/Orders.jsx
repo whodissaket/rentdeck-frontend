@@ -19,6 +19,7 @@ const Orders = ({user}) => {
   const [pro, setPro] = useState({})
 
   const classes = useStyles();
+
   useEffect(() => {
     axios.get(`http://localhost:5000/api/orders/myorders `, {
       headers: {
@@ -30,6 +31,8 @@ const Orders = ({user}) => {
       }).catch((error)=>{console.log(error)})
   
     }, [user]);
+    useEffect(()=>{console.log(orders)},[orders])
+
 
   const getprods = (id) =>{ axios
   .get(`http://localhost:5000/api/products/id/${id}`)
@@ -48,15 +51,15 @@ const Orders = ({user}) => {
 
         <Grid container spacing={4}>
           {orders.map((order) => {
-             {/* const items = order?.orderItems.map((o)=>{getprods()}) */}
+             //const items = order?.orderItems?.map((o)=>{getprods()})
           return (
           <Grid key="1" item md={4} sm={6} xs={12}>
             <Card className={classes.card}>
               <Typography>
-                <span>{order?._id}</span> <Chip label="processing" size="small" />
+                <span>{console.log(order)}</span> <Chip label="processing" size="small" />
               </Typography>
               <Typography>
-                <span>Products</span> {order?.orderItems.length}
+                <span>Products</span> {order?.orderItems?.length}
               </Typography>
               <Typography>
                 <span>Items</span> 
