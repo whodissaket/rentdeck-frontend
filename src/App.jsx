@@ -26,17 +26,20 @@ const App = () => {
         <Route exact path="/products">
           <ProductList />
         </Route>
-        <Route exact path="/products/:category">
-          <ProductList />
+        <Route exact path="/products?:category">
+        <ProductList />
         </Route>
-        <Route exact path="/product/:id">
-          <Product />
+        <Route exact path="/product">
+          {<Product />}
+        </Route> 
+        <Route path="/cart" exact>
+        <Cart />
         </Route>
-        <Route exact path="/cart">
-        {user ? <Cart user={user}/>  : <Login />}
+        <Route path="/cart/:id">
+        <Cart />
         </Route>
         <Route exact path="/orders">
-          {user ? <Orders user={user} /> : <Login />}
+          <Orders/>
         </Route>
         <Route exact path="/orderdetails">
           <Order />
