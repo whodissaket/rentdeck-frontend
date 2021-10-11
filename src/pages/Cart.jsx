@@ -186,8 +186,13 @@ const Cart = () => {
     console.log(item)
     dispatch(addToCart(item.product, item.qty+1));
   };
-  const handleDecrement =(item)=>{ dispatch(
-    addToCart(item.product, (item.qty-1>=0?item.qty-1:0)))};
+  const handleDecrement= (item)=>{ 
+    if(item.qty>1) {
+    dispatch(addToCart(item.product, (item.qty-1>0?item.qty-1:0)) ) 
+  }
+  else {
+      removeFromCartHandler(item.product)
+    } }
   return (
     <Container>
       <Navbar />
