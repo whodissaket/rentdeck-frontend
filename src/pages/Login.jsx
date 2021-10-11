@@ -134,10 +134,10 @@ const Login = ({ location, history }) => {
             New ?<Link to="/register"> Create New Account</Link>
           </New>
         </Form>
-        <Agreement>OR</Agreement>
+        {/* <Agreement>OR</Agreement>
         <GButton>
           <AiOutlineGoogle />
-        </GButton>
+        </GButton> */}
       </Wrapper>
     </Container>
   );

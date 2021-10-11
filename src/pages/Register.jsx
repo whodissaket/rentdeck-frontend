@@ -163,11 +163,11 @@ const Register = ({ location, history }) => {
           </Agreement>
           <Button type="submit">Create</Button>
         </Form>
-        <Agreement>OR</Agreement>
+        {/* <Agreement>OR</Agreement>
 
         <GButton>
           <AiOutlineGoogle />
-        </GButton>
+        </GButton> */}
       </Wrapper>
     </Container>
   );
