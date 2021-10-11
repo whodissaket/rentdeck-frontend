@@ -27,7 +27,7 @@ import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import Announcement from "../components/Announcement/Announcement";
 import OrderedProducts from "../components/Orders/OrderedProducts";
-
+import { useSelector } from "react-redux";
 const showStatus = (status) => {
   switch (status) {
     case "ORDERED":
@@ -43,7 +43,10 @@ const showStatus = (status) => {
 
 const Order = ({ admin }) => {
   const classes = useStyles();
-
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
+  const user=useSelector((state) => state.userLogin) 
+  console.log(user)
   return (
     <div>
       <Navbar />
@@ -67,24 +70,26 @@ const Order = ({ admin }) => {
             <Grid item md={6} xs={12}>
               <Paper className={classes.paper}>
                 <Typography>
-                  <span>Order ID</span>{" "}
+                  <span>Order for </span>{" "}
                   <Chip
-                    //  label={order?._id}
+                    label={user.userInfo.username} 
                     size="small"
                   />
                 </Typography>
                 <Typography>
-                  <span>Products</span> 2{/* {order?.items.length} */}
+                  <span>Products</span> {cartItems?.length}
                 </Typography>
                 <Typography>
-                  <span>Items</span> items
+                  <span>Items</span>
                 </Typography>
                 <Typography>
                   <span>Date</span>
                   {/* {moment(order?.date).fromNow()} */}
                 </Typography>
                 <Typography>
-                  <span>Price</span> Rs.900/month
+                  <span>Price</span> {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}/month
                 </Typography>
                 <Typography>
                   <span>Status</span>{" "}
