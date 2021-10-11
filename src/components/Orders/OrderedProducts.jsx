@@ -1,5 +1,5 @@
 ///***********Db work needed here********
-
+import { useSelector } from "react-redux";
 import {
   Container,
   Typography,
@@ -14,7 +14,8 @@ import { useStyles } from "../../pages/styles/style2";
 
 const OrderedProducts = () => {
   const classes = useStyles();
-
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
   return (
     <div>
       <Container maxWidth="lg">
@@ -23,8 +24,9 @@ const OrderedProducts = () => {
             Products
           </Typography>
           <Grid container spacing={5}>
-            {/* {order?.items?.map((item) => {
-            let isAddReview = false;
+            { cartItems?.map((item) => {
+           
+           {/*let isAddReview = false;
             const reviewExist = item.product.reviews?.find(
               (review) => review.order == order._id
             );
@@ -32,7 +34,8 @@ const OrderedProducts = () => {
             if (order.status === "DELIVERED" && !reviewExist && !admin) {
               isAddReview = true;
             } */}
-
+            return (
+            <>
             <Grid key="" item xs={12} sm={6} lg={4}>
               <Card className={classes.product}>
                 <CardActionArea
@@ -89,8 +92,9 @@ const OrderedProducts = () => {
                 </CardActions>
               )} */}
               </Card>
-            </Grid>
+            </Grid></>)})}
           </Grid>
+          
 
           {/* {!admin && order?.status === "DELIVERED" ? (
           <Box marginTop={4}>

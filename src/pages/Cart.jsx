@@ -186,8 +186,13 @@ const Cart = () => {
     console.log(item)
     dispatch(addToCart(item.product, item.qty+1));
   };
-  const handleDecrement =(item)=>{ dispatch(
-    addToCart(item.product, (item.qty-1>=0?item.qty-1:0)))};
+  const handleDecrement= (item)=>{ 
+    if(item.qty>1) {
+    dispatch(addToCart(item.product, (item.qty-1>0?item.qty-1:0)) ) 
+  }
+  else {
+      removeFromCartHandler(item.product)
+    } }
   return (
     <Container>
       <Navbar />
@@ -223,7 +228,7 @@ const Cart = () => {
         {/* {pro.name} */}
       </ProductName>
       <ProductId>
-        <b>ID:{item._id}</b>
+        <b>ID:{item.product}</b>
         {/* {pro._id} */}
       </ProductId>
 
@@ -255,20 +260,25 @@ const Cart = () => {
           <Summary>
             <SummaryTitle>Order Summary</SummaryTitle>
             <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemText>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</SummaryItemText>
+              <SummaryItemPrice> Rs
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>{}</SummaryItemPrice>
+              <SummaryItemPrice>Rs.200</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemPrice>Rs 50</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>{}</SummaryItemPrice>
+              <SummaryItemPrice>{cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <Link
               to="/orderdetails"

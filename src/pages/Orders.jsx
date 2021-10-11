@@ -8,29 +8,33 @@ import {
   Button,
 } from "@material-ui/core";
 import {} from "@material-ui/icons";
+import { useSelector } from "react-redux";
 import { useStyles } from "./styles/style";
 import { Link } from "react-router-dom";
 import axios from "axios"
 import { useState } from "react";
 
-const Orders = ({user}) => {
+const Orders = () => {
+  const userLogin = useSelector((state) => state.userLogin)
+  const { loading, error, userInfo } = userLogin
+  console.log("here" + userInfo)
   const [ orders , setOrd] = useState([{}])
 
   const [pro, setPro] = useState({})
   const [tit , setTit] =  useState([])
   const classes = useStyles();
-
   useEffect(() => {
+   
     axios.get(`http://localhost:5000/api/orders/myorders `, {
       headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`}
+          'Authorization': `Bearer ${userInfo.token}`}
   }).then((response) => {
     setOrd(response.data)
     console.log(response.data)
       }).catch((error)=>{console.log(error)})
   
-    }, [user]);
+    }, [userInfo]);
     useEffect(()=>{console.log(orders)},[orders])
 
 
@@ -47,11 +51,7 @@ return (
 {li}
 );
 }
-{/* const getOne =(orde)=>{
-  const is =orde?.map((order)=>{prodtit(order)})
-  console.log()
-  return();
-} */}
+
   
   return (
     <Container maxWidth="lg">

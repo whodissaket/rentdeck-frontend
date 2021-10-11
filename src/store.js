@@ -17,7 +17,9 @@ import { cartReducer } from './reducers/cartReducers'
   const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : []
-
+  const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
+  ? JSON.parse(localStorage.getItem('shippingAddress'))
+  : {}
   const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null
@@ -26,6 +28,7 @@ import { cartReducer } from './reducers/cartReducers'
     userLogin: { userInfo: userInfoFromStorage },
     cart: {
       cartItems: cartItemsFromStorage,
+      shippingAddress: shippingAddressFromStorage,
     },
   }
   const middleware = [thunk]

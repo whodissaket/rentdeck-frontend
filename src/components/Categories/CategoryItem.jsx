@@ -6,7 +6,7 @@ const CategoryItem = ({ item }) => {
   return (
     <ItemContainer>
       {console.log(item.category)}
-      <Link to={`/products?${item.category}`}>
+      <Link to={`/products/${item.category}`}>
         <Image src={item.img} />
         <Info>
           <Title>{item.title}</Title>
