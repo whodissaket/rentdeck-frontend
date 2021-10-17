@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useLocation  , useHistory ,useParams } from "react-router";
 import { useDispatch , useSelector } from "react-redux";
 import { addToCart, removeFromCart } from '../actions/cartActions'
+import { createOrder } from '../actions/orderActions'
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -193,6 +194,39 @@ const Cart = () => {
   else {
       removeFromCartHandler(item.product)
     } }
+  const addDecimals = (num) => {
+      return (Math.round(num * 100) / 100).toFixed(2)
+    }
+  cart.itemsPrice = addDecimals(
+      cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    )
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+  cart.totalPrice = (
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice) +
+    Number(cart.taxPrice)
+  ).toFixed(2)  
+  const orderCreate = useSelector((state) => state.orderCreate)
+  const { order, success, error } = orderCreate
+  const placeOrderHandler = () => {
+      dispatch(
+        createOrder({
+          orderItems: cart.cartItems,
+          shippingAddress:  {
+            "address": "1 Bashford Park",
+            "city": "Dulangan",
+            "postalCode": "1115",
+            "country": "Philippines"
+          },
+          paymentMethod: "Netbanking",
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          totalPrice: cart.totalPrice,
+        })
+      )
+    }
+    
   return (
     <Container>
       <Navbar />
@@ -268,7 +302,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>Rs.200</SummaryItemPrice>
+              <SummaryItemPrice>{cart.shippingPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
@@ -284,7 +318,7 @@ const Cart = () => {
               to="/orderdetails"
               style={{ color: "white", textDecoration: "none" }}
             >
-              <Button>CHECKOUT NOW</Button>
+              <Button onClick={placeOrderHandler} disabled={cart.cartItems === 0}>CHECKOUT NOW</Button>
             </Link>
           </Summary>
         </Bottom>

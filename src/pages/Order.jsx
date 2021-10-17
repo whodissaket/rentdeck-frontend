@@ -59,7 +59,7 @@ const Order = ({ admin }) => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <PersonOutlineOutlined />
-              Person Name here
+              {user.userInfo.username}
             </Grid>
           </Grid>
           <Typography className={classes.heading} variant="h3">
