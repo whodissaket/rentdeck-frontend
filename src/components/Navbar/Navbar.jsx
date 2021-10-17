@@ -33,20 +33,20 @@ const Navbar = () => {
           </Logo>
         </Left>
         <Center>
-          <Language>EN</Language>
-          <SearchContainer>
+          {/* <Language>EN</Language> */}
+          {/* <SearchContainer>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
+          </SearchContainer> */}
         </Center>
         <Right>
           <MenuItem>
-            <Link
+            {/* <Link
               to="/register"
               style={{ color: "black", textDecoration: "none" }}
             >
               Register
-            </Link>
+            </Link> */}
           </MenuItem>
           <MenuItem>
             <Link
@@ -66,7 +66,7 @@ const Navbar = () => {
           </MenuItem>
           <MenuItem>
             {/* Badge Dynamically Update krna hai  */}
-            <Badge badgeContent={4} color="primary">
+            <Badge color="primary">
               <Link
                 to="/cart"
                 style={{ color: "black", textDecoration: "none" }}

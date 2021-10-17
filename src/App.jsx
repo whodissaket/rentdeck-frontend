@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.userDetails);
   return (
     <Router>
       <Switch>
@@ -26,26 +26,25 @@ const App = () => {
         <Route exact path="/products">
           <ProductList />
         </Route>
-        <Route exact path="/products/:category">
-          <ProductList />
+        <Route exact path="/product">
+          {<Product />}
+        </Route> 
+        <Route path="/cart" exact>
+        <Cart />
         </Route>
-        <Route exact path="/product/:id">
-          <Product />
-        </Route>
-        <Route exact path="/cart">
-        {user ? <Cart user={user}/>  : <Login />}
+        <Route path="/cart/:id">
+        <Cart />
         </Route>
         <Route exact path="/orders">
-          {user ? <Orders user={user} /> : <Login />}
+          <Orders/>
         </Route>
         <Route exact path="/orderdetails">
           <Order />
         </Route>
-        <Route exact path="/login">
-          {user ? <Redirect to="/" /> : <Login />}
+        <Route exact path="/login" component={Login}>
         </Route>
-        <Route exact path="/register">
-          {user ? <Redirect to="/" /> : <Register />}
+        <Route exact path="/register" component={Register}>
+          
         </Route>
       </Switch>
     </Router>

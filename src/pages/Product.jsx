@@ -9,7 +9,7 @@ import Navbar from "../components/Navbar/Navbar";
 import { mobile } from "../responsive";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 
 const Container = styled.div``;
 
@@ -112,19 +112,21 @@ const Button = styled.button`
 
 const Product = () => {
   const [prod, setP] = useState(null);
-
-  const { id } = useParams();
+  const location = useLocation();
+  const id = location?.search.split("=")[1];
+  console.log(id);
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/products/id/${id}`)
       .then((response) => {
+        console.log(response.data);
         setP(response.data);
       })
       .catch((error) => console.log(error.message));
   }, [id]);
 
   console.log(prod);
-
+  const addToCart = () => {};
   return (
     <Container>
       <Navbar />
@@ -150,7 +152,7 @@ const Product = () => {
               <Amount>1</Amount>
               <Add />
             </AmountContainer>
-            <Button>Add to Cart</Button>
+            <Button onClick={addToCart}>Add to Cart</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
