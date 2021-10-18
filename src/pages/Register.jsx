@@ -114,19 +114,40 @@ const Register = ({ location, history }) => {
     }
   };
 
-  const googleAuth = ({ profileObj }) => {
-    axios({
-      method: "POST",
-      url: "/auth/google/signup",
-      data: {
-        googleId: profileObj.googleId,
-        email: profileObj.email,
-        first_name: profileObj.firstName,
-        last_name: profileObj.lastName,
-      },
-    })
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+  //POST Request for Google Oauth token
+
+  // const googleAuth = ({ profileObj }) => {
+  //   axios({
+  //     method: "POST",
+  //     url: "/auth/google/signup",
+  //     data: {
+  //       googleId: profileObj.googleId,
+  //       email: profileObj.email,
+  //       first_name: profileObj.firstName,
+  //       last_name: profileObj.lastName,
+  //     },
+  //   })
+  //     .then((res) => console.log(res.data))
+  //     .catch((err) => console.log(err));
+  // };
+
+  ///Google Login starts here.....
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    console.log(res);
+    try {
+      dispatch({ type: "AUTH", data: { result, token } });
+    } catch (err) {
+      console.log(error);
+    }
+  };
+
+  const googleFailure = (error) => {
+    console.log(error);
+    console.log("Sign-in was unsuccessful.");
   };
 
   return (
@@ -187,8 +208,8 @@ const Register = ({ location, history }) => {
         <GoogleLogin
           clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
           buttonText="Login with Google"
-          onSuccess={googleAuth}
-          onFailure={googleAuth}
+          onSuccess={googleSuccess}
+          onFailure={googleFailure}
           isSignedIn={true}
           cookiePolicy={"single_host_origin"}
         />
