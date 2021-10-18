@@ -15,13 +15,26 @@ import {
   Language,
   Left,
   Logo,
+  LogoutBtn,
   MenuItem,
   Right,
   SearchContainer,
   Wrapper,
 } from "./NavbarEle";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../actions/userActions";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -34,48 +47,74 @@ const Navbar = () => {
         </Left>
         <Center>
           {/* <Language>EN</Language> */}
-          {/* <SearchContainer>
+          <SearchContainer>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer> */}
+          </SearchContainer>
         </Center>
-        <Right>
-          <MenuItem>
-            {/* <Link
-              to="/register"
-              style={{ color: "black", textDecoration: "none" }}
-            >
-              Register
-            </Link> */}
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to="/login"
-              style={{ color: "black", textDecoration: "none" }}
-            >
-              Sign In
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to="/orderdetails"
-              style={{ color: "black", textDecoration: "none" }}
-            >
-              <PersonOutlineOutlined />
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            {/* Badge Dynamically Update krna hai  */}
-            <Badge color="primary">
+        {userInfo ? (
+          <Right>
+            <MenuItem>Hi, {userInfo.username}</MenuItem>
+            <LogoutBtn onClick={logoutHandler}>Log out</LogoutBtn>
+            <MenuItem>
               <Link
-                to="/cart"
+                to="/orderdetails"
                 style={{ color: "black", textDecoration: "none" }}
               >
-                <ShoppingCartOutlined />
+                <PersonOutlineOutlined />
               </Link>
-            </Badge>
-          </MenuItem>
-        </Right>
+            </MenuItem>
+            <MenuItem>
+              {/* Badge Dynamically Update krna hai  */}
+              <Badge color="primary">
+                <Link
+                  to="/cart"
+                  style={{ color: "black", textDecoration: "none" }}
+                >
+                  <ShoppingCartOutlined />
+                </Link>
+              </Badge>
+            </MenuItem>
+          </Right>
+        ) : (
+          <Right>
+            <MenuItem>
+              <Link
+                to="/register"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                Register
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link
+                to="/login"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                Sign In
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link
+                to="/orderdetails"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                <PersonOutlineOutlined />
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              {/* Badge Dynamically Update krna hai  */}
+              <Badge color="primary">
+                <Link
+                  to="/cart"
+                  style={{ color: "black", textDecoration: "none" }}
+                >
+                  <ShoppingCartOutlined />
+                </Link>
+              </Badge>
+            </MenuItem>
+          </Right>
+        )}
       </Wrapper>
     </Container>
   );
