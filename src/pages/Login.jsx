@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useEffect } from "react";
+import GoogleLogin from "react-google-login";
 import { AiOutlineGoogle } from "react-icons/ai";
-import { login } from '../actions/userActions'
+import { login } from "../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div`
   width: 100vw;
@@ -96,20 +98,39 @@ const Login = ({ location, history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
-  
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(login(username, password))
+    dispatch(login(username, password));
   };
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect)
+      history.push(redirect);
     }
-  }, [history, userInfo, redirect])
+  }, [history, userInfo, redirect]);
+
+  ///Google Login starts here.....
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    console.log(res);
+    try {
+      dispatch({ type: "AUTH", data: { result, token } });
+    } catch (err) {
+      console.log(error);
+    }
+  };
+
+  const googleFailure = (error) => {
+    console.log(error);
+    console.log("Sign-in was unsuccessful.");
+  };
 
   return (
     <Container>
@@ -134,10 +155,20 @@ const Login = ({ location, history }) => {
             New ?<Link to="/register"> Create New Account</Link>
           </New>
         </Form>
-        {/* <Agreement>OR</Agreement>
-        <GButton>
-          <AiOutlineGoogle />
-        </GButton> */}
+        <Agreement>OR</Agreement>
+        {/* <form action="http://localhost:5000/auth/google">
+          <GButton type="submit">
+            <AiOutlineGoogle />
+          </GButton>
+        </form> */}
+        <GoogleLogin
+          clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
+          buttonText="Login wi"
+          onSuccess={googleSuccess}
+          onFailure={googleFailure}
+          isSignedIn={true}
+          cookiePolicy={"single_host_origin"}
+        />
       </Wrapper>
     </Container>
   );

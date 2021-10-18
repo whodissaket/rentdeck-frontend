@@ -5,8 +5,9 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from '../actions/userActions'
-
+import { register } from "../actions/userActions";
+import axios from "axios";
+import GoogleLogin from "react-google-login";
 
 const Container = styled.div`
   width: 100vw;
@@ -94,7 +95,7 @@ const Register = ({ location, history }) => {
   const dispatch = useDispatch();
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister
+  const { loading, error, userInfo } = userRegister;
 
   //const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -111,6 +112,21 @@ const Register = ({ location, history }) => {
     } else {
       dispatch(register(username, email, password));
     }
+  };
+
+  const googleAuth = ({ profileObj }) => {
+    axios({
+      method: "POST",
+      url: "/auth/google/signup",
+      data: {
+        googleId: profileObj.googleId,
+        email: profileObj.email,
+        first_name: profileObj.firstName,
+        last_name: profileObj.lastName,
+      },
+    })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -168,6 +184,14 @@ const Register = ({ location, history }) => {
         <GButton>
           <AiOutlineGoogle />
         </GButton> */}
+        <GoogleLogin
+          clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
+          buttonText="Login with Google"
+          onSuccess={googleAuth}
+          onFailure={googleAuth}
+          isSignedIn={true}
+          cookiePolicy={"single_host_origin"}
+        />
       </Wrapper>
     </Container>
   );
