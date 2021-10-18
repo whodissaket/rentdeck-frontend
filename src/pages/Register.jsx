@@ -110,7 +110,8 @@ const Register = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(username, email, password));
+      const googleId=null
+      dispatch(register(username, email, password,googleId));
     }
   };
 
@@ -139,7 +140,8 @@ const Register = ({ location, history }) => {
 
     console.log(res);
     try {
-      dispatch({ type: "AUTH", data: { result, token } });
+      const password=null
+      dispatch(register(res.dt.Se , res.dt.Ot , password,res.profileObj.googleId));
     } catch (err) {
       console.log(error);
     }
@@ -210,8 +212,6 @@ const Register = ({ location, history }) => {
           buttonText="Login with Google"
           onSuccess={googleSuccess}
           onFailure={googleFailure}
-          isSignedIn={true}
-          cookiePolicy={"single_host_origin"}
         />
       </Wrapper>
     </Container>

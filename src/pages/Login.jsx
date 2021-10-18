@@ -105,7 +105,8 @@ const Login = ({ location, history }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(login(username, password));
+    const googleId=null
+    dispatch(login(username, password ,googleId));
   };
   useEffect(() => {
     if (userInfo) {
@@ -121,7 +122,8 @@ const Login = ({ location, history }) => {
 
     console.log(res);
     try {
-      dispatch({ type: "AUTH", data: { result, token } });
+      const password=null
+    dispatch(login(res.dt.Se, password ,res.profileObj.googleId))
     } catch (err) {
       console.log(error);
     }

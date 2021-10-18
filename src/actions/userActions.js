@@ -36,7 +36,7 @@ export const logout = () => (dispatch) => {
   //dispatch({ type: USER_LIST_RESET })
   document.location.href = "/";
 };
-export const login = (username, password) => async (dispatch) => {
+export const login = (username, password ,googleId) => async (dispatch) => {
   dispatch({
     type: USER_LOGIN_REQUEST,
   });
@@ -44,7 +44,7 @@ export const login = (username, password) => async (dispatch) => {
   axios
     .post(
       "http://localhost:5000/api/users/login",
-      { username, password },
+      { username, password ,googleId},
       {
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const login = (username, password) => async (dispatch) => {
     });
 };
 
-export const register = (username, email, password) => async (dispatch) => {
+export const register = (username, email, password,googleId) => async (dispatch) => {
   dispatch({
     type: USER_REGISTER_REQUEST,
   });
@@ -77,7 +77,7 @@ export const register = (username, email, password) => async (dispatch) => {
   axios
     .post(
       "http://localhost:5000/api/users/",
-      { username, email, password },
+      { username, email, password ,googleId },
       {
         headers: {
           "Content-Type": "application/json",
