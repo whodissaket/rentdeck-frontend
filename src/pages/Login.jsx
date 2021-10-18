@@ -168,8 +168,6 @@ const Login = ({ location, history }) => {
           buttonText="Login wi"
           onSuccess={googleSuccess}
           onFailure={googleFailure}
-          isSignedIn={true}
-          cookiePolicy={"single_host_origin"}
         />
       </Wrapper>
     </Container>
