@@ -1,12 +1,11 @@
 //Redux code daal dena uske baad hi chalega otherwise not defined aaega
 
 import styled from "styled-components";
-import { AiOutlineGoogle } from "react-icons/ai";
+
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../actions/userActions";
-import axios from "axios";
 import GoogleLogin from "react-google-login";
 
 const Container = styled.div`
@@ -63,19 +62,6 @@ const Button = styled.button`
     background-color: #4f5dd6;
   }
 `;
-const GButton = styled.button`
-  border: none;
-  width: 40%;
-  padding: 15px 20px;
-  font-size: 18px;
-  cursor: pointer;
-  background-color: #db4a39;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #ed6758;
-  }
-`;
 
 const Error = styled.span`
   color: red;
@@ -110,8 +96,8 @@ const Register = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      const googleId=null
-      dispatch(register(username, email, password,googleId));
+      const googleId = null;
+      dispatch(register(username, email, password, googleId));
     }
   };
 
@@ -135,13 +121,12 @@ const Register = ({ location, history }) => {
   ///Google Login starts here.....
 
   const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
-
     console.log(res);
     try {
-      const password=null
-      dispatch(register(res.dt.Se , res.dt.Ot , password,res.profileObj.googleId));
+      const password = null;
+      dispatch(
+        register(res.dt.Se, res.dt.Ot, password, res.profileObj.googleId)
+      );
     } catch (err) {
       console.log(error);
     }
@@ -155,7 +140,7 @@ const Register = ({ location, history }) => {
   return (
     <Container>
       <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
+        <Title>Create Account</Title>
         {message && <Error variant="danger">{message}</Error>}
         {error && <Error variant="danger">{error}</Error>}
 
@@ -202,8 +187,8 @@ const Register = ({ location, history }) => {
           </Agreement>
           <Button type="submit">Create</Button>
         </Form>
-        {/* <Agreement>OR</Agreement>
-
+        <Agreement>OR</Agreement>
+        {/*
         <GButton>
           <AiOutlineGoogle />
         </GButton> */}

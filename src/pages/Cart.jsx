@@ -6,10 +6,10 @@ import Navbar from "../components/Navbar/Navbar";
 import { mobile } from "../responsive";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useLocation  , useHistory ,useParams } from "react-router";
-import { useDispatch , useSelector } from "react-redux";
-import { addToCart, removeFromCart } from '../actions/cartActions'
-import { createOrder } from '../actions/orderActions'
+import { useLocation, useHistory, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../actions/cartActions";
+import { createOrder } from "../actions/orderActions";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -57,7 +57,6 @@ const Bottom = styled.div`
 const Info = styled.div`
   flex: 3;
 `;
-
 
 const Summary = styled.div`
   flex: 1;
@@ -164,69 +163,69 @@ const Hr = styled.hr`
 `;
 
 const Cart = () => {
-  const dispatch = useDispatch()
-  const param=useParams()
-  const location = useLocation()
-  const history = useHistory()
-  const productId = param.id
-  const qty = location.search ? Number(location?.search.split('=')[1]) : 1
-  console.log(productId ,qty)
-  const cart = useSelector((state) => state.cart)
-  const { cartItems } = cart
+  const dispatch = useDispatch();
+  const param = useParams();
+  const location = useLocation();
+  const history = useHistory();
+  const productId = param.id;
+  const qty = location.search ? Number(location?.search.split("=")[1]) : 1;
+  console.log(productId, qty);
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   useEffect(() => {
     if (productId) {
-      dispatch(addToCart(productId, qty))
+      dispatch(addToCart(productId, qty));
     }
-  }, [dispatch, productId, qty])
+  }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id))
-  }
-  const handleIncrement = (item)=> {
-    console.log(item)
-    dispatch(addToCart(item.product, item.qty+1));
+    dispatch(removeFromCart(id));
   };
-  const handleDecrement= (item)=>{ 
-    if(item.qty>1) {
-    dispatch(addToCart(item.product, (item.qty-1>0?item.qty-1:0)) ) 
-  }
-  else {
-      removeFromCartHandler(item.product)
-    } }
-  const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2)
+  const handleIncrement = (item) => {
+    console.log(item);
+    dispatch(addToCart(item.product, item.qty + 1));
+  };
+  const handleDecrement = (item) => {
+    if (item.qty > 1) {
+      dispatch(addToCart(item.product, item.qty - 1 > 0 ? item.qty - 1 : 0));
+    } else {
+      removeFromCartHandler(item.product);
     }
+  };
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
   cart.itemsPrice = addDecimals(
-      cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-    )
-  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
-  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  );
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
-  ).toFixed(2)  
-  const orderCreate = useSelector((state) => state.orderCreate)
-  const { order, success, error } = orderCreate
+  ).toFixed(2);
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
   const placeOrderHandler = () => {
-      dispatch(
-        createOrder({
-          orderItems: cart.cartItems,
-          shippingAddress:  {
-            "address": "1 Bashford Park",
-            "city": "Dulangan",
-            "postalCode": "1115",
-            "country": "Philippines"
-          },
-          paymentMethod: "Netbanking",
-          itemsPrice: cart.itemsPrice,
-          shippingPrice: cart.shippingPrice,
-          totalPrice: cart.totalPrice,
-        })
-      )
-    }
-    
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: {
+          address: "1 Bashford Park",
+          city: "Dulangan",
+          postalCode: "1115",
+          country: "Philippines",
+        },
+        paymentMethod: "Netbanking",
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
+
   return (
     <Container>
       <Navbar />
@@ -244,61 +243,75 @@ const Cart = () => {
             <TopText>Shopping Bag({cartItems?.length})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          
         </Top>
         <Bottom>
-        {}
-          
-          <Info>
-          { console.log(cartItems) && cartItems.length===0 ? <h1>Cart Empty</h1> :cartItems.map((item) => { return (
-    <>
-    <Product>
-  <ProductDetail>
-    <Image src={item.image} />
-    <Details>
-      <ProductName>
-        <b>Product:{item.name}</b>
-        {/* ********  Changes here******** */}
-        {/* {pro.name} */}
-      </ProductName>
-      <ProductId>
-        <b>ID:{item.product}</b>
-        {/* {pro._id} */}
-      </ProductId>
+          {}
 
-      <ProductSize>
-        <b>Tag:</b> {}
-      </ProductSize>
-    </Details>
-  </ProductDetail>
-  <PriceDetail>
-    <ProductAmountContainer>
-      <Button2 onClick={()=>handleIncrement(item)}>
-        <Add />
-      </Button2>
-      <ProductAmount value={item.qty}>{item.qty}</ProductAmount>
-      <Button2
-      onClick={()=>handleDecrement(item)}>
-        <Remove />
-      </Button2>
-    </ProductAmountContainer>
-    <ProductPrice>
-      Rs.
-      {item.price}
-      /month
-    </ProductPrice>
-  </PriceDetail>
-</Product><Hr />)
-</>) } )}
+          <Info>
+            {console.log(cartItems) && cartItems.length === 0 ? (
+              <h1>Cart Empty</h1>
+            ) : (
+              cartItems.map((item) => {
+                return (
+                  <>
+                    <Product>
+                      <ProductDetail>
+                        <Image src={item.image} />
+                        <Details>
+                          <ProductName>
+                            <b>Product:{item.name}</b>
+                            {/* ********  Changes here******** */}
+                            {/* {pro.name} */}
+                          </ProductName>
+                          <ProductId>
+                            <b>ID:{item.product}</b>
+                            {/* {pro._id} */}
+                          </ProductId>
+
+                          <ProductSize>
+                            <b>Tag:</b> {}
+                          </ProductSize>
+                        </Details>
+                      </ProductDetail>
+                      <PriceDetail>
+                        <ProductAmountContainer>
+                          <Button2 onClick={() => handleIncrement(item)}>
+                            <Add />
+                          </Button2>
+                          <ProductAmount value={item.qty}>
+                            {item.qty}
+                          </ProductAmount>
+                          <Button2 onClick={() => handleDecrement(item)}>
+                            <Remove />
+                          </Button2>
+                        </ProductAmountContainer>
+                        <ProductPrice>
+                          Rs.
+                          {item.price}
+                          /month
+                        </ProductPrice>
+                      </PriceDetail>
+                    </Product>
+                    <Hr />)
+                  </>
+                );
+              })
+            )}
           </Info>
           <Summary>
             <SummaryTitle>Order Summary</SummaryTitle>
             <SummaryItem>
-              <SummaryItemText>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</SummaryItemText>
-              <SummaryItemPrice> Rs
-              {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}</SummaryItemPrice>
+              <SummaryItemText>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                items
+              </SummaryItemText>
+              <SummaryItemPrice>
+                {" "}
+                Rs
+                {cartItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -310,15 +323,22 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>{cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}</SummaryItemPrice>
+              <SummaryItemPrice>
+                {cartItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </SummaryItemPrice>
             </SummaryItem>
             <Link
-              to="/orderdetails"
+              to="/shipping"
               style={{ color: "white", textDecoration: "none" }}
             >
-              <Button onClick={placeOrderHandler} disabled={cart.cartItems === 0}>CHECKOUT NOW</Button>
+              <Button
+                onClick={placeOrderHandler}
+                disabled={cart.cartItems === 0}
+              >
+                CHECKOUT NOW
+              </Button>
             </Link>
           </Summary>
         </Bottom>

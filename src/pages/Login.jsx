@@ -105,8 +105,8 @@ const Login = ({ location, history }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const googleId=null
-    dispatch(login(username, password ,googleId));
+    const googleId = null;
+    dispatch(login(username, password, googleId));
   };
   useEffect(() => {
     if (userInfo) {
@@ -122,8 +122,8 @@ const Login = ({ location, history }) => {
 
     console.log(res);
     try {
-      const password=null
-    dispatch(login(res.dt.Se, password ,res.profileObj.googleId))
+      const password = null;
+      dispatch(login(res.dt.Se, password, res.profileObj.googleId));
     } catch (err) {
       console.log(error);
     }
@@ -158,14 +158,10 @@ const Login = ({ location, history }) => {
           </New>
         </Form>
         <Agreement>OR</Agreement>
-        {/* <form action="http://localhost:5000/auth/google">
-          <GButton type="submit">
-            <AiOutlineGoogle />
-          </GButton>
-        </form> */}
+
         <GoogleLogin
           clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
-          buttonText="Login wi"
+          buttonText="Login with Google"
           onSuccess={googleSuccess}
           onFailure={googleFailure}
         />
