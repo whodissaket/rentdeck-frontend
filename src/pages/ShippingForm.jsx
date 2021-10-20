@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { saveShippingAddress } from "../actions/cartActions";
 import Announcement from "../components/Announcement/Announcement";
 import Navbar from "../components/Navbar/Navbar";
@@ -10,6 +10,8 @@ import Footer from "../components/Footer/Footer";
 import { useStyles } from "./styles/style2";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import { useHistory } from "react-router";
+import { createOrder } from "../actions/orderActions";
 
 const Container = styled.div`
   width: 100vw;
@@ -90,7 +92,7 @@ const Error = styled.span`
 const ShippingForm = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-
+  const history = useHistory()
   const classes = useStyles();
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
@@ -101,9 +103,29 @@ const ShippingForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    placeOrderHandler();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
   };
-
+  const goBackHandler = () => {
+    history.push('/cart')
+  }
+  const placeOrderHandler = () => {
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: {
+          address: "1 Bashford Park",
+          city: "Dulangan",
+          postalCode: "1115",
+          country: "Philippines",
+        },
+        paymentMethod: "Netbanking",
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
   return (
     <div>
       <Navbar />
@@ -150,7 +172,7 @@ const ShippingForm = () => {
           </Link>
           <Agreement></Agreement>
           <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
-            <Button2>Go Back</Button2>
+            <Button2 onClick={goBackHandler}>Go Back</Button2>
           </Link>
         </Wrapper>
       </Container>

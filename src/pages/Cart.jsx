@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { useLocation, useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
-import { createOrder } from "../actions/orderActions";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -208,24 +207,10 @@ const Cart = () => {
   ).toFixed(2);
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
-  const placeOrderHandler = () => {
-    dispatch(
-      createOrder({
-        orderItems: cart.cartItems,
-        shippingAddress: {
-          address: "1 Bashford Park",
-          city: "Dulangan",
-          postalCode: "1115",
-          country: "Philippines",
-        },
-        paymentMethod: "Netbanking",
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        totalPrice: cart.totalPrice,
-      })
-    );
-  };
 
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping')
+  }
   return (
     <Container>
       <Navbar />
@@ -248,10 +233,9 @@ const Cart = () => {
           {}
 
           <Info>
-            {console.log(cartItems) && cartItems.length === 0 ? (
-              <h1>Cart Empty</h1>
-            ) : (
+            {cartItems.length ===0 ? (<h1>CART EMPTY</h1>) : (
               cartItems.map((item) => {
+                console.log("here2")
                 return (
                   <>
                     <Product>
@@ -329,17 +313,12 @@ const Cart = () => {
                   .toFixed(2)}
               </SummaryItemPrice>
             </SummaryItem>
-            <Link
-              to="/shipping"
-              style={{ color: "white", textDecoration: "none" }}
-            >
               <Button
-                onClick={placeOrderHandler}
-                disabled={cart.cartItems === 0}
+                onClick={checkoutHandler}
+                disabled={cart.cartItems.length ===0}
               >
                 CHECKOUT NOW
               </Button>
-            </Link>
           </Summary>
         </Bottom>
       </Wrapper>
