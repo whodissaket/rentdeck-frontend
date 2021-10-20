@@ -3,11 +3,10 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useEffect } from "react";
 import GoogleLogin from "react-google-login";
-import { AiOutlineGoogle } from "react-icons/ai";
 import { login } from "../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import axios from "axios";
+
 
 const Container = styled.div`
   width: 100vw;

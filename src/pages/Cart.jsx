@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useLocation, useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -209,8 +210,8 @@ const Cart = () => {
   const { order, success, error } = orderCreate;
 
   const checkoutHandler = () => {
-    history.push('/login?redirect=shipping')
-  }
+    history.push("/login?redirect=shipping");
+  };
   return (
     <Container>
       <Navbar />
@@ -233,9 +234,11 @@ const Cart = () => {
           {}
 
           <Info>
-            {cartItems.length ===0 ? (<h1>CART EMPTY</h1>) : (
+            {cartItems.length === 0 ? (
+              <h1>CART EMPTY</h1>
+            ) : (
               cartItems.map((item) => {
-                console.log("here2")
+                console.log("here2");
                 return (
                   <>
                     <Product>
@@ -313,12 +316,12 @@ const Cart = () => {
                   .toFixed(2)}
               </SummaryItemPrice>
             </SummaryItem>
-              <Button
-                onClick={checkoutHandler}
-                disabled={cart.cartItems.length ===0}
-              >
-                CHECKOUT NOW
-              </Button>
+            <Button
+              onClick={checkoutHandler}
+              disabled={cart.cartItems.length === 0}
+            >
+              CHECKOUT NOW
+            </Button>
           </Summary>
         </Bottom>
       </Wrapper>
