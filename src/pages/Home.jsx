@@ -14,7 +14,7 @@ const Home = () => {
       <Navbar />
       <Slider />
       <Categories />
-      <Products />
+      <Products category={null} search={null} />
       <Footer />
     </div>
   );

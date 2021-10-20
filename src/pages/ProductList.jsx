@@ -35,7 +35,8 @@ const Option = styled.option``;
 
 const ProductList = () => {
   const location = useLocation()
-  const category = location?.search.split('=')[1]
+  const search=(location?.search.split('=')[0]=="?s")?(location?.search.split('=')[1]):(null)
+  const category = (location?.search.split('=')[0]=="?categories")?(location?.search.split('=')[1]):(null)
 
   return (
     <Container>
@@ -74,7 +75,7 @@ const ProductList = () => {
           </Select>
         </Filter>
       </FilterContainer>
-      <Products category={category} />
+      <Products category={category} search={search}/>
       <Footer />
     </Container>
   );

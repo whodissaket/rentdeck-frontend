@@ -71,3 +71,12 @@ export const LogoutBtn = styled.button`
   margin-left: 25px;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
+
+export const SearchBtn = styled.button`
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 1px solid #000;
+  
+  margin-left: 25px;
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+`;

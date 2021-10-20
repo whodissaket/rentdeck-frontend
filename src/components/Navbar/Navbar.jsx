@@ -7,6 +7,7 @@ import {
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Center,
@@ -15,6 +16,7 @@ import {
   Language,
   Left,
   Logo,
+  SearchBtn,
   LogoutBtn,
   MenuItem,
   Right,
@@ -22,11 +24,12 @@ import {
   Wrapper,
 } from "./NavbarEle";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { logout } from "../../actions/userActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-
+  const history =useHistory()
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
@@ -34,7 +37,11 @@ const Navbar = () => {
   const logoutHandler = () => {
     dispatch(logout());
   };
-
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+  const items=cartItems.length
+  const [search ,setSearch]=useState("")
+  const handleSearch=()=>{history.push(`/products?s=${search}`)}
   return (
     <Container>
       <Wrapper>
@@ -48,8 +55,10 @@ const Navbar = () => {
         <Center>
           {/* <Language>EN</Language> */}
           <SearchContainer>
-            <Input placeholder="Search" />
+            <Input placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)}/>
+            <SearchBtn onClick={handleSearch}>
             <Search style={{ color: "gray", fontSize: 16 }} />
+            </SearchBtn>
           </SearchContainer>
         </Center>
         {userInfo ? (
@@ -66,7 +75,7 @@ const Navbar = () => {
             </MenuItem>
             <MenuItem>
               {/* Badge Dynamically Update krna hai  */}
-              <Badge color="primary">
+              <Badge color="primary" badgeContent={items}>
                 <Link
                   to="/cart"
                   style={{ color: "black", textDecoration: "none" }}
