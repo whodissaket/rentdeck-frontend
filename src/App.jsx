@@ -15,6 +15,7 @@ import Order from "./pages/Order";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import ShippingForm from "./pages/ShippingForm";
+import PlaceOrder from "./pages/PlaceOrder";
 
 const App = () => {
   const user = useSelector((state) => state.userDetails);
@@ -46,6 +47,9 @@ const App = () => {
         <Route exact path="/register" component={Register}></Route>
         <Route exact path="/shipping">
           <ShippingForm />
+        </Route>
+        <Route path="/placeOrder">
+          <PlaceOrder />
         </Route>
       </Switch>
     </Router>

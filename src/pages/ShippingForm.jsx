@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector} from "react-redux";
-import { saveShippingAddress } from "../actions/cartActions";
+import { useDispatch, useSelector } from "react-redux";
+import { saveShippingAddress, savePaymentMethod } from "../actions/cartActions";
 import Announcement from "../components/Announcement/Announcement";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router";
 import { createOrder } from "../actions/orderActions";
+import { Col, Form } from "react-bootstrap";
 
 const Container = styled.div`
   width: 100vw;
@@ -30,8 +31,9 @@ const Heading = styled.h1`
 const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
+
   border-radius: 10px;
-  background-color: #fafafa;
+
   ${mobile({ width: "75%" })}
 `;
 
@@ -40,7 +42,7 @@ const Title = styled.h1`
   font-weight: 300;
 `;
 
-const Form = styled.form`
+const Form2 = styled.form`
   display: flex;
   flex-wrap: wrap;
 `;
@@ -92,23 +94,25 @@ const Error = styled.span`
 const ShippingForm = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-  const history = useHistory()
-  const classes = useStyles();
+  const history = useHistory();
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
-
+  const [paymentMethod, setPaymentMethod] = useState("RazorPay");
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
     placeOrderHandler();
-    dispatch(saveShippingAddress({ address, city, postalCode, country }));
+    dispatch(
+      saveShippingAddress({ address, city, postalCode, country }),
+      savePaymentMethod(paymentMethod)
+    );
   };
   const goBackHandler = () => {
-    history.push('/cart')
-  }
+    history.push("/cart");
+  };
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -132,10 +136,10 @@ const ShippingForm = () => {
       <Announcement />
       <Container>
         <Wrapper>
-          <Heading>Shipping Address</Heading>
+          <Heading>Shipping Address & Payment Method</Heading>
           <Agreement />
           <Title>Enter Shipping Address</Title>
-          <Form onSubmit={submitHandler}>
+          <Form2 onSubmit={submitHandler}>
             <Input
               id="address"
               placeholder="Enter Address"
@@ -165,12 +169,39 @@ const ShippingForm = () => {
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
+          </Form2>
+          <Agreement></Agreement>
+
+          <Agreement />
+          <Title>Select Payment Method</Title>
+          <Form>
+            <Col>
+              <Form.Check
+                type="radio"
+                label="RazorPay"
+                id="razorpay"
+                name="paymentMethod"
+                value="RazorPay"
+                checked
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
+              <Form.Check
+                type="radio"
+                label="Credit or Debit Card"
+                id="card"
+                name="paymentMethod"
+                value="card"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
+            </Col>
           </Form>
-          <Agreement></Agreement>
-          <Link to="/orderdetails">
-            <Button>Continue</Button>
+          <Agreement />
+          <Link to="/placeOrder">
+            <Button type="submit">Continue</Button>
           </Link>
-          <Agreement></Agreement>
+          <br />
+          <br />
+
           <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
             <Button2 onClick={goBackHandler}>Go Back</Button2>
           </Link>
