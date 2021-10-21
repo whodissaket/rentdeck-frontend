@@ -4,8 +4,11 @@
 //Order id fetch krna h
 //Order status fetch krna h
 //Shipping address fetch krna h agar h toh
-
-import { useEffect } from "react";
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from '../actions/orderActions'
 import {
   Container,
   Typography,
@@ -21,13 +24,20 @@ import {
   CircularProgress,
   Box,
 } from "@material-ui/core";
+import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from '../constants/orderConstants'
 import { PersonOutlineOutlined } from "@material-ui/icons";
 import { useStyles } from "./styles/style2";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import Announcement from "../components/Announcement/Announcement";
 import OrderedProducts from "../components/Orders/OrderedProducts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useHistory, useParams } from "react-router";
 const showStatus = (status) => {
   switch (status) {
     case "ORDERED":
@@ -41,12 +51,117 @@ const showStatus = (status) => {
   }
 };
 
-const Order = ({ admin }) => {
+const Order = () => {
   const classes = useStyles();
-  const cart = useSelector((state) => state.cart)
-  const { cartItems } = cart
-  const user=useSelector((state) => state.userLogin) 
-  console.log(user)
+  const param = useParams();
+  const orderId = param.id;
+  
+  const [sdkReady, setSdkReady] = useState(false)
+  const history=useHistory()
+  const dispatch = useDispatch()
+  const state=useSelector((state)=>state)
+  const orderDetails = useSelector((state) => state.orderDetails)
+  const { order, loading, error } = orderDetails
+
+  const orderPay = useSelector((state) => state.orderPay)
+  const { loading: loadingPay, success: successPay } = orderPay
+
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+  
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  if (!order || successPay || successDeliver || order._id !== orderId) {
+    dispatch({ type: ORDER_PAY_RESET })
+    dispatch({ type: ORDER_DELIVER_RESET })
+    dispatch(getOrderDetails(orderId))
+  } else if (!order.isPaid) {
+    
+  }
+}, [dispatch, orderId, successPay, successDeliver, order])
+
+console.log(order , orderId)
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userInfo.token}`,
+  },}
+const paytime=()=>{ 
+  axios
+  .post(`http://localhost:5000/api/orders/${orderId}/pay`,{},config)
+  .then(response => {console.log(response.data);
+    checkoutRazorpay(response.data);})
+  .catch(err => console.error(err));
+}
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
+const checkoutRazorpay = async (data) => {
+  const res = await loadScript(
+    'https://checkout.razorpay.com/v1/checkout.js'
+  );
+
+  if (!res) {
+    alert('Razorpay SDK failed to load. Are you online?');
+    return;
+  }
+  var options = {
+    key: "rzp_test_T2oeimfMzgJTrL", // Enter the Key ID generated from the Dashboard
+    amount: data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    currency: "INR",
+    name: userInfo.username,
+    description: "Test Transaction with Razorpay payment gateway",
+    image: "https://avatars.githubusercontent.com/u/73386156",
+    order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    handler: function (response) {
+      console.log(response.razorpay_payment_id);
+      console.log(response.razorpay_order_id);
+      console.log(response.razorpay_signature);
+      alert("Payment success!");
+    },
+    // prefill: {
+    //   name: "Gaurav Kumar",
+    //   email: "gaurav.kumar@example.com",
+    //   contact: "9999999999",
+    // },
+    notes: {
+      address: "Razorpay Corporate Office",
+    },
+    theme: {
+      color: "#61dafb",
+    },
+  };
+  let rzp1 = new window.Razorpay(options);
+  rzp1.on("payment.failed", function (response) {
+    console.log(response.error.code);
+    console.log(response.error.description);
+    console.log(response.error.source);
+    console.log(response.error.step);
+    console.log(response.error.reason);
+    console.log(response.error.metadata.order_id);
+    console.log(response.error.metadata.payment_id);
+    alert(response.error.description);
+  });
+  rzp1.open();
+};
+
+console.log(order)
   return (
     <div>
       <Navbar />
@@ -59,7 +174,7 @@ const Order = ({ admin }) => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <PersonOutlineOutlined />
-              {user.userInfo.username}
+              {userInfo.username}
             </Grid>
           </Grid>
           <Typography className={classes.heading} variant="h3">
@@ -70,37 +185,35 @@ const Order = ({ admin }) => {
             <Grid item md={6} xs={12}>
               <Paper className={classes.paper}>
                 <Typography>
-                  <span>Order for </span>{" "}
+                  <span>Order ID {order?._id} </span>{" "}
                   <Chip
-                    label={user.userInfo.username} 
+                    label={userInfo.username} 
                     size="small"
                   />
                 </Typography>
                 <Typography>
-                  <span>Products</span> {cartItems?.length}
+                  <span>Products</span> {order?.orderItems?.length}
                 </Typography>
                 <Typography>
                   <span>Items</span>
                 </Typography>
                 <Typography>
                   <span>Date</span>
-                  {/* {moment(order?.date).fromNow()} */}
+                  {order?.createdAt}
                 </Typography>
                 <Typography>
-                  <span>Price</span> {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}/month
+                  <span>Price</span> {order?.totalPrice}/month
                 </Typography>
                 <Typography>
-                  <span>Status</span>{" "}
+                  <span>Status</span>{"  "}
                   <Chip
-                    //   label={order?.status}
+                       label={order?.isPaid}
                     size="small"
                     style={{ color: "white", fontWeight: "bold" }}
                     color="primary"
                   />
                 </Typography>
-                {admin ? (
+                {true ? (
                   <>
                     {/* {order?.status === "DELIVERED" ? null : (
                     <Typography>
@@ -108,22 +221,9 @@ const Order = ({ admin }) => {
                     </Typography>
                   )} */}
                     <Button
-                      // disabled={order?.status === "DELIVERED" || buttonLoading}
-                      variant="outlined"
-                      color="primary"
-                      // onClick={() =>
-                      //   dispatch(
-                      //     editAdminOrder({
-                      //       id,
-                      //       status: showStatus(order?.status),
-                      //     })
-                      //   )
-                      // }
-                      // endIcon={
-                      //   buttonLoading ? <CircularProgress size={20} /> : null
-                      // }
+                    onClick={paytime}
                     >
-                      {/* {showStatus(order?.status)} */}
+                      {"PAY"}
                     </Button>
                   </>
                 ) : null}
@@ -143,11 +243,10 @@ const Order = ({ admin }) => {
                   Schedule a visit
                 </Button>
                 {/* //******************db here ************************ */}
-                {/* <Typography>{order?.shippingAddress?.country}</Typography>
+                 <Typography>{order?.shippingAddress?.country}</Typography>
               <Typography>{order?.shippingAddress?.city}</Typography>
-              <Typography>{order?.shippingAddress?.address1}</Typography>
-              <Typography>{order?.shippingAddress?.address2}</Typography>
-              <Typography>{order?.shippingAddress?.zipCode}</Typography> */}
+              <Typography>{order?.shippingAddress?.address}</Typography>
+              <Typography>{order?.shippingAddress?.zipCode}</Typography> 
               </Paper>
             </Grid>
           </Grid>

@@ -9,27 +9,39 @@ import { USER_DETAILS_RESET } from "../constants/userConstants";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 import { Button, Col, Row, ListGroup, Image, Card } from "react-bootstrap";
 import "./styles/bootstrap.min.css";
-const PlaceOrder = ({ history }) => {
+import { useHistory } from "react-router";
+const PlaceOrder = () => {
+  const history = useHistory()
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  //   if (!cart.shippingAddress.address) {
-  //     history.push("/shipping");
-  //   } else if (!cart.paymentMethod) {
-  //     history.push("/payment");
-  //   }
-
+     if (!cart.shippingAddress.address || !cart.paymentMethod) {
+       history.push("/shipping" );
+     }
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
-  //   useEffect(() => {
-  //     if (success) {
-  //       history.push(`/order/${order._id}`);
-  //       dispatch({ type: ORDER_CREATE_RESET });
-  //       dispatch({ type: USER_DETAILS_RESET });
-  //     }
-  //     //eslint-disable-next-line
-  //   }, [history, success]);
+     useEffect(() => {
+       if (success) {
+         history.push(`/order/${order._id}`);
+         dispatch({ type: ORDER_CREATE_RESET });
+         dispatch({ type: USER_DETAILS_RESET });
+       }
+       //eslint-disable-next-line
+     }, [history, success]);
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2)
+  }
 
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  )
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 2 : 100)
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+  cart.totalPrice = (
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice) +
+    Number(cart.taxPrice)
+  ).toFixed(2)
   const placeOrderHandler = () => {
     dispatch(
       createOrder({

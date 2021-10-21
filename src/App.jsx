@@ -43,6 +43,9 @@ const App = () => {
         <Route exact path="/orderdetails">
           <Order />
         </Route>
+        <Route exact path="/order/:id">
+          <Order />
+        </Route>
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/register" component={Register}></Route>
         <Route exact path="/shipping">

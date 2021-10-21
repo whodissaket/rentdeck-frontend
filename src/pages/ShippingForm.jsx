@@ -104,32 +104,18 @@ const ShippingForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    placeOrderHandler();
+    console.log("here")
     dispatch(
       saveShippingAddress({ address, city, postalCode, country }),
-      savePaymentMethod(paymentMethod)
     );
+    dispatch(savePaymentMethod(paymentMethod));
+    console.log("here2")
+    history.push('/placeorder')
   };
   const goBackHandler = () => {
     history.push("/cart");
   };
-  const placeOrderHandler = () => {
-    dispatch(
-      createOrder({
-        orderItems: cart.cartItems,
-        shippingAddress: {
-          address: "1 Bashford Park",
-          city: "Dulangan",
-          postalCode: "1115",
-          country: "Philippines",
-        },
-        paymentMethod: "Netbanking",
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        totalPrice: cart.totalPrice,
-      })
-    );
-  };
+  
   return (
     <div>
       <Navbar />
@@ -169,12 +155,9 @@ const ShippingForm = () => {
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
-          </Form2>
-          <Agreement></Agreement>
-
-          <Agreement />
+          <br />
           <Title>Select Payment Method</Title>
-          <Form>
+
             <Col>
               <Form.Check
                 type="radio"
@@ -194,17 +177,17 @@ const ShippingForm = () => {
                 onChange={(e) => setPaymentMethod(e.target.value)}
               />
             </Col>
-          </Form>
-          <Agreement />
-          <Link to="/placeOrder">
+            <br />
+        
             <Button type="submit">Continue</Button>
-          </Link>
-          <br />
-          <br />
-
+            <br />
           <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
             <Button2 onClick={goBackHandler}>Go Back</Button2>
           </Link>
+            </Form2>
+            <Agreement />
+          <br />
+          <br />
         </Wrapper>
       </Container>
       <Footer />
