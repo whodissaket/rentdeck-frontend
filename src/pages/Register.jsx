@@ -122,10 +122,11 @@ const Register = ({ location, history }) => {
 
   const googleSuccess = async (res) => {
     console.log(res);
+    const fullName = res?.profileObj.givenName + " " + res.profileObj.familyName
     try {
       const password = null;
       dispatch(
-        register(res.dt.Se, res.dt.Ot, password, res.profileObj.googleId)
+        register(fullName, res.profileObj.email, password, res.profileObj.googleId)
       );
     } catch (err) {
       console.log(error);

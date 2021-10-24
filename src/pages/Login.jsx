@@ -116,15 +116,14 @@ const Login = ({ location, history }) => {
   ///Google Login starts here.....
 
   const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
+    const fullName = res?.profileObj.givenName + " " + res.profileObj.familyName
 
     console.log(res);
     try {
       const password = null;
-      dispatch(login(res.dt.Se, password, res.profileObj.googleId));
+      dispatch(login(fullName, password, res.profileObj.googleId));
     } catch (err) {
-      console.log(error);
+      console.log(err);
     }
   };
 
