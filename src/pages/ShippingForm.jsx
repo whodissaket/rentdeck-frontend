@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router";
 import { createOrder } from "../actions/orderActions";
-import { Col, Form } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 
 const Container = styled.div`
   width: 100vw;
@@ -56,6 +56,7 @@ const Input = styled.input`
 
 const Agreement = styled.span`
   display: flex;
+  font-weight: 500;
   font-size: 12px;
   margin: 20px 0px;
 `;
@@ -104,18 +105,16 @@ const ShippingForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("here")
-    dispatch(
-      saveShippingAddress({ address, city, postalCode, country }),
-    );
+    console.log("here");
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
     dispatch(savePaymentMethod(paymentMethod));
-    console.log("here2")
-    history.push('/placeorder')
+    console.log("here2");
+    history.push("/placeorder");
   };
   const goBackHandler = () => {
     history.push("/cart");
   };
-  
+
   return (
     <div>
       <Navbar />
@@ -133,7 +132,6 @@ const ShippingForm = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
-
             <Input
               id="city"
               placeholder="Enter City"
@@ -155,11 +153,11 @@ const ShippingForm = () => {
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
-          <br />
-          <Title>Select Payment Method</Title>
 
+            <Agreement>Default Payment Method </Agreement>
+            <br />
             <Col>
-              <Form.Check
+              <Input
                 type="radio"
                 label="RazorPay"
                 id="razorpay"
@@ -168,26 +166,28 @@ const ShippingForm = () => {
                 checked
                 onChange={(e) => setPaymentMethod(e.target.value)}
               />
-              <Form.Check
-                type="radio"
-                label="Credit or Debit Card"
-                id="card"
-                name="paymentMethod"
-                value="card"
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
+              Razorpay <br />
+              {/* <InputRadio
+              type="radio"
+              label="Credit or Debit Card"
+              id="card"
+              name="paymentMethod"
+              value="card"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            />
+            Credit or Debit Card */}
             </Col>
-            <br />
-        
+            <Agreement>
+              Press Continue to proceed to payment and review your order
+            </Agreement>
+
             <Button type="submit">Continue</Button>
-            <br />
+          </Form2>
+
+          <br />
           <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
             <Button2 onClick={goBackHandler}>Go Back</Button2>
           </Link>
-            </Form2>
-            <Agreement />
-          <br />
-          <br />
         </Wrapper>
       </Container>
       <Footer />

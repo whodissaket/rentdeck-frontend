@@ -4,15 +4,10 @@ import Login from "./pages/Login";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Orders from "./pages/Orders";
 import Order from "./pages/Order";
-import { useEffect } from "react";
+
 import { useSelector } from "react-redux";
 import ShippingForm from "./pages/ShippingForm";
 import PlaceOrder from "./pages/PlaceOrder";
