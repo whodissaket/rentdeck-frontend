@@ -1,6 +1,7 @@
 // Badge Dynamically update krna hai
 
 import { Badge } from "@material-ui/core";
+import { useGoogleLogout } from 'react-google-login'
 import {
   PersonOutlineOutlined,
   Search,
@@ -28,6 +29,8 @@ import { useHistory } from "react-router";
 import { logout } from "../../actions/userActions";
 
 const Navbar = () => {
+  const clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
+  const { signOut, loaded } = useGoogleLogout({clientId})
   const dispatch = useDispatch();
   const history =useHistory()
   const userLogin = useSelector((state) => state.userLogin);
@@ -35,6 +38,7 @@ const Navbar = () => {
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
+    signOut({clientId})
     dispatch(logout());
   };
   const cart = useSelector((state) => state.cart);
