@@ -77,7 +77,8 @@ const Order = () => {
     if (!userInfo) {
       history.push('/login')
     }
-  if (!order || successPay || successDeliver || order._id !== orderId) {
+  if (!order || order._id !== orderId) {
+    console.log(state)
     dispatch({ type: ORDER_PAY_RESET })
     dispatch({ type: ORDER_DELIVER_RESET })
     dispatch(getOrderDetails(orderId))
@@ -86,7 +87,7 @@ const Order = () => {
   }
 }, [dispatch, orderId, successPay, successDeliver, order])
 
-console.log(order , orderId)
+
 const config = {
   headers: {
     'Content-Type': 'application/json',
@@ -95,8 +96,7 @@ const config = {
 const paytime=()=>{ 
   axios
   .post(`http://localhost:5000/api/orders/${orderId}/pay`,{},config)
-  .then(response => {console.log(response.data);
-    checkoutRazorpay(response.data);})
+  .then(response => {checkoutRazorpay(response.data);})
   .catch(err => console.error(err));
 }
 function loadScript(src) {
@@ -130,16 +130,15 @@ const checkoutRazorpay = async (data) => {
     image: "https://avatars.githubusercontent.com/u/73386156",
     order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     handler: function (response) {
-      console.log(response.razorpay_payment_id);
-      console.log(response.razorpay_order_id);
-      console.log(response.razorpay_signature);
+      const payRes= { "id" : `${orderId}` , "status":true , "update_time": `${Date(Date.now()).toString()}` , "email_address":`${userInfo.email}` }
+      dispatch(payOrder(orderId,payRes))
       alert("Payment success!");
     },
-    // prefill: {
-    //   name: "Gaurav Kumar",
-    //   email: "gaurav.kumar@example.com",
-    //   contact: "9999999999",
-    // },
+    prefill: {
+    name: userInfo.username,
+    email: userInfo.email,
+    contact: "9999999999",
+    },
     notes: {
       address: "Razorpay Corporate Office",
     },
@@ -149,19 +148,12 @@ const checkoutRazorpay = async (data) => {
   };
   let rzp1 = new window.Razorpay(options);
   rzp1.on("payment.failed", function (response) {
-    console.log(response.error.code);
-    console.log(response.error.description);
-    console.log(response.error.source);
-    console.log(response.error.step);
-    console.log(response.error.reason);
-    console.log(response.error.metadata.order_id);
-    console.log(response.error.metadata.payment_id);
+
     alert(response.error.description);
   });
   rzp1.open();
 };
 
-console.log(order)
   return (
     <div>
       <Navbar />
@@ -220,11 +212,11 @@ console.log(order)
                       <span>Change Status:</span>
                     </Typography>
                   )} */}
-                    <Button
+                    {order?.isPaid ? <h4>Delivery in Process</h4> :<Button
                     onClick={paytime}
                     >
                       {"PAY"}
-                    </Button>
+                    </Button>}
                   </>
                 ) : null}
               </Paper>
