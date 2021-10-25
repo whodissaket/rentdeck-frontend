@@ -32,7 +32,7 @@ const Navbar = () => {
   const clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
   const { signOut, loaded } = useGoogleLogout({clientId})
   const dispatch = useDispatch();
-  const history =useHistory()
+  const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
@@ -43,9 +43,11 @@ const Navbar = () => {
   };
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  const items=cartItems.length
-  const [search ,setSearch]=useState("")
-  const handleSearch=()=>{history.push(`/products?s=${search}`)}
+  const items = cartItems.length;
+  const [search, setSearch] = useState("");
+  const handleSearch = () => {
+    history.push(`/products?s=${search}`);
+  };
   return (
     <Container>
       <Wrapper>
@@ -59,9 +61,13 @@ const Navbar = () => {
         <Center>
           {/* <Language>EN</Language> */}
           <SearchContainer>
-            <Input placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)}/>
+            <Input
+              placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <SearchBtn onClick={handleSearch}>
-            <Search style={{ color: "gray", fontSize: 16 }} />
+              <Search style={{ color: "gray", fontSize: 16 }} />
             </SearchBtn>
           </SearchContainer>
         </Center>
@@ -109,7 +115,7 @@ const Navbar = () => {
             </MenuItem>
             <MenuItem>
               <Link
-                to="/orderdetails"
+                to="/profile"
                 style={{ color: "black", textDecoration: "none" }}
               >
                 <PersonOutlineOutlined />
