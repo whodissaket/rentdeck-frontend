@@ -195,7 +195,7 @@ const Register = ({ location, history }) => {
         </GButton> */}
         <GoogleLogin
           clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
-          buttonText="Login with Google"
+          buttonText="Register with Google"
           onSuccess={googleSuccess}
           onFailure={googleFailure}
         />
