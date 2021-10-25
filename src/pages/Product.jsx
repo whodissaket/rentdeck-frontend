@@ -10,7 +10,7 @@ import { mobile } from "../responsive";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useLocation } from "react-router";
-
+import { useHistory } from "react-router";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -110,10 +110,15 @@ const Button = styled.button`
   }
 `;
 
+
 const Product = () => {
   const [prod, setP] = useState(null);
+  const [qty , setQty] = useState(1)
+  const history = useHistory()
   const location = useLocation();
   const id = location?.search.split("=")[1];
+  const addHandler=()=>{setQty(state => (state+1));}
+  const remHandler=()=>{setQty(state => ((state-1)>=1?((state-1)):state));}
   console.log(id);
   useEffect(() => {
     axios
@@ -126,7 +131,9 @@ const Product = () => {
   }, [id]);
 
   console.log(prod);
-  const addToCart = () => {};
+  const addToCart = () => {
+    history.push(`/cart/${id}?qty=${qty}`)
+  };
   return (
     <Container>
       <Navbar />
@@ -137,20 +144,15 @@ const Product = () => {
           {prod && <Title>{prod.title}</Title>}
           {/******** Description dynamic krneka h*******/}
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris
-            pellentesque pulvinar pellentesque habitant morbi tristique.
-            Praesent elementum facilisis leo vel fringilla est ullamcorper eget.
-            Mauris pharetra et ultrices neque. Sollicitudin nibh sit amet
-            commodo nulla facilisi nullam.
+            {prod?.desObj}
           </Desc>
           {prod && <Price>Rs.{prod.rentalrate}/month</Price>}
 
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Button onClick={remHandler}><Remove /></Button>
+              <Amount>{qty}</Amount>
+              <Button onClick={addHandler}><Add /></Button>
             </AmountContainer>
             <Button onClick={addToCart}>Add to Cart</Button>
           </AddContainer>
