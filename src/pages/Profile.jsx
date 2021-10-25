@@ -10,8 +10,10 @@ import Loader from "../components/Loader";
 import Announcement from "../components/Announcement/Announcement";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import { useHistory } from "react-router";
 
-const Profile = ({ location, history }) => {
+const Profile = () => {
+  const history = useHistory();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,40 +21,45 @@ const Profile = ({ location, history }) => {
   const [message, setMessage] = useState(null);
   const dispatch = useDispatch();
 
+  const state = useSelector((state) => state);
+  console.log(state)
+
   const userDetails = useSelector((state) => state.userDetails);
-  //   const { error, user } = userDetails;
+  const { loading: load ,error, user } = userDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  //   const { success } = userUpdateProfile;
+  const { success } = userUpdateProfile;
+  console.log(success ,userUpdateProfile)
 
   const orderListMy = useSelector((state) => state.orderListMy);
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
-
-  //   useEffect(() => {
-  //     if (!userInfo) {
-  //       history.push("/login");
-  //     } else {
-  //       if (!user || !user.name || success) {
-  //         dispatch({ type: USER_UPDATE_PROFILE_RESET });
-  //         dispatch(getUserDetails("profile"));
-  //         dispatch(listMyOrders());
-  //       } else {
-  //         setName(user.name);
-  //         setEmail(user.email);
-  //       }
-  //     }
-  //   }, [dispatch, history, userInfo, user, success]);
+     useEffect(() => {
+       if (!userInfo) {
+         history.push("/login");
+       } else {
+         if (!user || !user.name || success) {
+           dispatch({ type: USER_UPDATE_PROFILE_RESET });
+           dispatch(getUserDetails("profile"));
+           dispatch(listMyOrders());
+         } else {
+           setName(user.name);
+           setEmail(user.email);
+         }
+       }
+     }, [dispatch, history, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // if (password !== confirmPassword) {
-    //   setMessage("Passwords do not match");
-    // } else {
-    //   dispatch(updateUserProfile({ id: user._id, name, email, password }));
-    // }
+     if (password !== confirmPassword) {
+       setMessage("Passwords do not match");
+     } else {
+      setMessage(null);
+       console.log("here?")
+       dispatch(updateUserProfile({ id: user._id, name, email, password }));
+     }
   };
 
   return (
@@ -63,14 +70,13 @@ const Profile = ({ location, history }) => {
       <Row>
         <Col md={3}>
           <h2>User Profile</h2>
-          {/* {message && <Message variant="danger">{message}</Message>} */}
-          {}
-          {/* {success && <Message variant="success">Profile Updated</Message>} */}
-          {/* {loading ? (
+          {message && <Message variant="danger">{message}</Message>}
+          {success && <Message variant="success">Profile Updated</Message>}
+          {load ? (
           <Loader />
         ) : error ? (
           <Message variant="danger">{error}</Message>
-        ) : ( */}
+        ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
@@ -116,7 +122,7 @@ const Profile = ({ location, history }) => {
               Update
             </Button>
           </Form>
-          {/* )} */}
+          )}
         </Col>
         <Col md={9}>
           <h2>My Orders</h2>

@@ -77,7 +77,7 @@ const Navbar = () => {
             <LogoutBtn onClick={logoutHandler}>Log out</LogoutBtn>
             <MenuItem>
               <Link
-                to="/orderdetails"
+                to="/profile"
                 style={{ color: "black", textDecoration: "none" }}
               >
                 <PersonOutlineOutlined />
