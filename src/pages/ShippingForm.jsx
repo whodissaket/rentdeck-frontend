@@ -102,7 +102,12 @@ const ShippingForm = () => {
   const [country, setCountry] = useState(shippingAddress.country);
   const [paymentMethod, setPaymentMethod] = useState("RazorPay");
   const dispatch = useDispatch();
-
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login?redirect=shipping')
+    }},[])
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("here");
