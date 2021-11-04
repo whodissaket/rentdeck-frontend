@@ -25,7 +25,7 @@ const ImgContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 90vh;
-  object-fit: cover;
+  object-fit: contain;
   ${mobile({ height: "40vh" })}
 `;
 
@@ -90,8 +90,7 @@ const AmountContainer = styled.div`
 const Amount = styled.span`
   width: 30px;
   height: 30px;
-  border-radius: 10px;
-  border: 1px solid teal;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,15 +109,18 @@ const Button = styled.button`
   }
 `;
 
-
 const Product = () => {
   const [prod, setP] = useState(null);
-  const [qty , setQty] = useState(1)
-  const history = useHistory()
+  const [qty, setQty] = useState(1);
+  const history = useHistory();
   const location = useLocation();
   const id = location?.search.split("=")[1];
-  const addHandler=()=>{setQty(state => (state+1));}
-  const remHandler=()=>{setQty(state => ((state-1)>=1?((state-1)):state));}
+  const addHandler = () => {
+    setQty((state) => state + 1);
+  };
+  const remHandler = () => {
+    setQty((state) => (state - 1 >= 1 ? state - 1 : state));
+  };
   console.log(id);
   useEffect(() => {
     axios
@@ -132,7 +134,7 @@ const Product = () => {
 
   console.log(prod);
   const addToCart = () => {
-    history.push(`/cart/${id}?qty=${qty}`)
+    history.push(`/cart/${id}?qty=${qty}`);
   };
   return (
     <Container>
@@ -142,18 +144,23 @@ const Product = () => {
         <ImgContainer>{prod && <Image src={prod.images[0]} />}</ImgContainer>
         <InfoContainer>
           {prod && <Title>{prod.title}</Title>}
-          {/******** Description dynamic krneka h*******/}
-          <Desc>
-            {prod?.desObj}
-          </Desc>
-          {prod && <Price>Rs.{prod.rentalrate}/month</Price>}
 
+          <Desc>{prod?.desObj}</Desc>
+          {prod && <Price>Deposit: Rs.{prod.rentalrate * 3}</Price>}
+          <br />
+          {prod && <Price>Monthly Rent:Rs.{prod.rentalrate}/month</Price>}
+          <br />
           <AddContainer>
             <AmountContainer>
-              <Button onClick={remHandler}><Remove /></Button>
+              <Button onClick={remHandler}>
+                <Remove />
+              </Button>
               <Amount>{qty}</Amount>
-              <Button onClick={addHandler}><Add /></Button>
+              <Button onClick={addHandler}>
+                <Add />
+              </Button>
             </AmountContainer>
+
             <Button onClick={addToCart}>Add to Cart</Button>
           </AddContainer>
         </InfoContainer>

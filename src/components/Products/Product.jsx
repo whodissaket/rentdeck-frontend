@@ -16,17 +16,14 @@ const Product = ({ item }) => {
       <Image src={item.images[0]} alt={item.title} />
       <Info>
         <Icon>
-        <Link to={`/cart/${item._id}?qty=1`}>
-          <ShoppingCartOutlined />
+          <Link to={`/cart/${item._id}?qty=1`}>
+            <ShoppingCartOutlined />
           </Link>
         </Icon>
         <Icon>
           <Link to={`product?id=${item._id}`} replace>
-          <ZoomOutMapOutlined />
+            <ZoomOutMapOutlined />
           </Link>
-        </Icon>
-        <Icon>
-          <FavoriteBorderOutlined />
         </Icon>
       </Info>
     </Container>

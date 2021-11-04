@@ -40,6 +40,8 @@ export const Circle = styled.div`
   position: absolute;
 `;
 export const Image = styled.img`
+  object-fit: contain;
+  width: 100%;
   height: 75%;
   z-index: 2;
 `;
