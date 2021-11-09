@@ -4,7 +4,8 @@ import App from "./App";
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "./store";
-
+import dotenv from  'dotenv'
+dotenv.config()
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

@@ -69,47 +69,46 @@ const Order = () => {
     if (!userInfo) {
       history.push("/login");
     }
-    if (!order || order._id !== orderId) {
-      dispatch({ type: ORDER_PAY_RESET });
-      dispatch({ type: ORDER_DELIVER_RESET });
-      dispatch({ type: ORDER_RETURN_RESET });
-      dispatch(getOrderDetails(orderId));
-    } else if (!order.isPaid) {
-    }
-  }, [dispatch, orderId, successPay, successDeliver, successReturn, order]);
-
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userInfo.token}`,
-    },
-  };
-  const paytime = () => {
-    axios
-      .post(`http://localhost:5000/api/orders/${orderId}/pay`, {}, config)
-      .then((response) => {
-        checkoutRazorpay(response.data);
-      })
-      .catch((err) => console.error(err));
-  };
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
+  if (!order || order._id !== orderId) {
+    
+    dispatch({ type: ORDER_PAY_RESET })
+    dispatch({ type: ORDER_DELIVER_RESET })
+    dispatch({type :ORDER_RETURN_RESET})
+    dispatch(getOrderDetails(orderId))
+  } else if (!order.isPaid) {
+    
   }
-  const checkoutRazorpay = async (data) => {
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
+}, [dispatch, orderId, successPay, successDeliver,successReturn, order])
 
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userInfo.token}`,
+  },}
+const paytime=()=>{ 
+  axios
+  .post(`${process.env.REACT_APP_BASE_URL}/api/orders/${orderId}/pay`,{},config)
+  .then(response => {checkoutRazorpay(response.data);})
+  .catch(err => console.error(err));
+}
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
+const checkoutRazorpay = async (data) => {
+  const res = await loadScript(
+    'https://checkout.razorpay.com/v1/checkout.js'
+  );
     if (!res) {
       alert("Razorpay SDK failed to load. Are you online?");
       return;

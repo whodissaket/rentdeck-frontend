@@ -13,11 +13,12 @@ const Container = styled.div`
 
 const Products = ({category , search}) => {
   const [prods, setProds] = useState([]);
-
+  console.log(process)
+console.log(process.env.REACT_APP_BASE_URL)
   useEffect(() => {
     console.log(category)
     if(category){
-    axios.post(`http://localhost:5000/api/products/categories`, {
+    axios.post(`${process.env.REACT_APP_BASE_URL}/api/products/categories`, {
       headers: {
           'Content-Type': 'application/json',
       },
@@ -26,12 +27,12 @@ const Products = ({category , search}) => {
     console.log("here")
         setProds(response.data);
       }).catch((error)=>{console.log(error)})}
-      else if(search){axios.get(`http://localhost:5000/api/products/s?q=${search}`).then((response) => {
+      else if(search){axios.get(`${process.env.REACT_APP_BASE_URL}/api/products/s?q=${search}`).then((response) => {
         console.log("ikde")
             setProds(response.data);
           }).catch((error)=>{console.log(error)})}
       else{
-        axios.get("http://localhost:5000/api/products").then((response) => {
+        axios.get(`${process.env.REACT_APP_BASE_URL}/api/products`).then((response) => {
           console.log("here")
               setProds(response.data);
             }).catch((error)=>{console.log(error)})

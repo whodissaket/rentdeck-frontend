@@ -17,7 +17,7 @@ const Product1 = ({item}) => {
     const classes = useStyles();
     const [product , setProd] = useState(null)
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/products/id/${item.product}`)
+        axios.get(`${process.env.REACT_APP_BASE_URL}/api/products/id/${item.product}`)
     .then((response) => { setProd(response.data)
    console.log(product)})
 .catch((error) => console.log(error.message))

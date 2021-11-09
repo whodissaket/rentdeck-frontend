@@ -25,7 +25,7 @@ const Orders = () => {
   const classes = useStyles();
   useEffect(() => {
    
-    axios.get(`http://localhost:5000/api/orders/myorders `, {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/api/orders/myorders `, {
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${userInfo.token}`}
@@ -40,7 +40,7 @@ const Orders = () => {
 
       const prodtit = (prod)=>{
 
-      axios.get(`http://localhost:5000/api/products/id/${prod.product}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/api/products/id/${prod.product}`)
       .then((response) => {
         setTit((prev)=>[...prev ,response.data.title ]) })
 .catch((error) => console.log(error.message))

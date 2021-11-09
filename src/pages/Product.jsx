@@ -124,7 +124,7 @@ const Product = () => {
   console.log(id);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/products/id/${id}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/api/products/id/${id}`)
       .then((response) => {
         console.log(response.data);
         setP(response.data);
