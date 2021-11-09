@@ -19,6 +19,10 @@ import {
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_REQUEST,
+  ORDER_RETURN_REQUEST,
+  ORDER_RETURN_SUCCESS,
+  ORDER_RETURN_FAIL
+
 } from '../constants/orderConstants'
 import { logout } from './userActions'
 
@@ -189,6 +193,48 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
   }
 }
 
+export const returnOrder = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_RETURN_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(
+      `http://localhost:5000/api/orders/${order._id}/return`,
+      {},
+      config
+    )
+
+    dispatch({
+      type: ORDER_RETURN_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ORDER_RETURN_FAIL,
+      payload: message,
+    })
+  }
+}
+
+
 export const listMyOrders = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -206,12 +252,13 @@ export const listMyOrders = () => async (dispatch, getState) => {
     }
 
     const { data } = await axios.get(`http://localhost:5000/api/orders/myorders`, config)
-
+    console.log("hai" + data )
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
       payload: data,
     })
   } catch (error) {
+    console.log("error " + error)
     const message =
       error.response && error.response.data.message
         ? error.response.data.message

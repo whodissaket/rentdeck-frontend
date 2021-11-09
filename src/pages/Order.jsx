@@ -8,6 +8,7 @@ import {
   getOrderDetails,
   payOrder,
   deliverOrder,
+  returnOrder
 } from '../actions/orderActions'
 import {
   Container,
@@ -142,6 +143,9 @@ const checkoutRazorpay = async (data) => {
   });
   rzp1.open();
 };
+const handleD = ()=>{dispatch(deliverOrder(order))}
+const handleR = ()=>{dispatch(returnOrder(order))}
+
 const showStatus = order?.isPaid? (order?.isDelivered? (order?.isReturned ? "RETURNED" : "RETURN PENDING") :"IN DELIVERY"):"UNPAID"
 const ts=Date.parse(order?.createdAt)
 const dt=new Date(ts)
@@ -209,10 +213,12 @@ const dt=new Date(ts)
                       {"PAY"}
                     </Button>}
                     {order?.isDelivered ? "":<Button
+                    onClick={handleD}
                     >
                       {"SIMULATE DELIVERY"}
                     </Button>}
                     {order?.isReturned ? "RETURNED":<Button
+                    onClick={handleR}
                     >
                       {"SIMULATE RETURN"}
                     </Button>}

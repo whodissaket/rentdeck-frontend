@@ -16,6 +16,7 @@ import {
     orderDetailsReducer,
     orderPayReducer,
     orderDeliverReducer,
+    orderReturnReducer,
     orderListMyReducer,
     orderListReducer,
   } from './reducers/orderReducers'
@@ -34,6 +35,7 @@ import { cartReducer } from './reducers/cartReducers'
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,
     orderDeliver: orderDeliverReducer,
+    orderReturn : orderReturnReducer,
     orderListMy: orderListMyReducer,
     orderList: orderListReducer,
   })
