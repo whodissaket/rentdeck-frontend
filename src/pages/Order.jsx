@@ -30,6 +30,7 @@ import React, { useState, useEffect } from 'react'
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
+  ORDER_RETURN_RESET,
 } from '../constants/orderConstants'
 import { PersonOutlineOutlined } from "@material-ui/icons";
 import { useStyles } from "./styles/style2";
@@ -59,6 +60,9 @@ const Order = () => {
   const orderDeliver = useSelector((state) => state.orderDeliver)
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
+  const orderReturn = useSelector((state) => state.orderReturn)
+  const { loading: loadingReturn, success: successReturn } = orderReturn
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   
@@ -68,14 +72,15 @@ const Order = () => {
       history.push('/login')
     }
   if (!order || order._id !== orderId) {
-    console.log(state)
+    
     dispatch({ type: ORDER_PAY_RESET })
     dispatch({ type: ORDER_DELIVER_RESET })
+    dispatch({type :ORDER_RETURN_RESET})
     dispatch(getOrderDetails(orderId))
   } else if (!order.isPaid) {
     
   }
-}, [dispatch, orderId, successPay, successDeliver, order])
+}, [dispatch, orderId, successPay, successDeliver,successReturn, order])
 
 
 const config = {
