@@ -21,7 +21,7 @@ const Product = ({ item }) => {
           </Link>
         </Icon>
         <Icon>
-          <Link to={`product?id=${item._id}`} replace>
+          <Link to={`product?id=${item._id}`}>
             <ZoomOutMapOutlined />
           </Link>
         </Icon>
