@@ -43,7 +43,7 @@ const ProductList = () => {
       <Navbar />
       <Announcement />
       <Title>Products</Title>
-      <FilterContainer>
+      {/* <FilterContainer>
         <Filter>
           <FilterText>Filter by:</FilterText>
           <Select>
@@ -74,7 +74,7 @@ const ProductList = () => {
             <Option>Popularity</Option>
           </Select>
         </Filter>
-      </FilterContainer>
+      </FilterContainer> */}
       <Products category={category} search={search}/>
       <Footer />
     </Container>

@@ -9,6 +9,10 @@ import { Link } from "react-router-dom";
 import { useLocation, useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import { Col } from "react-bootstrap";
+const Input = styled.input`
+  margin: 20px 10px 0px 0px;
+`;
 
 const Container = styled.div``;
 
@@ -107,7 +111,8 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 20%;
+  object-fit: contain;
 `;
 
 const Details = styled.div`
@@ -256,7 +261,41 @@ const Cart = () => {
                           </ProductId>
 
                           <ProductSize>
-                            <b>Tag:</b> {}
+                            <b>Rental Duration:</b>
+                            <Col>
+                              <Input
+                                type="radio"
+                                label="1 month"
+                                id="month1"
+                                name="month"
+                                value="1"
+                                checked
+                                // onChange={(e) => setPaymentMethod(e.target.value)}
+                              />{" "}
+                              1 month {}
+                              <br />
+                              <Input
+                                type="radio"
+                                label="2 month"
+                                id="month2"
+                                name="month"
+                                value="2"
+                                disabled
+                                // onChange={(e) => setPaymentMethod(e.target.value)}
+                              />
+                              2 months {}
+                              <br />
+                              <Input
+                                type="radio"
+                                label="2 month"
+                                id="month3"
+                                name="month"
+                                value="3"
+                                disabled
+                                // onChange={(e) => setPaymentMethod(e.target.value)}
+                              />
+                              3 months
+                            </Col>
                           </ProductSize>
                         </Details>
                       </ProductDetail>
@@ -279,7 +318,7 @@ const Cart = () => {
                         </ProductPrice>
                       </PriceDetail>
                     </Product>
-                    <Hr />)
+                    <Hr />
                   </>
                 );
               })
