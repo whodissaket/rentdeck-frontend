@@ -30,7 +30,8 @@ console.log(process.env.REACT_APP_BASE_URL)
       else if(search){axios.get(`${process.env.REACT_APP_BASE_URL}/api/products/s?q=${search}`).then((response) => {
         console.log("ikde")
             setProds(response.data);
-          }).catch((error)=>{console.log(error)})}
+          }).catch((error)=>{console.log(error)
+            setProds(null);})}
       else{
         axios.get(`${process.env.REACT_APP_BASE_URL}/api/products`).then((response) => {
           console.log("here")
@@ -38,7 +39,7 @@ console.log(process.env.REACT_APP_BASE_URL)
             }).catch((error)=>{console.log(error)})
       }
   }
-  , []);
+  , [search]);
 
 
 
@@ -46,7 +47,7 @@ console.log(prods)
 
   return (
     <Container>
-      {prods.map((item) => <Product item={item} key={item._id} />)}
+      {prods? prods.map((item) => <Product item={item} key={item._id} />) : <h1>NO PRODUCT FOUND</h1>}
     </Container>
   );
 };
