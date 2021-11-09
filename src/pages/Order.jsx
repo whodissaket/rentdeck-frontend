@@ -38,18 +38,7 @@ import Announcement from "../components/Announcement/Announcement";
 import OrderedProducts from "../components/Orders/OrderedProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useHistory, useParams } from "react-router";
-const showStatus = (status) => {
-  switch (status) {
-    case "ORDERED":
-      return "PACKED";
-    case "PACKED":
-      return "SHIPPED";
-    case "SHIPPED":
-      return "DELIVERED";
-    default:
-      return "ORDER COMPLETED";
-  }
-};
+
 
 const Order = () => {
   const classes = useStyles();
@@ -153,7 +142,9 @@ const checkoutRazorpay = async (data) => {
   });
   rzp1.open();
 };
-
+const showStatus = order?.isPaid? (order?.isDelivered? (order?.isReturned ? "RETURNED" : "RETURN PENDING") :"IN DELIVERY"):"UNPAID"
+const ts=Date.parse(order?.createdAt)
+const dt=new Date(ts)
   return (
     <div>
       <Navbar />
@@ -190,16 +181,16 @@ const checkoutRazorpay = async (data) => {
                   <span>Items</span>
                 </Typography>
                 <Typography>
-                  <span>Date</span>
-                  {order?.createdAt}
+                  <span>Date : </span>
+                  {dt.toUTCString()}
                 </Typography>
                 <Typography>
                   <span>Price</span> {order?.totalPrice}/month
                 </Typography>
                 <Typography>
-                  <span>Status</span>{"  "}
+                  <span>Status</span>
                   <Chip
-                       label={order?.isPaid}
+                       label={showStatus}
                     size="small"
                     style={{ color: "white", fontWeight: "bold" }}
                     color="primary"
@@ -212,10 +203,18 @@ const checkoutRazorpay = async (data) => {
                       <span>Change Status:</span>
                     </Typography>
                   )} */}
-                    {order?.isPaid ? <h4>Delivery in Process</h4> :<Button
+                    {order?.isPaid ? "":<Button
                     onClick={paytime}
                     >
                       {"PAY"}
+                    </Button>}
+                    {order?.isDelivered ? "":<Button
+                    >
+                      {"SIMULATE DELIVERY"}
+                    </Button>}
+                    {order?.isReturned ? "RETURNED":<Button
+                    >
+                      {"SIMULATE RETURN"}
                     </Button>}
                   </>
                 ) : null}
