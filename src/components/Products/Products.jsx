@@ -11,7 +11,7 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Products = ({category , search}) => {
+const Products = ({category , search,number}) => {
   const [prods, setProds] = useState([]);
   console.log(process)
 console.log(process.env.REACT_APP_BASE_URL)
@@ -32,6 +32,10 @@ console.log(process.env.REACT_APP_BASE_URL)
             setProds(response.data);
           }).catch((error)=>{console.log(error)
             setProds(null);})}
+      else if(number){axios.get(`${process.env.REACT_APP_BASE_URL}/api/products/some?n=${number}`).then((response) => {
+        console.log("here")
+            setProds(response.data);
+          }).catch((error)=>{console.log(error)})}
       else{
         axios.get(`${process.env.REACT_APP_BASE_URL}/api/products`).then((response) => {
           console.log("here")

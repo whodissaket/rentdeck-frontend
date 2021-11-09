@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useLocation } from "react-router";
 import { useHistory } from "react-router";
+import Products from "../components/Products/Products"
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -165,7 +166,7 @@ const Product = () => {
           </AddContainer>
         </InfoContainer>
       </Wrapper>
-
+      <Products category={null} search={null} number={5}/>
       <Footer />
     </Container>
   );
