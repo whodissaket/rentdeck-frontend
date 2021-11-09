@@ -344,7 +344,8 @@ const Cart = () => {
               <SummaryItemPrice>{cart.shippingPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
+              <SummaryItemText>Deposit</SummaryItemText>
+              {/* *********************INSERT CODE HERE *********************** */}
               <SummaryItemPrice>Rs 50</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">

@@ -1,3 +1,5 @@
+///Place Order Deposit cart working laana hai
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -123,6 +125,12 @@ const PlaceOrder = () => {
                   <Row>
                     <Col>Items</Col>
                     <Col>Rs.{cart.itemsPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Deposit</Col>
+                    <Col>Rs.{cart.itemsPrice * 3}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>

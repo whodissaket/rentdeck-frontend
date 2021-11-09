@@ -8,8 +8,8 @@ import {
   getOrderDetails,
   payOrder,
   deliverOrder,
-  returnOrder
-} from '../actions/orderActions'
+  returnOrder,
+} from "../actions/orderActions";
 import {
   Container,
   Typography,
@@ -25,13 +25,13 @@ import {
   CircularProgress,
   Box,
 } from "@material-ui/core";
-import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
   ORDER_RETURN_RESET,
-} from '../constants/orderConstants'
+} from "../constants/orderConstants";
 import { PersonOutlineOutlined } from "@material-ui/icons";
 import { useStyles } from "./styles/style2";
 import Footer from "../components/Footer/Footer";
@@ -41,119 +41,133 @@ import OrderedProducts from "../components/Orders/OrderedProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useHistory, useParams } from "react-router";
 
-
 const Order = () => {
   const classes = useStyles();
   const param = useParams();
   const orderId = param.id;
-  
-  const [sdkReady, setSdkReady] = useState(false)
-  const history=useHistory()
-  const dispatch = useDispatch()
-  const state=useSelector((state)=>state)
-  const orderDetails = useSelector((state) => state.orderDetails)
-  const { order, loading, error } = orderDetails
 
-  const orderPay = useSelector((state) => state.orderPay)
-  const { loading: loadingPay, success: successPay } = orderPay
+  const [sdkReady, setSdkReady] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { order, loading, error } = orderDetails;
 
-  const orderDeliver = useSelector((state) => state.orderDeliver)
-  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
 
-  const orderReturn = useSelector((state) => state.orderReturn)
-  const { loading: loadingReturn, success: successReturn } = orderReturn
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
-  
+  const orderReturn = useSelector((state) => state.orderReturn);
+  const { loading: loadingReturn, success: successReturn } = orderReturn;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     if (!userInfo) {
-      history.push('/login')
+      history.push("/login");
     }
-  if (!order || order._id !== orderId) {
-    
-    dispatch({ type: ORDER_PAY_RESET })
-    dispatch({ type: ORDER_DELIVER_RESET })
-    dispatch({type :ORDER_RETURN_RESET})
-    dispatch(getOrderDetails(orderId))
-  } else if (!order.isPaid) {
-    
-  }
-}, [dispatch, orderId, successPay, successDeliver,successReturn, order])
+    if (!order || order._id !== orderId) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
+      dispatch({ type: ORDER_RETURN_RESET });
+      dispatch(getOrderDetails(orderId));
+    } else if (!order.isPaid) {
+    }
+  }, [dispatch, orderId, successPay, successDeliver, successReturn, order]);
 
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${userInfo.token}`,
-  },}
-const paytime=()=>{ 
-  axios
-  .post(`http://localhost:5000/api/orders/${orderId}/pay`,{},config)
-  .then(response => {checkoutRazorpay(response.data);})
-  .catch(err => console.error(err));
-}
-function loadScript(src) {
-  return new Promise((resolve) => {
-    const script = document.createElement('script');
-    script.src = src;
-    script.onload = () => {
-      resolve(true);
-    };
-    script.onerror = () => {
-      resolve(false);
-    };
-    document.body.appendChild(script);
-  });
-}
-const checkoutRazorpay = async (data) => {
-  const res = await loadScript(
-    'https://checkout.razorpay.com/v1/checkout.js'
-  );
-
-  if (!res) {
-    alert('Razorpay SDK failed to load. Are you online?');
-    return;
-  }
-  var options = {
-    key: "rzp_test_T2oeimfMzgJTrL", // Enter the Key ID generated from the Dashboard
-    amount: data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    currency: "INR",
-    name: userInfo.username,
-    description: "Test Transaction with Razorpay payment gateway",
-    image: "https://avatars.githubusercontent.com/u/73386156",
-    order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    handler: function (response) {
-      const payRes= { "id" : `${orderId}` , "status":true , "update_time": `${Date(Date.now()).toString()}` , "email_address":`${userInfo.email}` }
-      dispatch(payOrder(orderId,payRes))
-      alert("Payment success!");
-    },
-    prefill: {
-    name: userInfo.username,
-    email: userInfo.email,
-    contact: "9999999999",
-    },
-    notes: {
-      address: "Razorpay Corporate Office",
-    },
-    theme: {
-      color: "#61dafb",
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userInfo.token}`,
     },
   };
-  let rzp1 = new window.Razorpay(options);
-  rzp1.on("payment.failed", function (response) {
+  const paytime = () => {
+    axios
+      .post(`http://localhost:5000/api/orders/${orderId}/pay`, {}, config)
+      .then((response) => {
+        checkoutRazorpay(response.data);
+      })
+      .catch((err) => console.error(err));
+  };
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+  const checkoutRazorpay = async (data) => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
 
-    alert(response.error.description);
-  });
-  rzp1.open();
-};
-const handleD = ()=>{dispatch(deliverOrder(order))}
-const handleR = ()=>{dispatch(returnOrder(order))}
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+    var options = {
+      key: "rzp_test_T2oeimfMzgJTrL", // Enter the Key ID generated from the Dashboard
+      amount: data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: userInfo.username,
+      description: "Test Transaction with Razorpay payment gateway",
+      image: "https://avatars.githubusercontent.com/u/73386156",
+      order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        const payRes = {
+          id: `${orderId}`,
+          status: true,
+          update_time: `${Date(Date.now()).toString()}`,
+          email_address: `${userInfo.email}`,
+        };
+        dispatch(payOrder(orderId, payRes));
+        alert("Payment success!");
+      },
+      prefill: {
+        name: userInfo.username,
+        email: userInfo.email,
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#61dafb",
+      },
+    };
+    let rzp1 = new window.Razorpay(options);
+    rzp1.on("payment.failed", function (response) {
+      alert(response.error.description);
+    });
+    rzp1.open();
+  };
+  const handleD = () => {
+    window.location.reload(false);
+    dispatch(deliverOrder(order));
+  };
+  const handleR = () => {
+    window.location.reload(false);
+    dispatch(returnOrder(order));
+  };
 
-const showStatus = order?.isPaid? (order?.isDelivered? (order?.isReturned ? "RETURNED" : "RETURN PENDING") :"IN DELIVERY"):"UNPAID"
-const ts=Date.parse(order?.createdAt)
-const dt=new Date(ts)
+  const showStatus = order?.isPaid
+    ? order?.isDelivered
+      ? order?.isReturned
+        ? "RETURNED"
+        : "RETURN PENDING"
+      : "IN DELIVERY"
+    : "UNPAID";
+  const ts = Date.parse(order?.createdAt);
+  const dt = new Date(ts);
   return (
     <div>
       <Navbar />
@@ -178,10 +192,7 @@ const dt=new Date(ts)
               <Paper className={classes.paper}>
                 <Typography>
                   <span>Order ID {order?._id} </span>{" "}
-                  <Chip
-                    label={userInfo.username} 
-                    size="small"
-                  />
+                  <Chip label={userInfo.username} size="small" />
                 </Typography>
                 <Typography>
                   <span>Products</span> {order?.orderItems?.length}
@@ -199,7 +210,7 @@ const dt=new Date(ts)
                 <Typography>
                   <span>Status</span>
                   <Chip
-                       label={showStatus}
+                    label={showStatus}
                     size="small"
                     style={{ color: "white", fontWeight: "bold" }}
                     color="primary"
@@ -207,26 +218,17 @@ const dt=new Date(ts)
                 </Typography>
                 {true ? (
                   <>
-                    {/* {order?.status === "DELIVERED" ? null : (
-                    <Typography>
-                      <span>Change Status:</span>
-                    </Typography>
-                  )} */}
-                    {order?.isPaid ? "":<Button
-                    onClick={paytime}
-                    >
-                      {"PAY"}
-                    </Button>}
-                    {order?.isDelivered ? "":<Button
-                    onClick={handleD}
-                    >
-                      {"SIMULATE DELIVERY"}
-                    </Button>}
-                    {order?.isReturned ? "RETURNED":<Button
-                    onClick={handleR}
-                    >
-                      {"SIMULATE RETURN"}
-                    </Button>}
+                    {order?.isPaid ? (
+                      <Button onClick={handleD}>{"SIMULATE DELIVERY"}</Button>
+                    ) : (
+                      <Button onClick={paytime}>{"PAY"}</Button>
+                    )}
+                    {order?.isDelivered ? (
+                      <Button onClick={handleR}>{"SIMULATE RETURN"}</Button>
+                    ) : null}
+                    {order?.isReturned ? (
+                      <Button disabled>{"RETURNED"}</Button>
+                    ) : null}
                   </>
                 ) : null}
               </Paper>
@@ -245,10 +247,10 @@ const dt=new Date(ts)
                   Schedule a visit
                 </Button>
                 {/* //******************db here ************************ */}
-                 <Typography>{order?.shippingAddress?.country}</Typography>
-              <Typography>{order?.shippingAddress?.city}</Typography>
-              <Typography>{order?.shippingAddress?.address}</Typography>
-              <Typography>{order?.shippingAddress?.zipCode}</Typography> 
+                <Typography>{order?.shippingAddress?.country}</Typography>
+                <Typography>{order?.shippingAddress?.city}</Typography>
+                <Typography>{order?.shippingAddress?.address}</Typography>
+                <Typography>{order?.shippingAddress?.zipCode}</Typography>
               </Paper>
             </Grid>
           </Grid>
