@@ -7,7 +7,6 @@ import { login } from "../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -116,7 +115,8 @@ const Login = ({ location, history }) => {
   ///Google Login starts here.....
 
   const googleSuccess = async (res) => {
-    const fullName = res?.profileObj.givenName + " " + res.profileObj.familyName
+    const fullName =
+      res?.profileObj.givenName + " " + res.profileObj.familyName;
 
     console.log(res);
     try {
@@ -158,7 +158,7 @@ const Login = ({ location, history }) => {
         <Agreement>OR</Agreement>
 
         <GoogleLogin
-          clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
+          clientId="1019311600503-2d91uaf545vs4hdrq2tnndnohr9g8qh7.apps.googleusercontent.com"
           buttonText="Login with Google"
           onSuccess={googleSuccess}
           onFailure={googleFailure}

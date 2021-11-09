@@ -122,11 +122,17 @@ const Register = ({ location, history }) => {
 
   const googleSuccess = async (res) => {
     console.log(res);
-    const fullName = res?.profileObj.givenName + " " + res.profileObj.familyName
+    const fullName =
+      res?.profileObj.givenName + " " + res.profileObj.familyName;
     try {
       const password = null;
       dispatch(
-        register(fullName, res.profileObj.email, password, res.profileObj.googleId)
+        register(
+          fullName,
+          res.profileObj.email,
+          password,
+          res.profileObj.googleId
+        )
       );
     } catch (err) {
       console.log(error);
@@ -194,7 +200,7 @@ const Register = ({ location, history }) => {
           <AiOutlineGoogle />
         </GButton> */}
         <GoogleLogin
-          clientId="1019311600503-ohj206gja72310m6tbogjhk0mlgd5g7m.apps.googleusercontent.com"
+          clientId="1019311600503-2d91uaf545vs4hdrq2tnndnohr9g8qh7.apps.googleusercontent.com"
           buttonText="Register with Google"
           onSuccess={googleSuccess}
           onFailure={googleFailure}
