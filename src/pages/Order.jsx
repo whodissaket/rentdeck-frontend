@@ -69,46 +69,50 @@ const Order = () => {
     if (!userInfo) {
       history.push("/login");
     }
-  if (!order || order._id !== orderId) {
-    
-    dispatch({ type: ORDER_PAY_RESET })
-    dispatch({ type: ORDER_DELIVER_RESET })
-    dispatch({type :ORDER_RETURN_RESET})
-    dispatch(getOrderDetails(orderId))
-  } else if (!order.isPaid) {
-    
+    if (!order || order._id !== orderId) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
+      dispatch({ type: ORDER_RETURN_RESET });
+      dispatch(getOrderDetails(orderId));
+    } else if (!order.isPaid) {
+    }
+  }, [dispatch, orderId, successPay, successDeliver, successReturn, order]);
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+  const paytime = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/orders/${orderId}/pay`,
+        {},
+        config
+      )
+      .then((response) => {
+        checkoutRazorpay(response.data);
+      })
+      .catch((err) => console.error(err));
+  };
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
   }
-}, [dispatch, orderId, successPay, successDeliver,successReturn, order])
-
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${userInfo.token}`,
-  },}
-const paytime=()=>{ 
-  axios
-  .post(`${process.env.REACT_APP_BASE_URL}/api/orders/${orderId}/pay`,{},config)
-  .then(response => {checkoutRazorpay(response.data);})
-  .catch(err => console.error(err));
-}
-function loadScript(src) {
-  return new Promise((resolve) => {
-    const script = document.createElement('script');
-    script.src = src;
-    script.onload = () => {
-      resolve(true);
-    };
-    script.onerror = () => {
-      resolve(false);
-    };
-    document.body.appendChild(script);
-  });
-}
-const checkoutRazorpay = async (data) => {
-  const res = await loadScript(
-    'https://checkout.razorpay.com/v1/checkout.js'
-  );
+  const checkoutRazorpay = async (data) => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
     if (!res) {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
@@ -173,16 +177,13 @@ const checkoutRazorpay = async (data) => {
       <Announcement />
       <Container maxWidth="lg">
         <>
-          <Typography className={classes.title} variant="h1">
-            Profile
-          </Typography>
-          <Grid container spacing={3}>
+          {/* <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <PersonOutlineOutlined />
               {userInfo.username}
             </Grid>
-          </Grid>
-          <Typography className={classes.heading} variant="h3">
+          </Grid> */}
+          <Typography className={classes.title} variant="h3">
             Order Details
           </Typography>
 
@@ -190,24 +191,25 @@ const checkoutRazorpay = async (data) => {
             <Grid item md={6} xs={12}>
               <Paper className={classes.paper}>
                 <Typography>
-                  <span>Order ID {order?._id} </span>{" "}
+                  <span>Username :</span>
                   <Chip label={userInfo.username} size="small" />
                 </Typography>
                 <Typography>
-                  <span>Products</span> {order?.orderItems?.length}
+                  <span>Order ID : </span>
+                  {order?._id}{" "}
                 </Typography>
                 <Typography>
-                  <span>Items</span>
+                  <span>Products :</span> {order?.orderItems?.length}
                 </Typography>
                 <Typography>
                   <span>Date : </span>
                   {dt.toUTCString()}
                 </Typography>
                 <Typography>
-                  <span>Price</span> {order?.totalPrice}/month
+                  <span>Price :</span> {order?.totalPrice}/month
                 </Typography>
                 <Typography>
-                  <span>Status</span>
+                  <span>Status :</span>
                   <Chip
                     label={showStatus}
                     size="small"
