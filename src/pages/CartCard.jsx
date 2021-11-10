@@ -205,9 +205,11 @@ const [stock,setStock] = useState(true)
                           {(stock) ? "in stock":"out of stock"}
                         </ProductAmountContainer>
                         <ProductPrice>
-                          Rs.
+                          Rental Rate Rs.
                           {item.price}
                           /month
+                          <br />
+                          Deposit Rs. {item.price * 3}
                         </ProductPrice>
                       </PriceDetail>
                     </Product>

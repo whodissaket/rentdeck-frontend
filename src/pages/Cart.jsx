@@ -195,7 +195,7 @@ const Cart = () => {
   };
 
   cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty + item.price * 3, 0)
   );
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
@@ -339,16 +339,20 @@ const Cart = () => {
               <SummaryItemPrice>{cart.shippingPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
+              <SummaryItemText>TAX </SummaryItemText>
+              <SummaryItemPrice>{cart.taxPrice}</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
               <SummaryItemText>Deposit</SummaryItemText>
               {/* *********************INSERT CODE HERE *********************** */}
-              <SummaryItemPrice>Rs 50</SummaryItemPrice>
+              <SummaryItemPrice>{cartItems
+                  .reduce((acc, item) => acc + 3 * item.price, 0)
+                  .toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>
-                {cartItems
-                  .reduce((acc, item) => acc + item.qty * item.price, 0)
-                  .toFixed(2)}
+                {cart.totalPrice}
               </SummaryItemPrice>
             </SummaryItem>
             <Button
