@@ -34,48 +34,35 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
-  const location = useLocation()
-  const search=(location?.search.split('=')[0]=="?s")?(location?.search.split('=')[1]):(null)
-  const category = (location?.search.split('=')[0]=="?categories")?(location?.search.split('=')[1]):(null)
+  const location = useLocation();
+  const search =
+    location?.search.split("=")[0] == "?s"
+      ? location?.search.split("=")[1]
+      : null;
+  const category =
+    location?.search.split("=")[0] == "?categories"
+      ? location?.search.split("=")[1]
+      : null;
 
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Title>Products</Title>
-      {/* <FilterContainer>
+      <FilterContainer>
         <Filter>
-          <FilterText>Filter by:</FilterText>
+          <FilterText>Categorize by:</FilterText>
           <Select>
             <Option disabled selected>
-              Furniture
+              All
             </Option>
-            <Option>Sofa</Option>
-            <Option>Dining</Option>
+            <Option>Furniture</Option>
+            <Option>Electronics</Option>
             <Option>Kitchen</Option>
-            <Option>Bedroom</Option>
-          </Select>
-          <Select>
-            <Option disabled selected>
-              Electronics
-            </Option>
-            <Option>TV</Option>
-            <Option>Laptops</Option>
-            <Option>Smart Phones</Option>
-            <Option>Fridge</Option>
           </Select>
         </Filter>
-        <Filter>
-          <FilterText>Sort by:</FilterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
-            <Option>Popularity</Option>
-          </Select>
-        </Filter>
-      </FilterContainer> */}
-      <Products category={category} search={search}/>
+      </FilterContainer>
+      <Products category={category} search={search} />
       <Footer />
     </Container>
   );

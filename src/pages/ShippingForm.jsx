@@ -60,6 +60,7 @@ const Agreement = styled.span`
   font-size: 12px;
   margin: 20px 0px;
 `;
+const ProductSize = styled.span``;
 
 const Button = styled.button`
   width: 40%;
@@ -92,7 +93,7 @@ const Error = styled.span`
   color: red;
 `;
 
-const ShippingForm = () => {
+const ShippingForm = (item) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
   const history = useHistory();
@@ -102,12 +103,13 @@ const ShippingForm = () => {
   const [country, setCountry] = useState(shippingAddress.country);
   const [paymentMethod, setPaymentMethod] = useState("RazorPay");
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   useEffect(() => {
     if (!userInfo) {
-      history.push('/login?redirect=shipping')
-    }},[])
+      history.push("/login?redirect=shipping");
+    }
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("here");
@@ -172,16 +174,10 @@ const ShippingForm = () => {
                 onChange={(e) => setPaymentMethod(e.target.value)}
               />
               Razorpay <br />
-              {/* <InputRadio
-              type="radio"
-              label="Credit or Debit Card"
-              id="card"
-              name="paymentMethod"
-              value="card"
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            />
-            Credit or Debit Card */}
+              
             </Col>
+            
+            
             <Agreement>
               Press Continue to proceed to payment and review your order
             </Agreement>

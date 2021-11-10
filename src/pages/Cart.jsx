@@ -10,7 +10,7 @@ import { useLocation, useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import { Col } from "react-bootstrap";
-import CartCard from "./CartCard"
+import CartCard from "./CartCard";
 const Input = styled.input`
   margin: 20px 10px 0px 0px;
 `;
@@ -134,7 +134,14 @@ const ProductColor = styled.div`
   background-color: ${(props) => props.color};
 `;
 
-const ProductSize = styled.span``;
+const ProductSize = styled.h3`
+font-weight: 500;
+font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+`;
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -168,7 +175,11 @@ const Hr = styled.hr`
   height: 1px;
 `;
 
-const Cart = () => {
+const Box = styled.div`
+  border: 1px solid #000;
+`;
+
+const Cart = (item) => {
   const dispatch = useDispatch();
   const param = useParams();
   const location = useLocation();
@@ -183,19 +194,19 @@ const Cart = () => {
     }
   }, [dispatch, productId, qty]);
 
-
-
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
-
 
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
   cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty + item.price * 3, 0)
+    cart.cartItems.reduce(
+      (acc, item) => acc + item.price * item.qty + item.price * 3,
+      0
+    )
   );
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
@@ -215,7 +226,7 @@ const Cart = () => {
       <Navbar />
       <Announcement />
       <Wrapper>
-        <Title>YOUR BAG</Title>
+        <Title>YOUR BAG({cartItems?.length})</Title>
         <Top>
           <Link
             to="/products"
@@ -223,10 +234,6 @@ const Cart = () => {
           >
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
-          <TopTexts>
-            <TopText>Shopping Bag({cartItems?.length})</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
         </Top>
         <Bottom>
           {}
@@ -235,9 +242,11 @@ const Cart = () => {
             {cartItems.length === 0 ? (
               <h1>CART EMPTY</h1>
             ) : (
-              cartItems.map((item) => {  return ( <CartCard item={item} key={item.product}/> )
-                
-                {/* 
+              cartItems.map((item) => {
+                return <CartCard item={item} key={item.product} />;
+
+                {
+                  /* 
                 
                 return (
                   <>
@@ -316,9 +325,12 @@ const Cart = () => {
                     <Hr />
                   </>
                 );
-              */}  })
+              */
+                }
+              })
             )}
           </Info>
+
           <Summary>
             <SummaryTitle>Order Summary</SummaryTitle>
             <SummaryItem>
@@ -345,15 +357,15 @@ const Cart = () => {
             <SummaryItem>
               <SummaryItemText>Deposit</SummaryItemText>
               {/* *********************INSERT CODE HERE *********************** */}
-              <SummaryItemPrice>{cartItems
+              <SummaryItemPrice>
+                {cartItems
                   .reduce((acc, item) => acc + 3 * item.price, 0)
-                  .toFixed(2)}</SummaryItemPrice>
+                  .toFixed(2)}
+              </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>
-                {cart.totalPrice}
-              </SummaryItemPrice>
+              <SummaryItemPrice>{cart.totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <Button
               onClick={checkoutHandler}
@@ -364,6 +376,44 @@ const Cart = () => {
           </Summary>
         </Bottom>
       </Wrapper>
+      <ProductSize>
+        <b>Rental Duration:</b>
+      </ProductSize>
+      <Col>
+        <Input
+          type="radio"
+          label="1 month"
+          id={item.product + " month1"}
+          name={item.product + "month"}
+          value="1"
+          checked
+          // onChange={(e) => setPaymentMethod(e.target.value)}
+        />{" "}
+        1 month {}
+        <br />
+        <Input
+          type="radio"
+          label="2 month"
+          id={item.product + " month2"}
+          name={item.product + "month"}
+          value="2"
+
+          // onChange={(e) => setPaymentMethod(e.target.value)}
+        />
+        2 months {}
+        <br />
+        <Input
+          type="radio"
+          label="2 month"
+          id={item.product + " month3"}
+          name={item.product + "month"}
+          value="3"
+
+          // onChange={(e) => setPaymentMethod(e.target.value)}
+        />
+        3 months
+      </Col>
+
       <Footer />
     </Container>
   );
