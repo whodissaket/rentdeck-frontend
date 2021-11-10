@@ -33,18 +33,22 @@ const PlaceOrder = () => {
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
-
+  cart.deposit = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * 3, 0)
+  );
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-  );
+  )*cart.duration;
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 2 : 100);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice) +
-    Number(cart.taxPrice)
+    Number(cart.taxPrice)+
+    Number(cart.deposit)
   ).toFixed(2);
   const placeOrderHandler = () => {
+    console.log(cart)
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
