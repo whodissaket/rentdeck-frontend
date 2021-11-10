@@ -24,7 +24,7 @@ const OrderedProducts = () => {
       <Container maxWidth="lg">
         <>
           <Typography variant="h4" className={classes.heading}>
-            Products
+            Products 
           </Typography>
           <Grid container spacing={5}>
             { order?.orderItems?.map((item) =><Product1 item={item} />
