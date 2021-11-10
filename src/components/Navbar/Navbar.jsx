@@ -37,7 +37,7 @@ const Navbar = () => {
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
-
+  console.log(userInfo);
   const logoutHandler = () => {
     signOut({ clientId });
     dispatch(logout());
@@ -74,8 +74,8 @@ const Navbar = () => {
         </Center>
         {userInfo ? (
           <Right>
-            {console.log(userInfo)}
-            <MenuItem>Hi,{userInfo.username}</MenuItem>
+            <MenuItem>Hi, {userInfo.username}</MenuItem>
+
             <LogoutBtn onClick={logoutHandler}>Log out</LogoutBtn>
             <MenuItem>
               <Link
