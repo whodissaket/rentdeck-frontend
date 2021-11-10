@@ -176,14 +176,15 @@ const Order = () => {
     const dt = new Date(ts);
     console.log("here" ,date ,"here1"  , ts ,"here2" , dt ,"here3"  , dt.toUTCString())
   return dt.toUTCString()}
-  
+ {/* const newdt=new Date()
+  newdt.setMonth(newdt.getMonth()+3)
+ console.log(typeof(newdt))*/}
   return (
     <div>
       <Navbar />
       <Announcement />
       <Container maxWidth="lg">
         <>
-          {/*parseDate(Date.now())*/}
           <Typography className={classes.title} variant="h3">
             Order Details
           </Typography>
@@ -219,6 +220,9 @@ const Order = () => {
                   <span>Price :</span> {order?.totalPrice}/month
                 </Typography>
                 <Typography>
+                  <span>Deposit :</span> {order?.deposit}/month
+                </Typography>
+                <Typography>
                   <span>Status :</span>
                   <Chip
                     label={showStatus}
@@ -247,6 +251,15 @@ const Order = () => {
                 </Typography>
                 </>
                  : ""}
+                 {/* order?.isReturned ? <Typography>
+                   <span>Returned On</span>
+                   <Chip
+                    label={parseDate(order.returnedAt)}
+                    size="small"
+                    style={{ color: "white", fontWeight: "bold" }}
+                    color="primary"
+                  />
+                 </Typography> :""*/}
                 {order ? (
                   <>
                     <br />
@@ -266,9 +279,9 @@ const Order = () => {
             <Grid item md={6} xs={12}>
               <Paper className={classes.paper}>
                 <Typography variant="h6">Shipping Address</Typography> 
-                <Typography variant="h7">
+                {!userInfo.verified ? <Typography variant="h7">
                   Schedule a visit for document verification
-                </Typography>{" "}
+                </Typography>: <Typography variant="h7"> Verified User</Typography>}
                 <Button
                   variant="contained"
                   color="success"
