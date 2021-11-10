@@ -73,7 +73,7 @@ const Footer = () => {
             </Link>
           </ListItem>
           <ListItem>
-            <Link to="#categories" style={{ textDecoration: "none" }}>
+            <Link to="/products" style={{ textDecoration: "none" }}>
               Categories
             </Link>
           </ListItem>
