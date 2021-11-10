@@ -19,7 +19,6 @@ const OrderedProducts = () => {
   const classes = useStyles();
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
-  console.log(order)
   return (
     <div>
       <Container maxWidth="lg">

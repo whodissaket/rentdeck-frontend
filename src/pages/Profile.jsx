@@ -22,7 +22,6 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const state = useSelector((state) => state);
-  console.log(state)
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading: load ,error, user } = userDetails;
@@ -57,7 +56,6 @@ const Profile = () => {
        setMessage("Passwords do not match");
      } else {
       setMessage(null);
-       console.log("here?")
        dispatch(updateUserProfile({ id: user._id, name, email, password }));
      }
   };
@@ -126,7 +124,7 @@ const Profile = () => {
         </Col>
         <Col md={9}>
           <h2>My Orders</h2>
-          {loadingOrders ? (
+          { loadingOrders ? (
             <Loader />
           ) : errorOrders ? (
             <Message variant="danger">{errorOrders}</Message>
@@ -143,7 +141,8 @@ const Profile = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {orders?.map((order) => (
+                  
                   <tr key={order._id}>
                     <td>{order._id}</td>
                     <td>{order.createdAt.substring(0, 10)}</td>

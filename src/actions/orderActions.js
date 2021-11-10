@@ -252,7 +252,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
     }
 
     const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/orders/myorders`, config)
-    console.log("hai" + data )
+    console.log("LISTING MY ORDERS")
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
       payload: data,
