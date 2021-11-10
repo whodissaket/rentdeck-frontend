@@ -1,4 +1,4 @@
-import { Add, Remove } from "@material-ui/icons";
+
 import styled from "styled-components";
 import Announcement from "../components/Announcement/Announcement";
 import Footer from "../components/Footer/Footer";
@@ -44,15 +44,6 @@ const TopButton = styled.button`
   color: ${(props) => props.type === "filled" && "white"};
 `;
 
-const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
-`;
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
-`;
-
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
@@ -94,45 +85,6 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-`;
-const Button2 = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: white;
-
-  font-weight: 600;
-`;
-const ProductDetail = styled.div`
-  flex: 2;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 20%;
-  object-fit: contain;
-`;
-
-const Details = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-`;
 
 const ProductSize = styled.h3`
   display: flex;
@@ -144,38 +96,6 @@ const ProductSize = styled.h3`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-`;
-
-const PriceDetail = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
-  ${mobile({ margin: "5px 15px" })}
-`;
-
-const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
-  ${mobile({ marginBottom: "20px" })}
-`;
-
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
 `;
 
 const Box = styled.div`
@@ -197,7 +117,7 @@ const Cart = (item) => {
   const qty = location.search ? Number(location?.search.split("=")[1]) : 1;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  const [duration , setDuration] = useState(1)
+  const [duration, setDuration] = useState(1);
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -211,19 +131,14 @@ const Cart = (item) => {
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
-  cart.duration=duration
-  cart.deposit=addDecimals(
-    cart.cartItems.reduce(
-      (acc, item) => acc + item.price * 3,
-      0
-    )
-  )
-  cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce(
-      (acc, item) => acc + item.price * item.qty,
-      0
-    )
-  )*cart.duration;
+  cart.duration = duration;
+  cart.deposit = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * 3, 0)
+  );
+  cart.itemsPrice =
+    addDecimals(
+      cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    ) * cart.duration;
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
   cart.totalPrice = (
