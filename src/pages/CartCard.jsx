@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { mobile } from "../responsive";
 import { Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 const Input = styled.input`
   flex: 1;
   min-width: 40%;
@@ -83,67 +85,133 @@ const Hr = styled.hr`
   height: 1px;
 `;
 
-const CartCard = (props) => {
-  console.log(props);
-  const [c, setC] = useState(props.p.qty);
-  const [orders, setOrd] = useState([{}]);
-  const handleIncrement = () => {
-    setC((state) => state + 1);
+const CartCard = ({item , key}) => {
+  useEffect(()=>{
+    if(item.qty < item.countInStock){
+      console.log("here1")
+      setStock(true)
+    }
+    else if(item.qty== item.countInStock)
+    { setStock(false)   
+      console.log("here2")        }
+      else {
+        console.log("here3")
+        setStock(false)
+      }
+  },[item])
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+  
+const [stock,setStock] = useState(true)
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
   };
-  const handleDecrement = () => {
-    setC((state) => (state - 1 >= 0 ? state - 1 : state));
+
+  const handleIncrement = (item) => {
+    if(item.qty + 1 < item.countInStock){
+    dispatch(addToCart(item.product, item.qty + 1));
+  console.log("1"+stock)}
+  else if(item.qty + 1 == item.countInStock)
+  {   dispatch(addToCart(item.product, item.qty + 1));
+  setStock(false)           }
+    else {
+      console.log(item.qty,item.countInStock)
+      console.log("2"+stock)
+      setStock(false)
+      console.log("3"+stock)
+    }
+
+  };
+
+  const handleDecrement = (item) => {
+    if (1 < item.qty && item.qty <= item.countInStock) {
+      dispatch(addToCart(item.product, item.qty - 1 > 0 ? item.qty - 1 : 0));
+      setStock(true)
+      console.log(item.qty > 1)
+    } else if (item.qty==1) {
+      removeFromCartHandler(item.product);
+    }
+    else {
+
+    }
   };
   return (
     <>
       <Product>
-        <ProductDetail>
-          <Image src={props.p.images[0]} />
-          <Details>
-            <ProductName>
-              <b>Product:{props.p.title}</b>
-              {/* ********  Changes here******** */}
-              {/* {pro.name} */}
-            </ProductName>
-            <ProductId>
-              <b>ID:{props.p._id}</b>
-              {/* {pro._id} */}
-            </ProductId>
+                      <ProductDetail>
+                        <Image src={item.image} />
+                        <Details>
+                          <ProductName>
+                            <b>Product:{item.name}</b>
+                            {/* ********  Changes here******** */}
+                            {/* {pro.name} */}
+                          </ProductName>
+                          <ProductId>
+                            <b>ID:{item.product}</b>
+                            {/* {pro._id} */}
+                          </ProductId>
 
-            <ProductSize>
-              <b>Rental Duration:</b>
-              <Col>
-                <Input
-                  type="radio"
-                  label="1 month"
-                  id="month1"
-                  name="month"
-                  value="1"
-                  checked
-                  // onChange={(e) => setPaymentMethod(e.target.value)}
-                />
-              </Col>{" "}
-              {}
-            </ProductSize>
-          </Details>
-        </ProductDetail>
-        <PriceDetail>
-          <ProductAmountContainer>
-            <Button2 onClick={handleIncrement}>
-              <Add />
-            </Button2>
-            <ProductAmount value={c}>{c}</ProductAmount>
-            <Button2 onClick={handleDecrement}>
-              <Remove />
-            </Button2>
-          </ProductAmountContainer>
-          <ProductPrice>
-            Rs.
-            {props.p.rentalrate}
-            /month
-          </ProductPrice>
-        </PriceDetail>
-      </Product>
-      <Hr />)
+                          <ProductSize>
+                            <b>Rental Duration:</b>
+                            <Col>
+                              <Input
+                                type="radio"
+                                label="1 month"
+                                id={item.product+" month1"}
+                                name={item.product+"month"}
+                                value="1"
+                                checked
+                                // onChange={(e) => setPaymentMethod(e.target.value)}
+                              />{" "}
+                              1 month {}
+                              <br />
+                              <Input
+                                type="radio"
+                                label="2 month"
+                                id={item.product+" month2"}
+                                name={item.product+"month"}
+                                value="2"
+                                
+                                // onChange={(e) => setPaymentMethod(e.target.value)}
+                              />
+                              2 months {}
+                              <br />
+                              <Input
+                                type="radio"
+                                label="2 month"
+                                id={item.product+" month3"}
+                                name={item.product+"month"}
+                                value="3"
+                                
+                                // onChange={(e) => setPaymentMethod(e.target.value)}
+                              />
+                              3 months
+                            </Col>
+                          </ProductSize>
+                        </Details>
+                      </ProductDetail>
+                      <PriceDetail>
+                        <ProductAmountContainer>
+                          <Button2 onClick={() => handleIncrement(item)}>
+                            <Add />
+                          </Button2>
+                          <ProductAmount value={item.qty}>
+                            {item.qty}
+                          </ProductAmount>
+                          <Button2 onClick={() => handleDecrement(item)}>
+                            <Remove />
+                          </Button2>
+                          {(stock) ? "in stock":"out of stock"}
+                        </ProductAmountContainer>
+                        <ProductPrice>
+                          Rs.
+                          {item.price}
+                          /month
+                        </ProductPrice>
+                      </PriceDetail>
+                    </Product>
+                    <Hr />
     </>
   );
 };

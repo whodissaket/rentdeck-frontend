@@ -116,8 +116,16 @@ const Product = () => {
   const history = useHistory();
   const location = useLocation();
   const id = location?.search.split("=")[1];
+  const [stock,setStock] = useState(null)
+  useEffect(()=>{
+    if(qty==prod?.countInStock)
+    {setStock("No More in Stock")}
+    else{
+      setStock(null)
+    }
+  },[qty,prod])
   const addHandler = () => {
-    setQty((state) => state + 1);
+    setQty((state) => (state + 1)<= prod.countInStock ? state+1 : state);
   };
   const remHandler = () => {
     setQty((state) => (state - 1 >= 1 ? state - 1 : state));
@@ -127,13 +135,11 @@ const Product = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/products/id/${id}`)
       .then((response) => {
-        console.log(response.data);
         setP(response.data);
       })
       .catch((error) => console.log(error.message));
   }, [id]);
 
-  console.log(prod);
   const addToCart = () => {
     history.push(`/cart/${id}?qty=${qty}`);
   };
@@ -161,9 +167,10 @@ const Product = () => {
                 <Add />
               </Button>
             </AmountContainer>
-
             <Button onClick={addToCart}>Add to Cart</Button>
           </AddContainer>
+          <br />
+            <h2>{stock}</h2>
         </InfoContainer>
       </Wrapper>
       <Price>View Related Products</Price>
