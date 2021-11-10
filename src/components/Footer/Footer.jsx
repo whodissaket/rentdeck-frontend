@@ -80,12 +80,12 @@ const Footer = () => {
           <ListItem>My Accounts</ListItem>
 
           <ListItem>
-            <Link to="/orderdetails" style={{ textDecoration: "none" }}>
+            <Link to="/profile" style={{ textDecoration: "none" }}>
               Orders
             </Link>
           </ListItem>
           <ListItem>
-            <Link to="/orderdetails" style={{ textDecoration: "none" }}>
+            <Link to="/profile" style={{ textDecoration: "none" }}>
               Order Tracking
             </Link>
           </ListItem>
