@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Announcement from "../components/Announcement/Announcement";
 import Footer from "../components/Footer/Footer";
@@ -33,7 +33,8 @@ const Select = styled.select`
 `;
 const Option = styled.option``;
 
-const ProductList = () => {
+const ProductList = (history) => {
+  const [categories, setCategories] = useState("All");
   const location = useLocation();
   const search =
     location?.search.split("=")[0] == "?s"
@@ -43,6 +44,16 @@ const ProductList = () => {
     location?.search.split("=")[0] == "?categories"
       ? location?.search.split("=")[1]
       : null;
+
+  const FHandler = () => {
+    history.push("/products?categories=Furniture");
+  };
+  const EHandler = () => {
+    history.push("/products?categories=Electronics");
+  };
+  const KHandler = () => {
+    history.push("/products?categories=Kitchen");
+  };
 
   return (
     <Container>
@@ -56,9 +67,9 @@ const ProductList = () => {
             <Option disabled selected>
               All
             </Option>
-            <Option>Furniture</Option>
-            <Option>Electronics</Option>
-            <Option>Kitchen</Option>
+            <Option onClick={FHandler}>Furniture</Option>
+            <Option onClick={KHandler}>Kitchen</Option>
+            <Option onClick={EHandler}>Electronics</Option>
           </Select>
         </Filter>
       </FilterContainer>
