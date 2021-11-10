@@ -54,6 +54,8 @@ const PlaceOrder = () => {
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
+        deposit:cart.deposit,
+        duration:cart.duration
       })
     );
   };
@@ -104,8 +106,8 @@ const PlaceOrder = () => {
                             </Link>
                           </Col>
                           <Col md={4}>
-                            {item.qty} x Rs.{item.price} = Rs.
-                            {item.qty * item.price}
+                            {item.qty} Qty x Rs.{item.price} = Rs.
+                            {item.qty * item.price} x {cart.duration} months duration = Rs.{item.qty * item.price * cart.duration}
                           </Col>
                         </Row>
                       </ListGroup.Item>
@@ -143,6 +145,12 @@ const PlaceOrder = () => {
                   <Row>
                     <Col>Tax</Col>
                     <Col>Rs.{cart.taxPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Duration</Col>
+                    <Col>{cart.duration} Months</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>

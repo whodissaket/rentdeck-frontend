@@ -211,13 +211,19 @@ const Cart = (item) => {
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
-
-  cart.itemsPrice = addDecimals(
+  cart.duration=duration
+  cart.deposit=addDecimals(
     cart.cartItems.reduce(
-      (acc, item) => acc + item.price * item.qty + item.price * 3,
+      (acc, item) => acc + item.price * 3,
       0
     )
-  );
+  )
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce(
+      (acc, item) => acc + item.price * item.qty,
+      0
+    )
+  )*cart.duration;
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
   cart.totalPrice = (
@@ -252,36 +258,32 @@ const Cart = (item) => {
 
           <Col>
             <Input
-              type="checkbox"
+              type="radio"
               label="1 month"
-              id={item.product + " month1"}
-              name={item.product + "month"}
+              id="month1"
+              name="month"
               value="1"
-              checked
-              // onChange={(e) => setPaymentMethod(e.target.value)}
+              onChange={(e) => setDuration(e.target.value)}
             />{" "}
             1 month {}
             <br />
             <Input
-              type="checkbox"
+              type="radio"
               label="2 month"
-              id={item.product + " month2"}
-              name={item.product + "month"}
+              id="month2"
+              name="month"
               value="2"
-              disabled
-              // onChange={(e) => setPaymentMethod(e.target.value)}
+              onChange={(e) => setDuration(e.target.value)}
             />
             2 months {}
             <br />
             <Input
-              type="checkbox"
+              type="radio"
               label="3 month"
-              id={item.product + " month3"}
-              name={item.product + "month"}
+              id="month3"
+              name="month"
               value="3"
-              disabled
-
-              // onChange={(e) => setPaymentMethod(e.target.value)}
+              onChange={(e) => setDuration(e.target.value)}
             />
             3 months
           </Col>
@@ -327,9 +329,14 @@ const Cart = (item) => {
               <SummaryItemText>Deposit</SummaryItemText>
               {/* *********************INSERT CODE HERE *********************** */}
               <SummaryItemPrice>
-                {cartItems
-                  .reduce((acc, item) => acc + 3 * item.price, 0)
-                  .toFixed(2)}
+                {cart.deposit}
+              </SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Duration</SummaryItemText>
+              
+              <SummaryItemPrice>
+                {cart.duration}
               </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
