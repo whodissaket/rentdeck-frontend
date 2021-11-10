@@ -19,7 +19,6 @@ const Product1 = ({ item }) => {
   const history=useHistory()
   const [product, setProd] = useState(null);
   useEffect(() => {
-    console.log(item)
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/products/id/${item.product}`)
       .then((response) => {
@@ -52,13 +51,16 @@ const Product1 = ({ item }) => {
             >
             </Typography>
             <Typography>
+              <span>Title :</span> {product?.title}
+            </Typography>
+            <Typography>
               <span>Quantity :</span> {item?.qty}
             </Typography>
             <Typography>
               <span>Price :</span> Rs.{product?.rentalrate}
             </Typography>
             <Typography>
-              <span>Total Price :</span> Rs.{product?.rentalrate * item?.qty}
+              <span>Rental Price :</span> Rs.{product?.rentalrate * item?.qty}
             </Typography>
 
             {/* {!admin && reviewExist ? (
