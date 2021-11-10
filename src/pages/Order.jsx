@@ -221,14 +221,14 @@ const Order = () => {
                 {order ? (
                   <>
                
-                      <Button onClick={paytime} disabled={order.isPaid}>{"PAY"}</Button>
+                     { !order.isPaid ? <Button onClick={paytime}>{"PAY"}</Button> : "" }
                        
-                      <Button onClick={handleD} disabled={!order.isPaid || order.isDelivered}>{"SIMULATE DELIVERY"}</Button>
+                    { order.isPaid ? <Button onClick={handleD} >{"SIMULATE DELIVERY"}</Button> : "" }
           
-                      <Button onClick={handleR} disabled={!order.isPaid || !order.isDelivered || order.isReturned}>{"SIMULATE RETURN"}</Button>
+                     { order.isDelivered ? <Button onClick={handleR}>{"SIMULATE RETURN"}</Button> : "" }
 
             
-                      <Button disabled={!order.isReturned}>{"RETURNED"}</Button>
+                    { order.isReturned ? "RENTAL PRODUCTS HAVE BEEN RETURNED" : ""}
       
                   </>
                 ) : null}
