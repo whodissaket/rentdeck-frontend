@@ -31,7 +31,6 @@ const Orders = () => {
           'Authorization': `Bearer ${userInfo.token}`}
   }).then((response) => {
     setOrd(response.data)
-    console.log(response.data)
       }).catch((error)=>{console.log(error)})
   
     }, [userInfo]);
@@ -45,8 +44,6 @@ const Orders = () => {
         setTit((prev)=>[...prev ,response.data.title ]) })
 .catch((error) => console.log(error.message))
 const li = tit.map((item)=>{<li> {item}</li>})
-console.log(tit)
-console.log(li)
 return (
 {li}
 );

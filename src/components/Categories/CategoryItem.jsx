@@ -5,7 +5,6 @@ import { ItemContainer, Image, Info, Title, Button } from "./CategoriesEle";
 const CategoryItem = ({ item }) => {
   return (
     <ItemContainer>
-      {console.log(item.category)}
       <Link to={`/products?categories=${item.category}`}>
         <Image src={item.img} />
         <Info>

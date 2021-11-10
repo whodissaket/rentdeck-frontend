@@ -10,24 +10,24 @@ import { Link } from "react-router-dom";
 
 const Product = ({ item }) => {
   useEffect(() => {}, [item]);
+  
   return (
     <Container>
       <Circle />
-      <Image src={item.images[0]} alt={item.title} />
+      <Image src={item?.images?.[0]} alt={item?.title} />
       <Info>
         <Icon>
-          <Link to={`/cart/${item._id}?qty=1`}>
+          <Link to={`/cart/${item?._id}?qty=1`}>
             <ShoppingCartOutlined />
           </Link>
         </Icon>
         <Icon>
-          <Link to={`product?id=${item._id}`}>
+          <Link to={`product?id=${item?._id}`}>
             <ZoomOutMapOutlined />
           </Link>
         </Icon>
       </Info>
-    </Container>
-  );
+    </Container> );
 };
 
 export default Product;

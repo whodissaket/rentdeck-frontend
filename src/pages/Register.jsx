@@ -121,7 +121,6 @@ const Register = ({ location, history }) => {
   ///Google Login starts here.....
 
   const googleSuccess = async (res) => {
-    console.log(res);
     const fullName =
       res?.profileObj.givenName + " " + res.profileObj.familyName;
     try {

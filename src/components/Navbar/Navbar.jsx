@@ -73,7 +73,7 @@ const Navbar = () => {
         </Center>
         {userInfo ? (
           <Right>
-            <MenuItem>Hi, {userInfo.username}</MenuItem>
+            <MenuItem>Hi, {userInfo.name}</MenuItem>
             <LogoutBtn onClick={logoutHandler}>Log out</LogoutBtn>
             <MenuItem>
               <Link
