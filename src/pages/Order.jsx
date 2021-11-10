@@ -135,6 +135,7 @@ const Order = () => {
         };
         dispatch(payOrder(orderId, payRes));
         alert("Payment success!");
+        history.go()
       },
       prefill: {
         name: userInfo.username,
@@ -151,15 +152,16 @@ const Order = () => {
     let rzp1 = new window.Razorpay(options);
     rzp1.on("payment.failed", function (response) {
       alert(response.error.description);
+      
     });
     rzp1.open();
   };
   const handleD = () => {
-    window.location.reload(false);
+    history.go();
     dispatch(deliverOrder(order));
   };
   const handleR = () => {
-    window.location.reload(false);
+    history.go();
     dispatch(returnOrder(order));
   };
 
@@ -199,7 +201,12 @@ const Order = () => {
                 </Typography>
                 <Typography>
                   <span>Order ID : </span>
-                  {order?._id}{" "}
+                  <Chip
+                    label={order?._id}
+                    size="small"
+                    style={{ color: "white", fontWeight: "bold" }}
+                    color="primary"
+                  />
                 </Typography>
                 <Typography>
                   <span>Products :</span> {order?.orderItems?.length}
@@ -207,6 +214,10 @@ const Order = () => {
                 <Typography>
                   <span>Date : </span>
                   {parseDate(order?.createdAt)}
+                </Typography>
+                <Typography>
+                  <span>Rental Duration : </span>
+                  {order?.duration} month
                 </Typography>
                 <Typography>
                   <span>Price :</span> {order?.totalPrice}/month
@@ -247,7 +258,7 @@ const Order = () => {
             </Grid>
             <Grid item md={6} xs={12}>
               <Paper className={classes.paper}>
-                <Typography variant="h6">Shipping Address</Typography>
+                <Typography variant="h6">Shipping Address</Typography> 
                 <Typography variant="h7">
                   Schedule a visit for document verification
                 </Typography>{" "}
@@ -258,7 +269,6 @@ const Order = () => {
                 >
                   Schedule a visit
                 </Button>
-                {/* //******************db here ************************ */}
                 <Typography>{order?.shippingAddress?.country}</Typography>
                 <Typography>{order?.shippingAddress?.city}</Typography>
                 <Typography>{order?.shippingAddress?.address}</Typography>

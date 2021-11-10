@@ -12,11 +12,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import React from "react";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { useStyles } from "../../pages/styles/style2";
 const Product1 = ({ item }) => {
   const classes = useStyles();
+  const history=useHistory()
   const [product, setProd] = useState(null);
   useEffect(() => {
+    console.log(item)
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/products/id/${item.product}`)
       .then((response) => {
@@ -30,7 +33,7 @@ const Product1 = ({ item }) => {
       <Grid key={item?._id} item xs={12} sm={6} lg={4}>
         <Card className={classes.product}>
           <CardActionArea
-          // onClick={() => history.push(`/product/${item.product._id}`)}
+          onClick={() => history.push(`/product?id=${item.product}`)}
           >
             <CardMedia
               style={{ height: "250px", backgroundSize: "contain" }}
