@@ -15,7 +15,6 @@ const Products = ({category , search,number}) => {
   const [prods, setProds] = useState([]);
 console.log(category,search,number)
   useEffect(() => {
-    console.log(category)
     if(category){
     axios.post(`${process.env.REACT_APP_BASE_URL}/api/products/categories`, {
       headers: {
@@ -23,21 +22,18 @@ console.log(category,search,number)
       },
       categories : category
   }).then((response) => {
-    console.log("here")
         setProds(response.data);
       }).catch((error)=>{console.log(error)})}
       else if(search){axios.get(`${process.env.REACT_APP_BASE_URL}/api/products/s?q=${search}`).then((response) => {
-        console.log("ikde")
             setProds(response.data);
           }).catch((error)=>{console.log(error)
             setProds(null);})}
       else if(number){axios.get(`${process.env.REACT_APP_BASE_URL}/api/products/some?n=${number}`).then((response) => {
-        console.log("here")
+
             setProds(response.data);
           }).catch((error)=>{console.log(error)})}
       else{
         axios.get(`${process.env.REACT_APP_BASE_URL}/api/products`).then((response) => {
-          console.log("here")
               setProds(response.data);
             }).catch((error)=>{console.log(error)})
       }
