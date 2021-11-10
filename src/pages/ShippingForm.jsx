@@ -112,10 +112,8 @@ const ShippingForm = (item) => {
   }, []);
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("here");
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     dispatch(savePaymentMethod(paymentMethod));
-    console.log("here2");
     history.push("/placeorder");
   };
   const goBackHandler = () => {

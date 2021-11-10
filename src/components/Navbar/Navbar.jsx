@@ -37,7 +37,6 @@ const Navbar = () => {
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
-  console.log(userInfo);
   const logoutHandler = () => {
     signOut({ clientId });
     dispatch(logout());

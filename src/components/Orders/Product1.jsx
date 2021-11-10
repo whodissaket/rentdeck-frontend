@@ -21,7 +21,6 @@ const Product1 = ({ item }) => {
       .get(`${process.env.REACT_APP_BASE_URL}/api/products/id/${item.product}`)
       .then((response) => {
         setProd(response.data);
-        console.log(product);
       })
       .catch((error) => console.log(error.message));
   }, [item]);
@@ -48,7 +47,6 @@ const Product1 = ({ item }) => {
               component={Link}
               to={`/product/${product?._id}`}
             >
-              {console.log(product)}
             </Typography>
             <Typography>
               <span>Quantity :</span> {item?.qty}

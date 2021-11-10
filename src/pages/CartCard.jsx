@@ -92,13 +92,11 @@ const Hr = styled.hr`
 const CartCard = ({ item, key }) => {
   useEffect(() => {
     if (item.qty < item.countInStock) {
-      console.log("here1");
+      
       setStock(true);
     } else if (item.qty == item.countInStock) {
       setStock(false);
-      console.log("here2");
     } else {
-      console.log("here3");
       setStock(false);
     }
   }, [item]);
@@ -114,15 +112,11 @@ const CartCard = ({ item, key }) => {
   const handleIncrement = (item) => {
     if (item.qty + 1 < item.countInStock) {
       dispatch(addToCart(item.product, item.qty + 1));
-      console.log("1" + stock);
     } else if (item.qty + 1 == item.countInStock) {
       dispatch(addToCart(item.product, item.qty + 1));
       setStock(false);
     } else {
-      console.log(item.qty, item.countInStock);
-      console.log("2" + stock);
       setStock(false);
-      console.log("3" + stock);
     }
   };
 
@@ -130,7 +124,6 @@ const CartCard = ({ item, key }) => {
     if (1 < item.qty && item.qty <= item.countInStock) {
       dispatch(addToCart(item.product, item.qty - 1 > 0 ? item.qty - 1 : 0));
       setStock(true);
-      console.log(item.qty > 1);
     } else if (item.qty == 1) {
       removeFromCartHandler(item.product);
     } else {

@@ -44,8 +44,9 @@ export const createOrder = (order) => async (dispatch, getState) => {
     }
     const uzer={ "user" : userInfo._id}
     const orderdata = {...order , ...uzer}
+    console.log(order)
     const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/orders/`, order, config)
-
+    console.log(data)
     dispatch({
       type: ORDER_CREATE_SUCCESS,
       payload: data,
