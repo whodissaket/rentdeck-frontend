@@ -188,6 +188,7 @@ const Cart = (item) => {
   const qty = location.search ? Number(location?.search.split("=")[1]) : 1;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const [duration , setDuration] = useState(1)
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -385,9 +386,9 @@ const Cart = (item) => {
           label="1 month"
           id={item.product + " month1"}
           name={item.product + "month"}
-          value="1"
+          value={1}
           checked
-          // onChange={(e) => setPaymentMethod(e.target.value)}
+        onChange={(e) => setDuration(e.target.value)}
         />{" "}
         1 month {}
         <br />
@@ -396,20 +397,19 @@ const Cart = (item) => {
           label="2 month"
           id={item.product + " month2"}
           name={item.product + "month"}
-          value="2"
-
-          // onChange={(e) => setPaymentMethod(e.target.value)}
+          value={2}
+          onChange={(e) => setDuration(e.target.value)}
         />
         2 months {}
         <br />
         <Input
           type="radio"
-          label="2 month"
+          label="3 month"
           id={item.product + " month3"}
           name={item.product + "month"}
-          value="3"
+          value={3}
 
-          // onChange={(e) => setPaymentMethod(e.target.value)}
+          onChange={(e) => setDuration(e.target.value)}
         />
         3 months
       </Col>
