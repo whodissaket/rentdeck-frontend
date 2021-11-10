@@ -13,8 +13,7 @@ const Container = styled.div`
 
 const Products = ({category , search,number}) => {
   const [prods, setProds] = useState([]);
-  console.log(process)
-console.log(process.env.REACT_APP_BASE_URL)
+console.log(category,search,number)
   useEffect(() => {
     console.log(category)
     if(category){
@@ -43,11 +42,8 @@ console.log(process.env.REACT_APP_BASE_URL)
             }).catch((error)=>{console.log(error)})
       }
   }
-  , [search]);
+  , [search,category,number]);
 
-
-
-console.log(prods)
 
   return (
     <Container>

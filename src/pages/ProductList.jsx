@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import styled from "styled-components";
 import Announcement from "../components/Announcement/Announcement";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import Products from "../components/Products/Products";
 import { mobile } from "../responsive";
-import { useLocation, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
+import { useFormControl } from "@material-ui/core";
 const Container = styled.div``;
 const Title = styled.h1`
   margin: 20px;
@@ -33,28 +34,27 @@ const Select = styled.select`
 `;
 const Option = styled.option``;
 
-const ProductList = (history) => {
-  const [categories, setCategories] = useState("All");
+const ProductList = () => {
   const location = useLocation();
+  const [categories , setCategories]=useState(null)
   const search =
     location?.search.split("=")[0] == "?s"
       ? location?.search.split("=")[1]
       : null;
-  const category =
+  var category =
     location?.search.split("=")[0] == "?categories"
       ? location?.search.split("=")[1]
       : null;
+const history=useHistory()
 
-  const FHandler = () => {
-    history.push("/products?categories=Furniture");
+const categoryHandler = (e) => {
+  history.push(`/products?categories=${e.target.value}`)
+  setCategories(e.target.value)
   };
-  const EHandler = () => {
-    history.push("/products?categories=Electronics");
-  };
-  const KHandler = () => {
-    history.push("/products?categories=Kitchen");
-  };
-
+  useEffect(()=>{
+    setCategories(location?.search.split("=")[0] == "?categories"
+      ? location?.search.split("=")[1]
+      : null);},[location,search])
   return (
     <Container>
       <Navbar />
@@ -63,17 +63,17 @@ const ProductList = (history) => {
       <FilterContainer>
         <Filter>
           <FilterText>Categorize by:</FilterText>
-          <Select>
+          <Select onChange={(e)=>{categoryHandler(e)}}>
             <Option disabled selected>
               All
             </Option>
-            <Option onClick={FHandler}>Furniture</Option>
-            <Option onClick={KHandler}>Kitchen</Option>
-            <Option onClick={EHandler}>Electronics</Option>
+            <Option>Furniture</Option>
+            <Option>Kitchen</Option>
+            <Option>Electronics</Option>
           </Select>
         </Filter>
       </FilterContainer>
-      <Products category={category} search={search} />
+      <Products category={categories} search={search} />
       <Footer />
     </Container>
   );
