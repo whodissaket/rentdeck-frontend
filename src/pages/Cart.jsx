@@ -322,22 +322,18 @@ const Cart = (item) => {
               <SummaryItemPrice>{cart.shippingPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>TAX </SummaryItemText>
+              <SummaryItemText>Tax </SummaryItemText>
               <SummaryItemPrice>{cart.taxPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Deposit</SummaryItemText>
               {/* *********************INSERT CODE HERE *********************** */}
-              <SummaryItemPrice>
-                {cart.deposit}
-              </SummaryItemPrice>
+              <SummaryItemPrice>{cart.deposit}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Duration</SummaryItemText>
-              
-              <SummaryItemPrice>
-                {cart.duration}
-              </SummaryItemPrice>
+
+              <SummaryItemPrice>{cart.duration}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
@@ -352,6 +348,9 @@ const Cart = (item) => {
           </Summary>
         </Bottom>
       </Wrapper>
+      <br />
+      <br />
+      <br />
 
       <Footer />
     </Container>
