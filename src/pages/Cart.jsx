@@ -135,9 +135,12 @@ const ProductColor = styled.div`
 `;
 
 const ProductSize = styled.h3`
-font-weight: 500;
-font-size: 14px;
   display: flex;
+  flex: 2;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  text-align: center;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
@@ -176,6 +179,12 @@ const Hr = styled.hr`
 `;
 
 const Box = styled.div`
+  margin: 0 auto;
+  display: flex;
+  flex: 1;
+  flex-direction: inherit;
+  padding: 20px;
+  width: 30%;
   border: 1px solid #000;
 `;
 
@@ -235,6 +244,48 @@ const Cart = (item) => {
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
         </Top>
+        <Box>
+          <ProductSize>
+            <b>Rental Duration:</b>
+          </ProductSize>
+
+          <Col>
+            <Input
+              type="checkbox"
+              label="1 month"
+              id={item.product + " month1"}
+              name={item.product + "month"}
+              value="1"
+              checked
+              // onChange={(e) => setPaymentMethod(e.target.value)}
+            />{" "}
+            1 month {}
+            <br />
+            <Input
+              type="checkbox"
+              label="2 month"
+              id={item.product + " month2"}
+              name={item.product + "month"}
+              value="2"
+              disabled
+              // onChange={(e) => setPaymentMethod(e.target.value)}
+            />
+            2 months {}
+            <br />
+            <Input
+              type="checkbox"
+              label="3 month"
+              id={item.product + " month3"}
+              name={item.product + "month"}
+              value="3"
+              disabled
+
+              // onChange={(e) => setPaymentMethod(e.target.value)}
+            />
+            3 months
+          </Col>
+        </Box>
+        <br />
         <Bottom>
           {}
 
@@ -244,89 +295,6 @@ const Cart = (item) => {
             ) : (
               cartItems.map((item) => {
                 return <CartCard item={item} key={item.product} />;
-
-                {
-                  /* 
-                
-                return (
-                  <>
-                    <Product>
-                      <ProductDetail>
-                        <Image src={item.image} />
-                        <Details>
-                          <ProductName>
-                            <b>Product:{item.name}</b>
-          
-                          </ProductName>
-                          <ProductId>
-                            <b>ID:{item.product}</b>
-                
-                          </ProductId>
-
-                          <ProductSize>
-                            <b>Rental Duration:</b>
-                            <Col>
-                              <Input
-                                type="radio"
-                                label="1 month"
-                                id="month1"
-                                name="month"
-                                value="1"
-                                checked
-                                // onChange={(e) => setPaymentMethod(e.target.value)}
-                              />{" "}
-                              1 month {}
-                              <br />
-                              <Input
-                                type="radio"
-                                label="2 month"
-                                id="month2"
-                                name="month"
-                                value="2"
-                                disabled
-                                // onChange={(e) => setPaymentMethod(e.target.value)}
-                              />
-                              2 months {}
-                              <br />
-                              <Input
-                                type="radio"
-                                label="2 month"
-                                id="month3"
-                                name="month"
-                                value="3"
-                                disabled
-                                // onChange={(e) => setPaymentMethod(e.target.value)}
-                              />
-                              3 months
-                            </Col>
-                          </ProductSize>
-                        </Details>
-                      </ProductDetail>
-                      <PriceDetail>
-                        <ProductAmountContainer>
-                          <Button2 onClick={() => handleIncrement(item)}>
-                            <Add />
-                          </Button2>
-                          <ProductAmount onLoad={()=>check(item)} value={item.qty}>
-                            {item.qty}
-                          </ProductAmount>
-                          <Button2 onClick={() => handleDecrement(item)}>
-                            <Remove />
-                          </Button2>
-                          {(stock) ? "in stock":"out of stock"}
-                        </ProductAmountContainer>
-                        <ProductPrice>
-                          Rs.
-                          {item.price}
-                          /month
-                        </ProductPrice>
-                      </PriceDetail>
-                    </Product>
-                    <Hr />
-                  </>
-                );
-              */
-                }
               })
             )}
           </Info>
@@ -376,43 +344,6 @@ const Cart = (item) => {
           </Summary>
         </Bottom>
       </Wrapper>
-      <ProductSize>
-        <b>Rental Duration:</b>
-      </ProductSize>
-      <Col>
-        <Input
-          type="radio"
-          label="1 month"
-          id={item.product + " month1"}
-          name={item.product + "month"}
-          value="1"
-          checked
-          // onChange={(e) => setPaymentMethod(e.target.value)}
-        />{" "}
-        1 month {}
-        <br />
-        <Input
-          type="radio"
-          label="2 month"
-          id={item.product + " month2"}
-          name={item.product + "month"}
-          value="2"
-
-          // onChange={(e) => setPaymentMethod(e.target.value)}
-        />
-        2 months {}
-        <br />
-        <Input
-          type="radio"
-          label="2 month"
-          id={item.product + " month3"}
-          name={item.product + "month"}
-          value="3"
-
-          // onChange={(e) => setPaymentMethod(e.target.value)}
-        />
-        3 months
-      </Col>
 
       <Footer />
     </Container>
