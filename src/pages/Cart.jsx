@@ -10,6 +10,7 @@ import { useLocation, useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import { Col } from "react-bootstrap";
+import CartCard from "./CartCard"
 const Input = styled.input`
   margin: 20px 10px 0px 0px;
 `;
@@ -174,33 +175,25 @@ const Cart = () => {
   const history = useHistory();
   const productId = param.id;
   const qty = location.search ? Number(location?.search.split("=")[1]) : 1;
-  console.log(productId, qty);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
   }, [dispatch, productId, qty]);
 
+
+
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
-  const handleIncrement = (item) => {
-    console.log(item);
-    dispatch(addToCart(item.product, item.qty + 1));
-  };
-  const handleDecrement = (item) => {
-    if (item.qty > 1) {
-      dispatch(addToCart(item.product, item.qty - 1 > 0 ? item.qty - 1 : 0));
-    } else {
-      removeFromCartHandler(item.product);
-    }
-  };
+
+
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
+
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
@@ -242,8 +235,10 @@ const Cart = () => {
             {cartItems.length === 0 ? (
               <h1>CART EMPTY</h1>
             ) : (
-              cartItems.map((item) => {
-                console.log("here2");
+              cartItems.map((item) => {  return ( <CartCard item={item} key={item.product}/> )
+                
+                {/* 
+                
                 return (
                   <>
                     <Product>
@@ -252,12 +247,11 @@ const Cart = () => {
                         <Details>
                           <ProductName>
                             <b>Product:{item.name}</b>
-                            {/* ********  Changes here******** */}
-                            {/* {pro.name} */}
+          
                           </ProductName>
                           <ProductId>
                             <b>ID:{item.product}</b>
-                            {/* {pro._id} */}
+                
                           </ProductId>
 
                           <ProductSize>
@@ -304,12 +298,13 @@ const Cart = () => {
                           <Button2 onClick={() => handleIncrement(item)}>
                             <Add />
                           </Button2>
-                          <ProductAmount value={item.qty}>
+                          <ProductAmount onLoad={()=>check(item)} value={item.qty}>
                             {item.qty}
                           </ProductAmount>
                           <Button2 onClick={() => handleDecrement(item)}>
                             <Remove />
                           </Button2>
+                          {(stock) ? "in stock":"out of stock"}
                         </ProductAmountContainer>
                         <ProductPrice>
                           Rs.
@@ -321,7 +316,7 @@ const Cart = () => {
                     <Hr />
                   </>
                 );
-              })
+              */}  })
             )}
           </Info>
           <Summary>
