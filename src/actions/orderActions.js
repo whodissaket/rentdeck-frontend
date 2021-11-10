@@ -168,12 +168,18 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-
+    const dt = Date.now()
+    const newdt=new Date()
+    newdt.setMonth(newdt.getMonth()+order.duration)
+    const dates ={deliveredAt : dt , toBeReturnedAt : Date.UTC(newdt.getUTCFullYear(), newdt.getUTCMonth(), newdt.getUTCDate(),
+ newdt.getUTCHours(), newdt.getUTCMinutes(), newdt.getUTCSeconds())}
+    console.log(dates)
     const { data } = await axios.put(
       `${process.env.REACT_APP_BASE_URL}/api/orders/${order._id}/deliver`,
-      {},
+      dates,
       config
     )
+    console.log(data)
 
     dispatch({
       type: ORDER_DELIVER_SUCCESS,
@@ -209,10 +215,10 @@ export const returnOrder = (order) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-
+    const rDate={returnedAt : Date.now()}
     const { data } = await axios.put(
       `${process.env.REACT_APP_BASE_URL}/api/orders/${order._id}/return`,
-      {},
+      rDate,
       config
     )
 
