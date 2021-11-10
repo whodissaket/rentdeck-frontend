@@ -50,6 +50,7 @@ const Order = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
@@ -217,19 +218,18 @@ const Order = () => {
                     color="primary"
                   />
                 </Typography>
-                {true ? (
+                {order ? (
                   <>
-                    {order?.isPaid ? (
-                      <Button onClick={handleD}>{"SIMULATE DELIVERY"}</Button>
-                    ) : (
-                      <Button onClick={paytime}>{"PAY"}</Button>
-                    )}
-                    {order?.isDelivered ? (
-                      <Button onClick={handleR}>{"SIMULATE RETURN"}</Button>
-                    ) : null}
-                    {order?.isReturned ? (
-                      <Button disabled>{"RETURNED"}</Button>
-                    ) : null}
+               
+                      <Button onClick={paytime} disabled={order.isPaid}>{"PAY"}</Button>
+                       
+                      <Button onClick={handleD} disabled={!order.isPaid || order.isDelivered}>{"SIMULATE DELIVERY"}</Button>
+          
+                      <Button onClick={handleR} disabled={!order.isPaid || !order.isDelivered || order.isReturned}>{"SIMULATE RETURN"}</Button>
+
+            
+                      <Button disabled={!order.isReturned}>{"RETURNED"}</Button>
+      
                   </>
                 ) : null}
               </Paper>
