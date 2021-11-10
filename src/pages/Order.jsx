@@ -172,8 +172,9 @@ const Order = () => {
         : "RETURN PENDING"
       : "IN DELIVERY"
     : "UNPAID";
-  const parseDate = (date) => {const ts = Date.parse(date);
+  const parseDate = (date) => {const ts = new Date(date);
     const dt = new Date(ts);
+    console.log("here" ,date ,"here1"  , ts ,"here2" , dt ,"here3"  , dt.toUTCString())
   return dt.toUTCString()}
   
   return (
@@ -182,12 +183,7 @@ const Order = () => {
       <Announcement />
       <Container maxWidth="lg">
         <>
-          {/* <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <PersonOutlineOutlined />
-              {userInfo.username}
-            </Grid>
-          </Grid> */}
+          {/*parseDate(Date.now())*/}
           <Typography className={classes.title} variant="h3">
             Order Details
           </Typography>
@@ -231,7 +227,16 @@ const Order = () => {
                     color="primary"
                   />
                 </Typography>
-                { order?.isDelivered ? <Typography>
+                { order?.isDelivered ?<> <Typography>
+                  <span>Delivery Date :</span>
+                  <Chip
+                    label={parseDate(order.deliveredAt)}
+                    size="small"
+                    style={{ color: "white", fontWeight: "bold" }}
+                    color="primary"
+                  />
+                </Typography>
+                <Typography>
                   <span>Return Date :</span>
                   <Chip
                     label={parseDate(order.toBeReturnedAt)}
@@ -239,7 +244,9 @@ const Order = () => {
                     style={{ color: "white", fontWeight: "bold" }}
                     color="primary"
                   />
-                </Typography> : ""}
+                </Typography>
+                </>
+                 : ""}
                 {order ? (
                   <>
                     <br />
