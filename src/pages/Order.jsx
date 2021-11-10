@@ -170,8 +170,10 @@ const Order = () => {
         : "RETURN PENDING"
       : "IN DELIVERY"
     : "UNPAID";
-  const ts = Date.parse(order?.createdAt);
-  const dt = new Date(ts);
+  const parseDate = (date) => {const ts = Date.parse(date);
+    const dt = new Date(ts);
+  return dt.toUTCString()}
+  
   return (
     <div>
       <Navbar />
@@ -204,7 +206,7 @@ const Order = () => {
                 </Typography>
                 <Typography>
                   <span>Date : </span>
-                  {dt.toUTCString()}
+                  {parseDate(order?.createdAt)}
                 </Typography>
                 <Typography>
                   <span>Price :</span> {order?.totalPrice}/month
@@ -218,14 +220,23 @@ const Order = () => {
                     color="primary"
                   />
                 </Typography>
+                { order?.isDelivered ? <Typography>
+                  <span>Return Date :</span>
+                  <Chip
+                    label={parseDate(order.toBeReturnedAt)}
+                    size="small"
+                    style={{ color: "white", fontWeight: "bold" }}
+                    color="primary"
+                  />
+                </Typography> : ""}
                 {order ? (
                   <>
-               
+                    <br />
                      { !order.isPaid ? <Button onClick={paytime}>{"PAY"}</Button> : "" }
                        
-                    { order.isPaid ? <Button onClick={handleD} >{"SIMULATE DELIVERY"}</Button> : "" }
+                    { order.isPaid && !order.isDelivered ? <Button onClick={handleD} >{"SIMULATE DELIVERY"}</Button> : "" }
           
-                     { order.isDelivered ? <Button onClick={handleR}>{"SIMULATE RETURN"}</Button> : "" }
+                     { order.isDelivered && !order.isReturned ? <Button onClick={handleR}>{"SIMULATE RETURN"}</Button> : "" }
 
             
                     { order.isReturned ? "RENTAL PRODUCTS HAVE BEEN RETURNED" : ""}
