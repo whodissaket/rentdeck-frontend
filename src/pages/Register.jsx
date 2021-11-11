@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../actions/userActions";
 import GoogleLogin from "react-google-login";
-
+import validator from "../helper/validator";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -96,8 +96,12 @@ const Register = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
+      console.log(validator(password))
       const googleId = null;
-      dispatch(register(username, email, password, googleId));
+      if(validator(password)==true)
+      {console.log(validator(password))
+        dispatch(register(username, email, password, googleId));}
+      else{ setMessage('Invalid Password')}
     }
   };
 
