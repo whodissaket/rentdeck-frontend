@@ -89,7 +89,6 @@ const Footer = () => {
               Order Tracking
             </Link>
           </ListItem>
-          <ListItem>Wishlist</ListItem>
           <ListItem>Terms and Conditions</ListItem>
         </List>
       </Center>

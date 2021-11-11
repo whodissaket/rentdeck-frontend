@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Announcement from "../components/Announcement/Announcement";
 import Footer from "../components/Footer/Footer";
@@ -36,7 +36,7 @@ const Option = styled.option``;
 
 const ProductList = () => {
   const location = useLocation();
-  const [categories , setCategories]=useState(null)
+  const [categories, setCategories] = useState(null);
   const search =
     location?.search.split("=")[0] == "?s"
       ? location?.search.split("=")[1]
@@ -45,16 +45,19 @@ const ProductList = () => {
     location?.search.split("=")[0] == "?categories"
       ? location?.search.split("=")[1]
       : null;
-const history=useHistory()
+  const history = useHistory();
 
-const categoryHandler = (e) => {
-  history.push(`/products?categories=${e.target.value}`)
-  setCategories(e.target.value)
+  const categoryHandler = (e) => {
+    history.push(`/products?categories=${e.target.value}`);
+    setCategories(e.target.value);
   };
-  useEffect(()=>{
-    setCategories(location?.search.split("=")[0] == "?categories"
-      ? location?.search.split("=")[1]
-      : null);},[location,search])
+  useEffect(() => {
+    setCategories(
+      location?.search.split("=")[0] == "?categories"
+        ? location?.search.split("=")[1]
+        : null
+    );
+  }, [location, search]);
   return (
     <Container>
       <Navbar />
@@ -63,7 +66,11 @@ const categoryHandler = (e) => {
       <FilterContainer>
         <Filter>
           <FilterText>Categorize by:</FilterText>
-          <Select onChange={(e)=>{categoryHandler(e)}}>
+          <Select
+            onChange={(e) => {
+              categoryHandler(e);
+            }}
+          >
             <Option disabled selected>
               All
             </Option>
