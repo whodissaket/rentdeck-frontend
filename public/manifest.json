@@ -1,0 +1,22 @@
+{
+    "name": "My Sample PWA",
+    "lang": "en-US",
+    "start_url": "/",
+    "display": "standalone",
+    "icons": [{
+        "src": "/logo.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "purpose": "maskable any"
+    },
+    {
+        "src": "/rentdeck_logo.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable any"
+    }
+
+],
+    "theme_color": "#07a0ff",
+    "background_color": "#3367D6"
+}
