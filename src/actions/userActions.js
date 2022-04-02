@@ -25,6 +25,7 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_REQUEST,
 } from "../constants/userConstants";
+import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   localStorage.removeItem("cartItems");
@@ -32,8 +33,8 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("paymentMethod");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
-  // dispatch({ type: ORDER_LIST_MY_RESET })
-  //dispatch({ type: USER_LIST_RESET })
+  dispatch({ type: ORDER_LIST_MY_RESET })
+  dispatch({ type: USER_LIST_RESET })
   document.location.href = "/";
 };
 export const login = (username, password ,googleId) => async (dispatch) => {
@@ -52,6 +53,7 @@ export const login = (username, password ,googleId) => async (dispatch) => {
       }
     )
     .then((response) => {
+      console.log(response)
       dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: response.data,
@@ -73,7 +75,7 @@ export const register = (username, email, password,googleId) => async (dispatch)
   dispatch({
     type: USER_REGISTER_REQUEST,
   });
-
+  console.log(username, email, password,googleId)
   axios
     .post(
       `${process.env.REACT_APP_BASE_URL}/api/users/`,
@@ -85,13 +87,21 @@ export const register = (username, email, password,googleId) => async (dispatch)
       }
     )
     .then((response) => {
+      console.log("db se aya")
+      console.log(response)
       dispatch({
         type: USER_REGISTER_SUCCESS,
         payload: response.data,
       });
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: response.data,
+      })
       localStorage.setItem("userInfo", JSON.stringify(response.data));
     })
     .catch((error) => {
+      console.log("db se aya")
+      console.log(error)
       dispatch({
         type: USER_REGISTER_FAIL,
         payload:
