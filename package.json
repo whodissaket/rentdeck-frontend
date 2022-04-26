@@ -1,7 +1,6 @@
 {
   "name": "rentdeck-frontend",
   "version": "0.1.0",
-  "homepage": "https://gitname.github.io/rentdeck-frontend",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
