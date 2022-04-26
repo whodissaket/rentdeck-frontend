@@ -1,5 +1,4 @@
-{
-    "name": "My Sample PWA",
+{"name": "My Sample PWA",
     "lang": "en-US",
     "start_url": "/",
     "display": "standalone",
@@ -17,7 +16,6 @@
     }
 
 ],
-"scope": "/",
     "theme_color": "#07a0ff",
     "background_color": "#3367D6"
 }
