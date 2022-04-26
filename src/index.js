@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import dotenv from  'dotenv'
 import * as serviceWorker from './serviceWorker';
+import { subscribeUser } from './subscription';
 dotenv.config()
 ReactDOM.render(
   <React.StrictMode>
@@ -17,3 +18,5 @@ ReactDOM.render(
 );
 
 serviceWorker.register(); 
+
+subscribeUser()
