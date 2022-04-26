@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/https:/rentdeck-frontend/static/css/main.4773fd9a.chunk.css",
+    "main.js": "/https:/rentdeck-frontend/static/js/main.35b73490.chunk.js",
+    "main.js.map": "/https:/rentdeck-frontend/static/js/main.35b73490.chunk.js.map",
+    "runtime-main.js": "/https:/rentdeck-frontend/static/js/runtime-main.75ef7920.js",
+    "runtime-main.js.map": "/https:/rentdeck-frontend/static/js/runtime-main.75ef7920.js.map",
+    "static/js/2.fd47c9ce.chunk.js": "/https:/rentdeck-frontend/static/js/2.fd47c9ce.chunk.js",
+    "static/js/2.fd47c9ce.chunk.js.map": "/https:/rentdeck-frontend/static/js/2.fd47c9ce.chunk.js.map",
+    "index.html": "/https:/rentdeck-frontend/index.html",
+    "static/css/main.4773fd9a.chunk.css.map": "/https:/rentdeck-frontend/static/css/main.4773fd9a.chunk.css.map",
+    "static/js/2.fd47c9ce.chunk.js.LICENSE.txt": "/https:/rentdeck-frontend/static/js/2.fd47c9ce.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.75ef7920.js",
+    "static/js/2.fd47c9ce.chunk.js",
+    "static/css/main.4773fd9a.chunk.css",
+    "static/js/main.35b73490.chunk.js"
+  ]
+}
